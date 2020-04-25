@@ -1,0 +1,11 @@
+%h1 Listing Boards
+
+= link_to 'New board', new_board_path
+
+= form_with(url: boards_path, method: "get", local: true) do |form| 
+%p
+	= form.text_field :search, :value => @search
+	= form.submit "Search", :name => ""
+
+%ul
+	= render @boards 

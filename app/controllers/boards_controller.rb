@@ -2,7 +2,11 @@ class BoardsController < ApplicationController
 	before_action :find_board, only: [:show, :edit,:update, :destroy]
 
   def index 
-    @boards = Board.all
+    if params.has_key? :search
+      @search = params[:search]
+      @boards = @boards.where("title like ? or description like ?", "%#{@search}%")
+    else
+       @boards = Board.all
   end
 
   def show
