@@ -24,6 +24,7 @@ config/initializers/secret_token.rb
 config/master.key
 
 config/database.yml
+db/schema.rb
 
 
 # Only include if you have production secrets in this file, which is no longer a Rails default
