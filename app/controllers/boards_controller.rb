@@ -22,7 +22,8 @@ class BoardsController < ApplicationController
 
   def create
     @board = Board.new(board_params)
-    @board.user_id = current_user.id
+    # @board.user_id = current_user.id
+    @board.user_id = 1
     if @board.save
       redirect_to @board
     else
@@ -55,6 +56,6 @@ private
   end
 
   def board_params
-    params.require(:board).permit(:title, :description, :search)
+    params.require(:board).permit(:title, :description, :search, :is_public)
   end
 end
