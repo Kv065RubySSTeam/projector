@@ -17,7 +17,6 @@ require('jquery')
 // const imagePath = (name) => images(name, true)
 
 // BEGIN Vendor JS
-	require('frest/app-assets/vendors/js/hello.js')
     require('frest/app-assets/vendors/js/vendors.min.js')
     require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js')
     require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js')
