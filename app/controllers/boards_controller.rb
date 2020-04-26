@@ -3,10 +3,11 @@ class BoardsController < ApplicationController
 
   def index 
     if params.has_key? :search
-      @search = params[:search]
-      @boards = @boards.where("title like ? or description like ?", "%#{@search}%")
+      @input = params[:search]
+      @boards = Board.search(@input)
     else
-       @boards = Board.all
+      @boards = Board.all
+    end
   end
 
   def show
@@ -54,5 +55,6 @@ private
   end
 
   def board_params
-    params.require(:board).permit(:title, :description)
+    params.require(:board).permit(:title, :description, :search)
   end
+end

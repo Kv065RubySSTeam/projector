@@ -1,0 +1,11 @@
+= form_with(model: board, local: true) do |f|
+
+	
+	%p= f.label :title
+	%p= f.text_field :title, autofocus: true
+
+	
+	%p= f.label :description
+	%p= f.text_area :description, rows: 5
+	
+	%p= f.submit

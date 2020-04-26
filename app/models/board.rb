@@ -5,4 +5,6 @@ belongs_to :user
  validates :description, length: { minimum: 5 }
  validates :user_id, presence: true    
 
+  scope :search, ->(input) { where("title ilike ? or description ilike ?", "%#{input}%", "%#{input}%") }
+
 end
