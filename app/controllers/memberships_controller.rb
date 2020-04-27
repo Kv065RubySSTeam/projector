@@ -3,14 +3,14 @@ class MembershipsController < ApplicationController
 
   def create
     @membership = Membership.new(params[:membership])
-    unless @membership&.nil?
+    if @membership&.nil? && current_user.board_admin
       @membership.save!
     end
   end
 
   def update
     @user = Membership.find_by_id(params[:user_id])
-    unless @user.nil? && current_user.board_admin
+    if !@user.nil? && current_user.board_admin
       @user.admin = true
       @user.save!
     end
