@@ -1,2 +1,7 @@
-%li
-	= link_to board.title, board
+- boards.each do |board|
+	
+	%p
+		%strong title:
+		= link_to board.title, board_path(board)
+	%strong description:
+	=	board.description

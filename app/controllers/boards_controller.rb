@@ -5,9 +5,21 @@ class BoardsController < ApplicationController
     if params.has_key? :search
       @input = params[:search]
       @boards = Board.search(@input)
+    elsif params.has_key? :filter
+      case params[:filter]
+      when "my_boards"
+        @boards = Board.user_boards(1)
+      when "private_boards"
+        @boards = Board.is_public?(false).user_boards(1)
+      when "public_boards"
+        @boards = Board.is_public?(true)
+      end
     else
       @boards = Board.all
     end
+
+      @private_boards = @boards.is_public?(false)
+      @public_boards = @boards.is_public?(true)
   end
 
   def show
@@ -23,7 +35,7 @@ class BoardsController < ApplicationController
   def create
     @board = Board.new(board_params)
     # @board.user_id = current_user.id
-    @board.user_id = 1
+    @board.user_id = 2
     if @board.save
       redirect_to @board
     else

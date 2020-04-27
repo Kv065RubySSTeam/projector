@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get "boards/filter/:filter" => "boards#index", as: :filtered_boards
+
   resources :users
   resources :boards
   devise_for :users

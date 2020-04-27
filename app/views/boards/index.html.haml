@@ -1,3 +1,9 @@
+
+= link_to 'All boards', boards_path
+= link_to 'My boards', filtered_boards_path(:my_boards)
+= link_to 'Private boards', filtered_boards_path(:private_boards)
+= link_to 'Public boards', filtered_boards_path(:public_boards)
+
 %h1 Listing Boards
 
 = link_to 'New board', new_board_path
@@ -7,5 +13,10 @@
 	= text_field_tag :search
 	= submit_tag "Search"
 
-%ul
-	= render @boards 
+- if @private_boards.any?
+	%h2 Private boards
+	= render 'board', boards: @private_boards
+
+-if @public_boards.any?
+	%h2 Public boards
+	= render 'board', boards: @public_boards
