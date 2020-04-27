@@ -18,7 +18,7 @@ ActiveRecord::Schema.define(version: 2020_04_26_160435) do
   create_table "boards", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.boolean "is_public", default: false
+    t.boolean "public", default: false
     t.bigint "user_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

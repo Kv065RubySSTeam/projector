@@ -7,8 +7,8 @@ class Board < ApplicationRecord
 
   scope :search, ->(input) { where("title ilike ? or description ilike ?", "%#{input}%", "%#{input}%") }
 
-  scope :public_boards, -> { where(is_public: true) }
-  scope :private_boards, -> { where(is_public: false) }
+  scope :public_boards, -> { where(public: true) }
+  scope :private_boards, -> { where(public: false) }
 
   scope :user_boards, -> { where(user_id: 1) }
 
