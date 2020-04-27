@@ -2,8 +2,9 @@ class BoardsController < ApplicationController
 	before_action :find_board, only: [:show, :edit,:update, :destroy]
 
   def index 
-    if params.has_key? :filter
-      @boards = Board.filter(params[:filter]).search(params[:search])
+    if params.has_key? :filter 
+      @filter = params[:filter]
+      @boards = Board.filter(@filter).search(params[:search])
     else
       @boards = Board.all.search(params[:search])
     end
