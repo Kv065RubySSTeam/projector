@@ -2,24 +2,14 @@ class BoardsController < ApplicationController
 	before_action :find_board, only: [:show, :edit,:update, :destroy]
 
   def index 
-    if params.has_key? :search
-      @input = params[:search]
-      @boards = Board.search(@input)
-    elsif params.has_key? :filter
-      case params[:filter]
-      when "my_boards"
-        @boards = Board.user_boards(1)
-      when "private_boards"
-        @boards = Board.is_public?(false).user_boards(1)
-      when "public_boards"
-        @boards = Board.is_public?(true)
-      end
+    if params.has_key? :filter
+      @boards = Board.filter(params[:filter]).search(params[:search])
     else
-      @boards = Board.all
+      @boards = Board.all.search(params[:search])
     end
 
-      @private_boards = @boards.is_public?(false)
-      @public_boards = @boards.is_public?(true)
+    @private_boards = @boards.private_boards
+    @public_boards = @boards.public_boards
   end
 
   def show
