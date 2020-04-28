@@ -15,11 +15,13 @@ ActiveRecord::Schema.define(version: 2020_04_28_125314) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "boards", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.boolean "public", default: false
-    t.bigint "user_id"
+    t.boolean "public"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["public"], name: "index_boards_on_public"
@@ -31,7 +33,6 @@ ActiveRecord::Schema.define(version: 2020_04_28_125314) do
     t.bigint "board_id", null: false
     t.bigint "user_id", null: false
     t.boolean "admin", default: false
-    t.boolean "starred"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["board_id"], name: "index_memberships_on_board_id"

@@ -4,7 +4,6 @@ class CreateMemberships < ActiveRecord::Migration[6.0]
       t.references :board, null: false, foreign_key: true
       t.references :user, null: false, foreign_key: true
       t.boolean :admin, default: false
-      t.boolean :starred
 
       t.timestamps
     end
