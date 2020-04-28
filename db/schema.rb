@@ -19,7 +19,6 @@ ActiveRecord::Schema.define(version: 2020_04_27_164624) do
     t.string "title"
     t.text "description"
     t.boolean "public"
-    t.boolean "template"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -28,7 +27,6 @@ ActiveRecord::Schema.define(version: 2020_04_27_164624) do
     t.bigint "board_id", null: false
     t.bigint "user_id", null: false
     t.boolean "admin", default: false
-    t.boolean "starred"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["board_id"], name: "index_memberships_on_board_id"

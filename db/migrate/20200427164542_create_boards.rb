@@ -4,7 +4,6 @@ class CreateBoards < ActiveRecord::Migration[6.0]
       t.string :title
       t.text :description
       t.boolean :public
-      t.boolean :template
 
       t.timestamps
     end
