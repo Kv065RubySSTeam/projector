@@ -12,6 +12,9 @@
 
 ActiveRecord::Schema.define(version: 2020_04_28_125314) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "boards", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -25,8 +28,8 @@ ActiveRecord::Schema.define(version: 2020_04_28_125314) do
   end
 
   create_table "memberships", force: :cascade do |t|
-    t.integer "board_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "board_id", null: false
+    t.bigint "user_id", null: false
     t.boolean "admin", default: false
     t.boolean "starred"
     t.datetime "created_at", precision: 6, null: false
