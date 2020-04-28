@@ -19,7 +19,7 @@ ActiveRecord::Schema.define(version: 2020_04_28_125314) do
     t.string "title"
     t.text "description"
     t.boolean "public", default: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["public"], name: "index_boards_on_public"
