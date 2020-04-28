@@ -4,7 +4,7 @@ class User < ApplicationRecord
          :registerable, :validatable,
          :confirmable, :recoverabl
 
-  has_many :memberships
+  has_many :memberships, dependent: :destroy
   has_many :boards, through: :memberships
   has_many :administrated_boards, -> { where(admin: true) }, class_name: 'Board', through: :membership, source: board
 end
