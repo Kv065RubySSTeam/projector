@@ -4,7 +4,7 @@ class MembershipsController < ApplicationController
 
   def create
     @user = User.find(params[:user_id])
-    if @board.memberships.create(user_id: user.id, admin: false) 
+    if @board.memberships.create(user_id: user.id, admin: false)
       flash[:success] = 'New user is added!'
     else 
       flash[:danger] = 'New user was not added!'
