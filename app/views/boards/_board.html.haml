@@ -5,3 +5,9 @@
 		= link_to board.title, board_path(board)
 	%strong description:
 	=	board.description
+	%p
+		%strong type:
+		- unless board.public
+			private
+		- else
+			public
