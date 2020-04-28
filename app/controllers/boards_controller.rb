@@ -22,7 +22,7 @@ class BoardsController < ApplicationController
 
   def edit
   end
-  
+
 #!!! To do
   def create
     @board = Board.new(board_params)
@@ -59,6 +59,6 @@ private
   end
 
   def board_params
-    params.require(:board).permit(:title, :description, :search, :public)
+    params.require(:board).permit(:title, :description, :public)
   end
 end
