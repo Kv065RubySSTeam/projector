@@ -25,6 +25,8 @@ class MembershipsController < ApplicationController
 
   def check_user_permission
     if current_user.memberships.exists?(board_id: @board.id, admin: true)
+      flash[:success] = 'Success'
+    else
       flash[:danger] = 'You are not admin for this board'
       redirect_back fallback_location: root_path
     end
