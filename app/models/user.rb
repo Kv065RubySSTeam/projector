@@ -7,8 +7,4 @@ class User < ApplicationRecord
   has_many :memberships
   has_many :boards, through: :memberships
   has_many :administrated_boards, -> { where(admin: true) }, class_name: 'Board', through: :membership
-
-  def board_admin(board)
-    administrated_boards.exists?(id: board.id)
-  end
 end
