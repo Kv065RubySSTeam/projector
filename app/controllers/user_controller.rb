@@ -1,4 +1,6 @@
-class UsersController < ApplicationController
+# frozen_string_literal: true
+
+class UserController < ApplicationController
   def index
     @users = User.search(params[:search]).limit(10)
 

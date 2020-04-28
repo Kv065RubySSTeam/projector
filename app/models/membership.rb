@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Membership < ApplicationRecord
   belongs_to :board
   belongs_to :user
