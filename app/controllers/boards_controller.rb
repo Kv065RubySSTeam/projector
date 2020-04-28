@@ -22,11 +22,11 @@ class BoardsController < ApplicationController
 
   def edit
   end
-
+  
+#!!! To do
   def create
     @board = Board.new(board_params)
-    # @board.user_id = current_user.id
-    @board.user_id = 2
+    @board.user_id = 1  # @board.user_id = current_user.id
     if @board.save
       redirect_to @board
     else
@@ -59,6 +59,6 @@ private
   end
 
   def board_params
-    params.require(:board).permit(:title, :description, :search, :is_public)
+    params.require(:board).permit(:title, :description, :search, :public)
   end
 end
