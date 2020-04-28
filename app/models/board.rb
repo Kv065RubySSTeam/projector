@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Board < ApplicationRecord
   belongs_to :user
 
@@ -5,24 +7,26 @@ class Board < ApplicationRecord
   validates :description, length: { within: 5..255 }
   validates :user, presence: true
 
-  scope :search, ->(input) { where("title ilike ? or description ilike ?",
-                                   "%#{input}%",
-                                   "%#{input}%") }
+  scope :search, lambda { |input|
+                   where('title ilike ? or description ilike ?',
+                         "%#{input}%",
+                         "%#{input}%")
+                 }
   scope :user_boards, ->(user) { where(user_id: user.id) }
   scope :public_boards, -> { where(public: true) }
   scope :private_boards, -> { where(public: false) }
-  scope :filter, ->(filter,user) do
+  scope :filter, lambda { |filter, user|
     case filter
-    when "my"
+    when 'my'
       user_boards(user)
-    when "private"
+    when 'private'
       private_boards.user_boards(user)
-    when "public"
+    when 'public'
       public_boards
     else
       all
     end
-  end
+  }
   self.per_page = 10
   has_many :memberships
   has_many :memberships, dependent: :destroy
