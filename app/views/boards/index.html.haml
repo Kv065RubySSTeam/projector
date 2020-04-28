@@ -15,6 +15,6 @@
 	= submit_tag "Search"
 
 %h2 Boards
-	= render 'board', boards: @boards
+= render 'board', boards: @boards
 	
-	= will_paginate(@boards)
+= will_paginate(@boards)

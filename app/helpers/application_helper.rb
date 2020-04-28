@@ -1,8 +1,4 @@
-module ApplicationHelper
-
-  # def current_user?(user)
-  #   user == current_user
-  # end
+module ApplicationHelper  
 
   def flash_class(level)
     case level

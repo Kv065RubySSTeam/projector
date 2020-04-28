@@ -5,3 +5,5 @@ class User < ApplicationRecord
          :registerable, :validatable,
          :confirmable, :recoverable
 
+end
+

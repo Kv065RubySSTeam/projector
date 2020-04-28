@@ -222,7 +222,6 @@ DEPENDENCIES
   devise
   haml
   haml-rails (~> 2.0)
-
   jbuilder (~> 2.7)
   letter_opener
   listen (>= 3.0.5, < 3.2)
