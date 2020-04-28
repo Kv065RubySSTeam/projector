@@ -1,26 +1,35 @@
 class MembershipsController < ApplicationController
-  before_action :load_board
+  before_action :get_board
   before_action :check_user_permission
+  before_action :get_user
 
   def create
-    @user = User.find(params[:user_id])
-    if @board.memberships.create(user_id: user.id, admin: false) 
+    unless @board.memberships.exists?(user: @user)
+      @board.users << @user
       flash[:success] = 'New user is added!'
-    else 
+    else
       flash[:danger] = 'New user was not added!'
       redirect_back fallback_location: root_path
     end
   end
 
   def update
-    @membership = @board.memberships.where(user_id: params[:user_id]).first
-    @membership.update_attribute('admin', true)
+    if @board.memberships.exists?(user: @user, admin: false)
+      @user.memberships.update(admin: true)
+      flash[:success] = 'Success'
+    else
+      flash[:danger] = 'Danger'
+    end
   end
 
   private
 
-  def load_board
+  def get_board
     @board = Board.find(params[:board_id])
+  end
+
+  def get_user
+    @user = User.find(params[:user_id])
   end
 
   def check_user_permission
@@ -33,6 +42,6 @@ class MembershipsController < ApplicationController
   end
 
   def board_admin(board)
-    administrated_boards.exists?(id: board.id)
+    current_user.administrated_boards.exists?(id: board.id)
   end
 end
