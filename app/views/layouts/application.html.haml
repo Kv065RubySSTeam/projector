@@ -15,7 +15,6 @@
       .content-wrapper
         = yield
         = render 'layouts/boards' if user_signed_in?
-        = javascript_pack_tag "error_fields.js"
     .sidenav-overlay
     .drag-target
     = render 'layouts/footer'
