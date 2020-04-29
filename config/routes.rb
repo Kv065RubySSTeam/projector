@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/index'
+
   resources :boards do
     resources :memberships, only: %i[create]
     put 'members/:user_id/admin' => 'memberships#admin'
