@@ -14,12 +14,10 @@
  *= require_self
  */
 
-   /* BEGIN: Theme CSS--;*/
-    @import "app-assets/css/bootstrap.css";
-    @import "app-assets/css/bootstrap-extended.css";
-    @import "app-assets/css/colors.css";
-    @import "app-assets/css/components.min.css";
-    /* @import "app-assets/css/themes/dark-layout.css";
-    @import "app-assets/css/themes/semi-dark-layout.css"; */
-    @import "app-assets/vendors/css/vendors.min.css";
-    @import "app-assets/css/core/menu/menu-types/vertical-menu.min.css";
+/* BEGIN: Theme CSS--;*/
+@import "app-assets/css/bootstrap.css";
+@import "app-assets/css/bootstrap-extended.css";
+@import "app-assets/css/colors.css";
+@import "app-assets/css/components.css";
+@import "app-assets/css/themes/dark-layout.css";
+@import "app-assets/css/themes/semi-dark-layout.css";
