@@ -19,5 +19,6 @@
     @import "app-assets/css/bootstrap-extended.css";
     @import "app-assets/css/colors.css";
     @import "app-assets/css/components.css";
-    @import "app-assets/css/themes/dark-layout.css";
-    @import "app-assets/css/themes/semi-dark-layout.css";
+    /* @import "app-assets/css/themes/dark-layout.css";
+    @import "app-assets/css/themes/semi-dark-layout.css"; */
+    @import "app-assets/vendors/css/vendors.min.css";

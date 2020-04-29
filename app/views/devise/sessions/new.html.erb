@@ -1,0 +1,72 @@
+<div class="app-content content">
+  <div class="content-wrapper">
+    <section id="auth-login" class="row flexbox-container">
+        <div class="col-xl-8 col-11">
+            <div class="card bg-authentication mb-0">
+                <div class="row m-0">
+                    <!-- left section-login -->
+                    <div class="col-md-6 col-12 px-0">
+                        <div class="card disable-rounded-right mb-0 p-2 h-100 d-flex justify-content-center">
+                            <div class="card-header pb-1">
+                                <div class="card-title">
+                                    <h4 class="text-center mb-2">Welcome Back!</h4>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                              <div class="card-body">
+
+                                <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+                                  <div class="form-group mb-50">
+                                    <%= f.label 'Email address', class: "text-bold-600" %><br />
+                                    <%= f.email_field :email, autofocus: true, autocomplete: "email",
+                                        class: "form-control", id: "exampleInputEmail1", placeholder: "Email address"%>
+                                  </div>
+
+                                  <div class="form-group">
+                                    <%= f.label :password, class: "text-bold-600" %><br />
+                                    <%= f.password_field :password, autocomplete: "current-password",
+                                        class: "form-control", id: "exampleInputPassword1", placeholder: "Password"%>
+                                  </div>
+
+                                  <%# <% if devise_mapping.rememberable? %>
+                                    <%# <div class="field"> %>
+                                      <%# <%= f.check_box :remember_me %> 
+                                      <%# <%= f.label :remember_me %> 
+                                    <%# </div> %>
+                                  <%# <% end %> 
+
+                                  <div class="actions">
+                                      <%= f.submit "Log in", class: "btn btn-primary glow w-100 position-relative" %>
+                                  </div>
+                                <% end %>
+
+                                <div class="form-group d-flex flex-md-row flex-column justify-content-between align-items-center">
+                                    <div class="text-right"><small>
+                                      <%= link_to "Forgot password?", new_password_path(resource_name), class:"card-link" %>
+                                    </small></div>
+                                </div>
+
+                                  <hr>
+                                  <div class="text-center">
+                                    <small class="mr-25">Don't have an account?
+                                      <%= link_to "Sign up", new_registration_path(resource_name) %>
+                                    </small>
+                                  </div>
+                              
+
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- right section image -->
+                    <div class="col-md-6 d-md-block d-none text-center align-self-center p-3">
+                        <div class="card-content">
+                            <img class="img-fluid" src="/images/login.png" alt="branding logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  </div>
+</div>
