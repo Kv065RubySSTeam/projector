@@ -47,7 +47,6 @@ group :development do
 
   gem "letter_opener"
   gem "haml-rails", "~> 2.0"
-
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
