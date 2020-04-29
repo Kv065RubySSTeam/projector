@@ -13,8 +13,13 @@
       = render 'layouts/side_menu'
     .app-content.content
       .content-wrapper
+      .container
+        - flash.each do |type, msg|
+          .alert.alert-info
+            = msg
         = yield
         = render 'layouts/boards' if user_signed_in?
     .sidenav-overlay
     .drag-target
     = render 'layouts/footer'
+
