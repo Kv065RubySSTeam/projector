@@ -1,18 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Projector</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<head>
+  <title>Projector</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-  <body class="vertical-layout content-left-sidebar chat-application 
-    navbar-sticky footer-static pace-done menu-hide vertical-overlay-menu">
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body class="vertical-layout vertical-menu-modern 2-columns navbar-sticky 
+footer-static menu-expanded pace-done" data-open="click" 
+data-menu="vertical-menu-modern" data-col="2-columns">
+  <% if user_signed_in? %>
+  <%= render 'layouts/header' %>
+  <%= render 'layouts/side_menu' %>
+  <% end %>
+  <div class="app-content content">
+    <div class="content-wrapper">
       <%= yield %>
-      <%= javascript_pack_tag "error_fields.js" %>   
-  </body>
+      <%= render 'layouts/boards' if user_signed_in? %>
 
+      <%= javascript_pack_tag "error_fields.js" %>  
 
+    </div>
+  </div>
+  </div>
+
+  <div class="sidenav-overlay"></div>
+  <div class="drag-target"></div>
+  <%= render 'layouts/footer' %>
+
+</body>
+
+</html>

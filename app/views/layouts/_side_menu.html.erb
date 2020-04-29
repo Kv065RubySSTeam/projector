@@ -1,0 +1,86 @@
+<div class="main-menu menu-fixed menu-light menu-accordion menu-shadow expanded" data-scroll-to-active="true">
+  <div class="navbar-header expanded">
+    <div class="shadow-bottom"></div>
+    <ul class="nav navbar-nav flex-row">
+      <li class="nav-item mr-auto">
+        <a class="navbar-brand" href="<%= root_path %>">
+          <%#
+          <div class="brand-logo"><img class="logo" src="logo.png" /></div>
+          %>
+          <h2 class="brand-text mb-0">Projector</h2>
+        </a>
+      </li>
+      <li class="nav-item nav-toggle">
+        <a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse">
+          <i class="bx bx-x d-block d-xl-none font-medium-4 primary"></i>
+          <i class="toggle-icon font-medium-4 d-none d-xl-block primary bx bx-disc" data-ticon="bx-disc"></i>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <div class="shadow-bottom"></div>
+  <div class="main-menu-content ps ps--active-y">
+    <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+      <li class="nav-item">
+        <a href="#"><i class="bx bx-home-alt"></i><span class="menu-title">Dashboard</span></a>
+      </li>
+      <li class="nav-item has-sub sidebar-group-active open">
+        <a href="#" data-turbolinks="fasle">
+          <i class="bx bxs-group"></i>
+          <span class="menu-title" data-i18n="Starter kit">Public Board</span>
+        </a>
+        <ul class="menu-content">
+          <li class="">
+            <a href="#"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="1 column">Front-end</span></a>
+          </li>
+          <li class="active">
+            <a href="#"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="2 columns">Back-end</span></a>
+          </li>
+          <li class="">
+            <a href="#"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="Fixed navbar">Testing</span></a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item has-sub sidebar-group-active">
+        <a href="#"><i class="bx bx-task"></i><span class="menu-title" data-i18n="Starter kit">My Board</span></a>
+        <ul class="menu-content">
+          <li class="">
+            <a href="#"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="2 columns">Back-end</span></a>
+          </li>
+          <li class="">
+            <a href="#"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="Fixed navbar">Testing</span></a>
+          </li>
+        </ul>
+      </li>
+      <li class="nav-item has-sub open">
+        <a href="#"><i class="bx bxs-user"></i><span class="menu-title" data-i18n="Starter kit">Private Board</span></a>
+        <ul class="menu-content">
+          <li class="is-shown">
+            <a href="#"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="2 columns">Back-end</span></a>
+          </li>
+          <li class="is-shown">
+            <a href="#"><i class="bx bx-right-arrow-alt"></i><span class="menu-item" data-i18n="Fixed navbar">Testing</span></a>
+          </li>
+        </ul>
+      </li>
+      <%# <li class="nav-item">
+        <a href="#" target="_blank">
+          <i class="bx bx-folder"></i>
+          <span class="menu-title" data-i18n="Documentation">Documentation</span>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a href="#" target="_blank">
+          <i class="bx bx-purchase-tag-alt"></i>
+          <span class="menu-title" data-i18n="Raise Support">Raise Support</span>
+        </a>
+      </li> %>
+    </ul>
+    <div class="ps__rail-x">
+      <div class="ps__thumb-x" tabindex="0"></div>
+    </div>
+    <div class="ps__rail-y">
+      <div class="ps__thumb-y" tabindex="0"></div>
+    </div>
+  </div>
+</div>
