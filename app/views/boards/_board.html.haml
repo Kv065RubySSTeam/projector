@@ -1,12 +1,11 @@
 - boards.each do |board|
-	
 	%p
-		%strong title:
+		%strong Title:
 		= link_to board.title, board_path(board)
-	%strong description:
+	%strong Description:
 	=	board.description
 	%p
-		%strong type:
+		%strong Type:
 		- unless board.public
 			private
 		- else

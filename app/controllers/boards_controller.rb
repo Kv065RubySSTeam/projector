@@ -1,9 +1,10 @@
 class BoardsController < ApplicationController
-	before_action :find_board, only: [:show, :edit,:update, :destroy]
+	before_action :find_board!, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
   def index 
-    @boards = Board.filter(params[:filter], current_user).search(params[:search]).pagination(params[:page])
+    @boards = Board.filter(params[:filter], current_user)
+      .search(params[:search]).paginate(page: params[:page])
   end
 
   def show
@@ -16,10 +17,8 @@ class BoardsController < ApplicationController
   def edit
   end
 
-
   def create
-    @board = Board.new(board_params)
-    @board.user_id = current_user.id
+    @board = current_user.boards.new(board_params)
     if @board.save
       redirect_to @board
     else
@@ -47,7 +46,7 @@ class BoardsController < ApplicationController
 
 private
 
-  def find_board
+  def find_board!
     @board = Board.find(params[:id])
   end
 

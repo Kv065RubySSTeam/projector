@@ -1,20 +1,18 @@
-
 = link_to 'All boards', boards_path
 = link_to 'My boards', filter: 'my'
 = link_to 'Private boards', filter: 'private'
 = link_to 'Public boards', filter: 'public'
 
 %h1 Listing Boards
-
 = link_to 'New board', new_board_path
 
 = form_with(url: boards_path, method: "get", local: true) do
-	= label_tag :search, "Search for"
-	= text_field_tag :search
-	= hidden_field_tag(:filter, params[:filter])
-	= submit_tag "Search"
+  = label_tag :search, "Search for"
+  = text_field_tag :search
+  = hidden_field_tag(:filter, params[:filter])
+  = submit_tag "Search"
 
 %h2 Boards
+= will_paginate(@boards)
 = render 'board', boards: @boards
-	
 = will_paginate(@boards)
