@@ -1,12 +1,12 @@
 class Board < ApplicationRecord
-  belongs_to :user 
+  belongs_to :user
 
   validates :title, length: { within: 5..50 }
   validates :description, length: { within: 5..255 }
-  validates :user, presence: true    
+  validates :user, presence: true
 
-  scope :search, ->(input) { where("title ilike ? or description ilike ?", 
-                                   "%#{input}%", 
+  scope :search, ->(input) { where("title ilike ? or description ilike ?",
+                                   "%#{input}%",
                                    "%#{input}%") }
   scope :user_boards, ->(user) { where(user_id: user.id) }
   scope :public_boards, -> { where(public: true) }

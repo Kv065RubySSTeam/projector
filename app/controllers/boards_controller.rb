@@ -1,10 +1,10 @@
 class BoardsController < ApplicationController
-	before_action :find_board!, only: [:show, :edit, :update, :destroy]
+  before_action :find_board!, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
 
-  def index 
+  def index
     @boards = Board.filter(params[:filter], current_user)
-      .search(params[:search]).paginate(page: params[:page])
+    .search(params[:search]).paginate(page: params[:page])
   end
 
   def show
@@ -27,8 +27,8 @@ class BoardsController < ApplicationController
   end
 
   def update
-    flash[:success] = "Successfully updated!"
     if @board.update(board_params)
+      flash[:success] = "Successfully updated!"
       redirect_to @board
     else
       render 'edit'
@@ -44,7 +44,7 @@ class BoardsController < ApplicationController
     end
   end
 
-private
+  private
 
   def find_board!
     @board = Board.find(params[:id])
