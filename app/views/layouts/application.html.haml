@@ -1,0 +1,21 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+    %title Projector
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  %body.vertical-layout.vertical-menu-modern.2-columns.navbar-sticky.footer-static.menu-expanded.pace-done{"data-col" => "2-columns", "data-menu" => "vertical-menu-modern", "data-open" => "click"}
+    - if user_signed_in?
+      = render 'layouts/header'
+      = render 'layouts/side_menu'
+    .app-content.content
+      .content-wrapper
+        = yield
+        = render 'layouts/boards' if user_signed_in?
+        = javascript_pack_tag "error_fields.js"
+    .sidenav-overlay
+    .drag-target
+    = render 'layouts/footer'
