@@ -1,0 +1,12 @@
+%h2= @board.title
+
+%h3	Create by:
+= link_to @board.user.email, user_path(@board.user_id)
+
+%h3 Description:
+%p= @board.description
+= link_to 'Edit', edit_board_path(@board)
+= link_to 'Destroy', @board, method: :delete,
+                                  data: { confirm: "You sure?" }
+
+= link_to 'Back', boards_path
