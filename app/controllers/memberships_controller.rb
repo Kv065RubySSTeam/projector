@@ -3,6 +3,10 @@ class MembershipsController < ApplicationController
   before_action :get_user!
   before_action :check_user_permission!
 
+  def index
+    @memberships = Memberships.all
+  end
+
   def create
     if !@board.memberships.exists?(user: @user)
       @board.users << @user
