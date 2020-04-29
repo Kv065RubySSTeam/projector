@@ -1,0 +1,12 @@
+= form_tag users_index_url, method: :get, class: "navbar-form navbar-right", role: "search" do
+    = text_field_tag :search, params[:search], class: "form-control"
+    = submit_tag "Search", name: nil, class: "btn btn-default"
+
+%h1 Board
+%p= @board.title
+%p= @board.description
+%p= @board.public
+
+- @board.users.each do |user|
+    %p Email:
+    =user.email
