@@ -9,7 +9,10 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="vertical-layout content-left-sidebar chat-application 
+    navbar-sticky footer-static pace-done menu-hide vertical-overlay-menu">
+      <%= yield %>
+      <%= javascript_pack_tag "error_fields.js" %>   
   </body>
-</html>
+
+

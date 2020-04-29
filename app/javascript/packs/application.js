@@ -23,8 +23,10 @@ require('jquery')
     require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')
 
 // BEGIN: Theme JS
-	require('frest/app-assets/js/scripts/configs/horizontal-menu.js')
+	  require('frest/app-assets/js/scripts/configs/horizontal-menu.js')
     require('frest/app-assets/js/core/app-menu.js')
     require('frest/app-assets/js/core/app.js')
     require('frest/app-assets/js/scripts/components.js')
     require('frest/app-assets/js/scripts/footer.js')
+
+    require('javascript/packs/error_fields.js')
