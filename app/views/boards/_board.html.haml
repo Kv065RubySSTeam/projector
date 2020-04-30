@@ -1,12 +1,18 @@
 - boards.each do |board|
-  %p
-    %strong Title:
-    = link_to board.title, board_path(board)
-  %strong Description:
-  = board.description
-  %p
-    %strong Type:
-    - unless board.public
-      private
-    - else
-      public
+  %li.todo-item
+    = link_to board_path(board) do
+      .todo-title-wrapper.d-flex.justify-content-sm-between.justify-content-end.align-items-center
+        .todo-title-area.d-flex
+          %p.todo-title.mx-50.m-0.truncate
+            = board.title
+        .todo-item-action.d-flex.align-items-center
+          .todo-badge-wrapper.d-flex
+            - if board.public
+              %span.badge.badge-light-primary.badge-pill.ml-50
+                Public
+            - else
+              %span.badge.badge-light-success.badge-pill.ml-50
+                Private
+            - if board.user.id == current_user.id
+              %span.badge.badge-light-warning.badge-pill.ml-50
+                My

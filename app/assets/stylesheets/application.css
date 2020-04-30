@@ -14,7 +14,7 @@
  *= require_self
  */
 
-   /* BEGIN: Theme CSS--;*/
+  /* BEGIN: Theme CSS--;*/
     @import "app-assets/css/bootstrap.css";
     @import "app-assets/css/bootstrap-extended.css";
     @import "app-assets/css/colors.css";
