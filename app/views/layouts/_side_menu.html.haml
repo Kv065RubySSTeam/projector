@@ -1,0 +1,22 @@
+.main-menu.menu-fixed.menu-light.menu-accordion.menu-shadow.expanded{"data-scroll-to-active" => "true"}
+  .navbar-header.expanded
+    .shadow-bottom
+    %ul.nav.navbar-nav.flex-row
+      %li.nav-item.mr-auto
+        %a.navbar-brand{:href => root_path}
+          %h2.brand-text.mb-0 Projector
+      %li.nav-item.nav-toggle
+        %a.nav-link.modern-nav-toggle.pr-0{"data-toggle" => "collapse"}
+          %i.bx.bx-x.d-block.d-xl-none.font-medium-4.primary
+          %i.toggle-icon.font-medium-4.d-none.d-xl-block.primary.bx.bx-disc{"data-ticon" => "bx-disc"}
+  .shadow-bottom
+  .main-menu-content.ps.ps--active-y
+    %ul#main-menu-navigation.navigation.navigation-main{"data-menu" => "menu-navigation"}
+      %li.nav-item
+        %a{:href => "#"}
+          %i.bx.bx-desktop
+          %span.menu-title Boards
+    .ps__rail-x
+      .ps__thumb-x{:tabindex => "0"}
+    .ps__rail-y
+      .ps__thumb-y{:tabindex => "0"}

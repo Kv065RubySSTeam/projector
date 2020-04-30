@@ -1,0 +1,42 @@
+.app-content.content
+  .content-wrapper
+    .content-body
+      / forgot password start
+      %section.row.flexbox-container
+        .col-xl-8.col-10
+          .card.bg-authentication.mb-0
+            .row.m-0
+              / left section-forgot password
+              .col-md-6.col-14.px-0
+                .card.disable-rounded-right.mb-0.p-2
+                  .card-header.pb-1
+                    .card-title
+                      %h4.text-center.mb-2 Forgot Password?
+                  .form-group.d-flex.justify-content-between.align-items-center.mb-2
+                    .text-left
+                      .ml-3.ml-md-2.mr-1
+                        = link_to "Log in", new_session_path(resource_name),     |
+                          class: "card-link btn btn-outline-primary text-nowrap" |
+                    .mr-3
+                      = link_to "Sign up", new_registration_path(resource_name), |
+                        class: "card-link btn btn-outline-primary text-nowrap"   |
+                  .card-content
+                    .card-body
+                      = form_for(resource, as: resource_name, url: password_path(resource_name), |
+                        html: { method: :post }, class: "mb-2") do |f|                           |
+                        = render "devise/shared/error_messages", resource: resource
+                        .field.form-group.mb-2
+                          = f.label :email, class: "text-bold-600"
+                          = f.email_field :email, autofocus: true, autocomplete: "email",              |
+                            class: "form-control", id: "exampleInputEmailPhone1", placeholder: "Email" |
+                        .actions
+                          = f.submit "Send me instructions",                      |
+                            class: "btn btn-primary glow position-relative w-100" |
+                      %hr/
+                      .text-center.mb-2
+                        %small.text-muted
+                          = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)
+              / right section image
+              .col-md-6.d-md-block.d-none.text-center.align-self-center
+                %img.img-fluid{:alt => "branding logo", :src => "/images/forgot-password.png", :width => "300"}/
+      / forgot password ends
