@@ -24,4 +24,15 @@ class Board < ApplicationRecord
     end
   end
   self.per_page = 10
+
+  scope :sorting, ->(sorting) do
+    case sorting
+    when "descending"
+      order(created_at: :desc)
+    when "ascending"
+      order(created_at: :asc)
+    else
+      all
+    end
+  end
 end

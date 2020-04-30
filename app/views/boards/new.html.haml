@@ -1,3 +1,24 @@
-%h1 New board
-	
-= render 'form', board: @board
+.row.justify-content-md-center.mt-4
+  .col-lg-8
+    .card
+      .card-header
+        %h4.card-title Create board
+      .card-content
+        .card-body
+          .row
+            .col
+              = form_with(model: @board, class: "form-group", local: true) do |f|
+                = render "shared/errors", object: @board
+                = f.label :title
+                = f.text_field :title, class: "form-control", placeholder: "Enter title"
+                = f.label :description
+                = f.text_area :description, class: "form-control", id: "basicTextarea", rows: "3", placeholder: "Enter description"
+                %li.d-inline-block.mr-2.mb-1
+                  .radio
+                    = f.radio_button :public, false, checked: true
+                    = f.label :public, 'Private', value: false
+                %li.d-inline-block.mr-2.mb-1
+                  .radio
+                    = f.radio_button :public, true
+                    = f.label :public, 'Public', value: true
+                = f.submit "Create board", class: "btn btn-primary glow position-relative w-100"

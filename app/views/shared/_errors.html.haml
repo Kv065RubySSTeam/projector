@@ -1,0 +1,10 @@
+- if object.errors.any?
+  %section.errors
+    %b.text-danger
+      Form could not be saved.
+      %br/
+      Please correct the following
+      \#{pluralize(object.errors.size, "error")}:
+    %ul
+      - object.errors.full_messages.each do |message|
+        %li= message
