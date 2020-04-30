@@ -29,8 +29,10 @@ gem 'aws-sdk-s3', require: false
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
-gem 'will_paginate'
 gem 'devise'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap4', '~> 0.2.2'
+
 gem 'haml'
 
 group :development, :test do
@@ -47,8 +49,9 @@ group :development do
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 
-  gem "letter_opener"
-  gem "haml-rails", "~> 2.0"
+  gem 'haml-rails', '~> 2.0'
+  gem 'letter_opener'
+  gem 'rubocop', require: false
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
