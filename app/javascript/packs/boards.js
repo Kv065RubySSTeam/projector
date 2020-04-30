@@ -1,0 +1,1 @@
+require('frest/app-assets/vendors/js/ui/jquery.sticky.js')
