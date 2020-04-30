@@ -1,0 +1,13 @@
+/* // Place all the styles related to the Boards controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/ */
+
+
+/* // <!-- BEGIN: Vendor CSS--> */
+@import "app-assets/vendors/css/vendors.min.css";
+/* 
+// <!-- BEGIN: Page CSS--> */
+@import "app-assets/css/core/menu/menu-types/horizontal-menu.css";
+
+/* <!-- BEGIN: Custom CSS--> */
+@import "assets/css/style.css";
