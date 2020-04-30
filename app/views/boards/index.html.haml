@@ -1,18 +1,66 @@
-= link_to 'All boards', boards_path
-= link_to 'My boards', filter: 'my'
-= link_to 'Private boards', filter: 'private'
-= link_to 'Public boards', filter: 'public'
-
-%h1 Listing Boards
-= link_to 'New board', new_board_path
-
-= form_with(url: boards_path, method: "get", local: true) do
-  = label_tag :search, "Search for"
-  = text_field_tag :search
-  = hidden_field_tag(:filter, params[:filter])
-  = submit_tag "Search"
-
-%h2 Boards
-= will_paginate(@boards)
-= render 'board', boards: @boards
-= will_paginate(@boards)
+.app-content.content
+  .content-area-wrapper
+    .sidebar-left
+      .sidebar
+        .todo-sidebar.d-flex
+          .todo-app-menu
+            .form-group.text-center.add-task
+              /new board button
+              %button.btn.btn-primary.add-task-btn.btn-block.my-1{:type => "button"}
+                %i.bx.bx-plus
+                %span
+                  = link_to "Add New Board", new_board_path, class: "text-white"
+            /sidebar list start
+            .sidebar-menu-list
+              .list-group
+                = link_to 'All boards', boards_path, class: "fonticon-wrap.mr-50"
+              %label.filter-label.mt-2.mb-1.pt-25 Filters
+              .list-group
+                = link_to filter: 'my', class: "list-group-item.border-0" do
+                  %span
+                    My boards
+                  %span.bullet.bullet-sm.bullet-warning
+                = link_to filter: 'private', class: "list-group-item.border-0" do
+                  %span
+                    Private boards
+                  %span.bullet.bullet-sm.bullet-success
+                = link_to filter: 'public', class: "list-group-item.border-0" do
+                  %span
+                    Public boards
+                  %span.bullet.bullet-sm.bullet-primary
+            /sidebar list end
+    /righht part
+    .content-right
+      .content-overlay
+      .content-wrapper
+        .content-header.row
+        .content-body
+          .app-content-overlay
+          .todo-app-area
+            .todo-app-list-wrapper
+              .todo-app-list
+                .todo-fixed-search.d-flex.justify-content-between.align-items-center
+                  .sidebar-toggle.d-block.d-lg-none
+                    %i.bx.bx-menu
+                  /Search bar
+                  %fieldset.form-group.position-relative.has-icon-left.m-0.flex-grow-1
+                    = form_with(url: boards_path, method: "get", local: true) do
+                      = text_field_tag :search, "", class: "form-control todo-search", id: "todo-search"
+                      = hidden_field_tag(:filter, params[:filter])
+                      = hidden_field_tag(:sorting, params[:sorting])
+                    .form-control-position
+                      %i.bx.bx-search
+                  /Sort
+                  .todo-sort.dropdown.mr-1
+                    %button#sortDropdown.btn.dropdown-toggle.sorting{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+                      %i.bx.bx-filter
+                      %span Sort
+                    .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "sortDropdown"}
+                      .dropdown-item.ascending
+                        = link_to 'Ascending', sorting: 'ascending'
+                      .dropdown-item.descending
+                        = link_to 'Descending', sorting: 'descending'
+                .todo-task-list.list-group.ps.ps--active-y
+                  = will_paginate(@boards)
+                  %ul#todo-task-list-drag.todo-task-list-wrapper.list-unstyled
+                    = render 'board', boards: @boards, class: "todo-item"

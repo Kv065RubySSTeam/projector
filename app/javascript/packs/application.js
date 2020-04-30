@@ -28,11 +28,3 @@ require('frest/app-assets/js/core/app-menu.js')
 require('frest/app-assets/js/core/app.js')
 require('frest/app-assets/js/scripts/components.js')
 require('frest/app-assets/js/scripts/footer.js')
-
-//For boards
-// require('frest/app-assets/vendors/js/ui/jquery.sticky.js')
-// require('frest/app-assets/vendors/js/jkanban/jkanban.min.js')
-// require('frest/app-assets/vendors/js/editors/quill/quill.min.js')
-// require('frest/app-assets/vendors/js/pickers/pickadate/picker.js')
-// require('frest/app-assets/vendors/js/pickers/pickadate/picker.date.js')
-// require('frest/app-assets/js/scripts/pages/app-kanban_1.js')
