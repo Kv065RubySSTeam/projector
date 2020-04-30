@@ -1,48 +1,46 @@
-.app-content.content
-  .content-wrapper
-    .content-body
-      / register section starts
-      %section.row.flexbox-container
-        .col-xl-8.col-10
-          .card.bg-authentication.mb-0
-            .row.m-0
-              / register section left
-              .col-md-6.col-12.px-0
-                .card.disable-rounded-right.mb-0.p-2.h-100.d-flex.justify-content-center
-                  .card-header.pb-1
-                    .card-title
-                      %h4.text-center.mb-2 Sign Up
-                  .card-content
-                    .card-body
-                      = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
-                        = render "devise/shared/error_messages", resource: resource
-                        .field.form-group.mb-50
-                          = f.label 'Email address', class: "text-bold-600"
-                          %br/
-                          = f.email_field :email, autofocus: true, autocomplete: "email",                 |
-                            class: "form-control", id: "exampleInputEmail1", placeholder: "Email address" |
-                        .field.form-group
-                          = f.label :password, class: "text-bold-600"
-                          - if @minimum_password_length
-                            %em
-                              (#{@minimum_password_length} characters minimum)
-                          = f.password_field :password, autocomplete: "new-password",                   |
-                            class: "form-control", id: "exampleInputPassword1", placeholder: "Password" |
-                        .field.form-group
-                          = f.label :password_confirmation, class: "text-bold-600"
-                          = f.password_field :password_confirmation, autocomplete: "new-password",                   |
-                            class: "form-control", id: "exampleInputPassword1", placeholder: "Password confirmation" |
-                        .actions
-                          = f.submit "Sign up", class: "btn btn-primary glow position-relative w-100"
-                      %hr/
-                      .text-center
-                        %small.mr-25
-                          Already have an account?
-                          \#{link_to "Log in", new_session_path(resource_name)}
-                      .text-center
-                        %small.mr-25
-                          = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)
-              / image section right
-              .col-md-6.d-md-block.d-none.text-center.align-self-center.p-3
-                %img.img-fluid{:alt => "branding logo", :src => "/images/register.png"}/
-      / register section endss
+.content-body
+  / register section starts
+  %section.row.flexbox-container
+    .col-xl-8.col-10
+      .card.bg-authentication.mb-0
+        .row.m-0
+          / register section left
+          .col-md-6.col-12.px-0
+            .card.disable-rounded-right.mb-0.p-2.h-100.d-flex.justify-content-center
+              .card-header.pb-1
+                .card-title
+                  %h4.text-center.mb-2 Sign Up
+              .card-content
+                .card-body
+                  = form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+                    = render "devise/shared/error_messages", resource: resource
+                    .field.form-group.mb-50
+                      = f.label 'Email address', class: "text-bold-600"
+                      %br/
+                      = f.email_field :email, autofocus: true, autocomplete: "email",                 |
+                        class: "form-control", id: "exampleInputEmail1", placeholder: "Email address" |
+                    .field.form-group
+                      = f.label :password, class: "text-bold-600"
+                      - if @minimum_password_length
+                        %em
+                          (#{@minimum_password_length} characters minimum)
+                      = f.password_field :password, autocomplete: "new-password",                   |
+                        class: "form-control", id: "exampleInputPassword1", placeholder: "Password" |
+                    .field.form-group
+                      = f.label :password_confirmation, class: "text-bold-600"
+                      = f.password_field :password_confirmation, autocomplete: "new-password",                   |
+                        class: "form-control", id: "exampleInputPassword1", placeholder: "Password confirmation" |
+                    .actions
+                      = f.submit "Sign up", class: "btn btn-primary glow position-relative w-100"
+                  %hr/
+                  .text-center
+                    %small.mr-25
+                      Already have an account?
+                      \#{link_to "Log in", new_session_path(resource_name)}
+                  .text-center
+                    %small.mr-25
+                      = link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name)
+          / image section right
+          .col-md-6.d-md-block.d-none.text-center.align-self-center.p-3
+            %img.img-fluid{:alt => "branding logo", :src => "/images/register.png"}/
+  / register section endss
