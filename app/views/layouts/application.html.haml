@@ -18,6 +18,7 @@
           .alert.alert-info
             = msg
         = yield
+        = javascript_pack_tag "error_fields.js"
     .sidenav-overlay
     .drag-target
     = render 'layouts/footer'
