@@ -1,5 +1,3 @@
-//Theme components
-require('frest/app-assets/vendors/js/ui/jquery.sticky.js')
 //For boards
 require('frest/app-assets/vendors/js/ui/jquery.sticky.js')
 require('frest/app-assets/vendors/js/editors/quill/quill.min.js')
