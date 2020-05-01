@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
   before_action :find_board!
   before_action :find_user!
-  before_action :board_admin!
+  before_action :authorize!
 
   def create
     @board.users << @user
@@ -10,8 +10,8 @@ class MembershipsController < ApplicationController
   end
 
   def admin
-    if @user.errors.empty?
-      @user.memberships.update(admin: true)
+    @user.memberships.update(admin: true)
+    if @user.memberships.errors.empty?
       flash[:success] = 'Success'
     else
       flash[:danger] = 'Error'
@@ -21,14 +21,15 @@ class MembershipsController < ApplicationController
   private
 
   def find_board!
-    @board = Board.find(params[:board_id])
+    @board = Board.find(params[:id])
   end
 
   def find_user!
     @user = User.find(params[:user_id])
   end
 
-  def board_admin!
+  def authorize!
+    # 401 Error - check
     current_user.administrated_boards.exists?(@board.id)
   end
 end
