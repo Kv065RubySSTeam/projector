@@ -5,6 +5,10 @@ class MembershipsController < ApplicationController
 
   def create
     @board.users << @user
+    # respond_to do |format|
+    #   binding pry
+    #   format.js
+    # end
   rescue ActiveRecord::RecordNotSaved => e
     flash[:danger] = e.to_s
   end

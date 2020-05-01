@@ -1,32 +1,34 @@
 = javascript_pack_tag 'auto', 'data-turbolinks-track': 'reload'
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
--# = form_tag users_index_url, method: :get, class: "navbar-form navbar-right", role: "search" do
--#     = text_field_tag :search, params[:search], id: 'autoComplete', class: "form-control"
--#     = submit_tag "Search", name: nil, class: "btn btn-default"
+
+.bookmark-input.search-input
+    .bookmark-input-icon
+        %i.bx.bx-search.primary
+    %input.form-control.input{"data-search" => "template-search", :tabindex => "0", :type => "text", id: "autoComplete"}/
+    %input{:type=>"hidden", :value=>memberships_create_path(@board), :id=> "addMembershipURL"}
+    %ul.search-list.show#show-users
 
 -# %input{id: 'search_users', users_index_path ,method: :post, data_behaivor: 'autocomplete', placeholder: 'Search'}
-%input{id: "autoComplete"}
+-# .search-input
+-#     %i.bx.bx-search.primary
+-#     %div#destination
 -# %button.btn.btn-primary.primary-button{ type: 'submit' } Submit
 
 -# memberships
 -# = debug
 -# = link_to 'Add', memberships_create_path(@board, user_id: 4), method: :post
 
-.selection
-
-
-
-= form_tag memberships_create_path(@board), :method => :post do
-    = text_field_tag "selection"
-    = submit_tag "Add"
+-# %input{id: "autoComplete"}
+-# %input{:type=>"hidden", :value=>memberships_create_path(@board), :id=> "addMembershipURL"}
+-# .selection#selection
 
 %h1 Board
 %p= @board.title
 %p= @board.description
 %p= @board.public
 
-- @board.users.each do |user|
-    %p Email:
-    =user.email
+#user-section
+    - @board.users.each do |user|
+        %p Email:
+        =user.email
 
 <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>

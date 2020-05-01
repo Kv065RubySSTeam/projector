@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   get 'users/index'
-  post '/boards/:id/memberships/' => 'memberships#create', as: :memberships_create
+  get '/boards/:id/memberships/' => 'memberships#create', as: :memberships_create
 
   resources :boards do
     # resources :memberships, only: %i[create]
