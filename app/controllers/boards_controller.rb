@@ -1,6 +1,5 @@
 class BoardsController < ApplicationController
   before_action :find_board!, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
 
   def index
     @boards = Board.filter(params[:filter], current_user)
