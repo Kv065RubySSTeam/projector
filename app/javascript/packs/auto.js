@@ -72,12 +72,15 @@ $(function () {
             // Concole log autoComplete data membership
             // Send request to server to add user
             let url = document.getElementById("addMembershipURL").value;
-            fetch(url + `?user_id=${selectedUserId}`
-            // {
-            //     method: 'GET',
-            //     // headers: { 'X-CSRF-Token': token },
-            //     body: '?user_id=' + `${selectedUserId}`
-            //   } 
+            fetch(url, 
+            {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'X-CSRF-Token': token 
+                },
+                body: `{"user_id": ${selectedUserId}}`
+              } 
             ).then((response) => {
                 if(response.ok) {
                     alert("User was successfully added!");
