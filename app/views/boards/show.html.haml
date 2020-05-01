@@ -15,22 +15,14 @@
     = submit_tag "Search", name: nil, class: "btn btn-default"
 = javascript_pack_tag 'auto', 'data-turbolinks-track': 'reload'
 
-.bookmark-input.search-input
-    .bookmark-input-icon
-        %i.bx.bx-search.primary
-    %input.form-control.input{"data-search" => "template-search", :tabindex => "0", :type => "text", id: "autoComplete"}/
-    %input{:type=>"hidden", :value=>memberships_create_path(@board), :id=> "addMembershipURL"}
-    %ul.search-list.show#show-users
+.container
+    .row.justify-content-md-center
+        .col-md-6
+            .input-group.input-group-sm
+                %input.form-control{"data-search" => "template-search", :tabindex => "0", :type => "text", id: "autoComplete"}/
+                %input{type: "hidden", value: memberships_create_path(@board), id: "addMembershipURL"}
+            %ul.list-group.search-list.show#show-users
 
-    -# Search bar
-    %fieldset.form-group.position-relative.has-icon-left.m-0.flex-grow-1
-        = form_with(url: boards_path, method: "get", local: true) do
-            = text_field_tag :search, "", class: "form-control todo-search", id: "todo-search"
-        = hidden_field_tag(:filter, params[:filter])
-        = hidden_field_tag(:sorting, params[:sorting])
-    .form-control-position
-    %i.bx.bx-search
-    
 %h1 Board
 %p= @board.title
 %p= @board.description

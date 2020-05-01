@@ -49,13 +49,14 @@ $(function () {
         },
         resultItem: {
             content: (data, source) => {
+                source.setAttribute("class", "list-group-item list-group-item-action")
                 source.innerHTML = data.match;
             },
             element: "li"
         },
         noResults: () => {
             const result = document.createElement("li");
-            result.setAttribute("class", "no_result");
+            result.setAttribute("class", "list-group-item");
             result.innerHTML = "No Results";
             document.querySelector("#autoComplete_list").appendChild(result);
         },
