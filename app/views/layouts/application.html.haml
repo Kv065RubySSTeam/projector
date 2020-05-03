@@ -8,7 +8,7 @@
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   %body.vertical-layout.vertical-menu-modern.2-columns.navbar-sticky.footer-static.menu-expanded.pace-done{"data-col" => "2-columns", "data-menu" => "vertical-menu-modern", "data-open" => "click"}
-    - if user_signed_in?
+    - if user_signed_in? && not_edit_page
       = render 'layouts/header'
       = render 'layouts/side_menu'
     .app-content.content

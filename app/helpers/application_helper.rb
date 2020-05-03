@@ -7,4 +7,7 @@ module ApplicationHelper
     when :alert then "alert alert-error"
     end
   end
+  def not_edit_page
+    request.fullpath != '/users/edit'
+  end
 end
