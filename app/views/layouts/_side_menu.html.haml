@@ -13,9 +13,10 @@
   .main-menu-content.ps.ps--active-y
     %ul#main-menu-navigation.navigation.navigation-main{"data-menu" => "menu-navigation"}
       %li.nav-item
-        %a{:href => "#"}
-          %i.bx.bx-desktop
-          %span.menu-title Boards
+        = link_to boards_path,   |
+          class: "menu-title" do |
+          %i.bx.bx-desktop>
+          Boards
     .ps__rail-x
       .ps__thumb-x{:tabindex => "0"}
     .ps__rail-y
