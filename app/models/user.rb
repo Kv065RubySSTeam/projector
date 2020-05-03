@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  before_save :capitalize_first_last_name
+
   has_many :boards, dependent: :nullify
   has_one_attached :avatar
 
