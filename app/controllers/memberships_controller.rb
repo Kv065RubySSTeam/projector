@@ -1,10 +1,10 @@
 class MembershipsController < ApplicationController
-  before_action :get_board
-  before_action :check_user_permission
-  before_action :get_user
+  before_action :get_board!
+  before_action :get_user!
+  before_action :check_user_permission!
 
   def create
-    unless @board.memberships.exists?(user: @user)
+    if !@board.memberships.exists?(user: @user)
       @board.users << @user
       flash[:success] = 'New user is added!'
     else
@@ -13,7 +13,7 @@ class MembershipsController < ApplicationController
     end
   end
 
-  def update
+  def admin
     if @board.memberships.exists?(user: @user, admin: false)
       @user.memberships.update(admin: true)
       flash[:success] = 'Success'
@@ -24,15 +24,15 @@ class MembershipsController < ApplicationController
 
   private
 
-  def get_board
+  def get_board!
     @board = Board.find(params[:board_id])
   end
 
-  def get_user
+  def get_user!
     @user = User.find(params[:user_id])
   end
 
-  def check_user_permission
+  def check_user_permission!
     if current_user.memberships.exists?(board_id: @board.id, admin: true)
       flash[:success] = 'Success'
     else
