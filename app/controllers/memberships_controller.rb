@@ -5,17 +5,13 @@ class MembershipsController < ApplicationController
 
   def create
     @board.users << @user
-    # respond_to do |format|
-    #   binding pry
-    #   format.js
-    # end
   rescue ActiveRecord::RecordNotSaved => e
     flash[:danger] = e.to_s
   end
 
   def admin
     @user.memberships.update(admin: true)
-    if @user.memberships.errors.empty?
+    if @user.memberships.empty?
       flash[:success] = 'Success'
     else
       flash[:danger] = 'Error'
