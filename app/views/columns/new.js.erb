@@ -1,0 +1,12 @@
+// cheack if we have eventListener at the ajax and remove them then add new one 
+$("#add-kanban").off('ajax:success').on('ajax:success', function() {
+  $.ajax({
+    url: <%= @board.id %>+"/columns",
+    method: "POST",
+    headers: { 'X-CSRF-Token': document.getElementsByName( "csrf-token" )[0].content },
+    data: { "column[name]": "Default Title",
+     "column[board_id]": <%= @board.id %>,
+     "column[position]": 1
+     }
+  });
+});
