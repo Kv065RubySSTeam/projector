@@ -5,16 +5,17 @@ class MembershipsController < ApplicationController
 
   def create
     @board.users << @user
-  rescue ActiveRecord::RecordNotSaved => e
-    flash[:danger] = e.to_s
+    flash[:success] = 'Membership Success'
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:danger] = e.message
   end
 
   def admin
     @user.memberships.update(admin: true)
     if @user.memberships.empty?
-      flash[:success] = 'Success'
+      flash[:success] = 'Admin Success'
     else
-      flash[:danger] = 'Error'
+      flash[:danger] = 'Admin Error'
     end
   end
 
@@ -29,7 +30,8 @@ class MembershipsController < ApplicationController
   end
 
   def authorize!
-    # 401 Error - check
-    current_user.administrated_boards.exists?(@board.id)
+    unless current_user.administrated_boards.exists?(@board.id)
+      render file: "public/401.html", status: :unauthorized
+    end
   end
 end
