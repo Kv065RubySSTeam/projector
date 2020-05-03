@@ -1,0 +1,17 @@
+.kanban-board{"data-id" => "kanban-board-#{(column.id)}", "data-order" => "#{(column.id)}"}
+  %header.kanban-board-header
+    .kanban-title-board.line-ellipsis{:contenteditable => "true"}= column.name
+    %button.kanban-title-button.btn.btn-default.btn-xs
+      + Add New Item
+    .dropdown
+      #dropdownMenuButton.dropdown-toggle.cursor-pointer{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :role => "button"}
+        %i.bx.bx-dots-vertical-rounded
+      .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "dropdownMenuButton", "x-placement" => "bottom-end"}
+        %a.dropdown-item{:href => "#"}
+          %i.bx.bx-link.mr-50>
+          Copy Link
+        %a#kanban-delete.dropdown-item.kanban-delete{:href => "#"}
+          %i.bx.bx-trash.mr-50>
+          Delete
+  %main.kanban-drag
+  %footer

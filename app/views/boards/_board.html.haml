@@ -1,6 +1,6 @@
 - boards.each do |board|
   %li.todo-item
-    = link_to board_path(board) do
+    = link_to board_path(board), :id => 'new_board_link' do
       .todo-title-wrapper.d-flex.justify-content-sm-between.justify-content-end.align-items-center
         .todo-title-area.d-flex
           %p.todo-title.mx-50.m-0.truncate
