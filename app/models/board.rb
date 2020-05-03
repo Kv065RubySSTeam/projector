@@ -24,4 +24,7 @@ class Board < ApplicationRecord
     end
   end
   self.per_page = 10
+  has_many :memberships
+  has_many :memberships, dependent: :destroy
+  has_many :users, through: :memberships
 end

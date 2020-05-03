@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_28_125314) do
+ActiveRecord::Schema.define(version: 2020_04_27_164624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,13 +18,21 @@ ActiveRecord::Schema.define(version: 2020_04_28_125314) do
   create_table "boards", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.boolean "public", default: false
-    t.bigint "user_id"
+    t.boolean "public"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["public"], name: "index_boards_on_public"
     t.index ["title", "description"], name: "index_boards_on_title_and_description", unique: true
     t.index ["user_id"], name: "index_boards_on_user_id"
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "board_id", null: false
+    t.bigint "user_id", null: false
+    t.boolean "admin", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["board_id", "user_id"], name: "index_memberships_on_board_id_and_user_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -43,5 +51,6 @@ ActiveRecord::Schema.define(version: 2020_04_28_125314) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "boards", "users"
+  add_foreign_key "memberships", "boards"
+  add_foreign_key "memberships", "users"
 end
