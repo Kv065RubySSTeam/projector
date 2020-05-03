@@ -13,12 +13,40 @@
 = form_tag users_index_url, method: :get, class: "navbar-form navbar-right", role: "search" do
     = text_field_tag :search, params[:search], class: "form-control"
     = submit_tag "Search", name: nil, class: "btn btn-default"
+= javascript_pack_tag 'auto', 'data-turbolinks-track': 'reload'
+
+.container
+    .row.justify-content-md-center
+        .col-md-6
+            .input-group.input-group-sm
+                %input.form-control{"data-search" => "template-search", :tabindex => "0", :type => "text", id: "autoComplete"}/
+                %input{type: "hidden", value: memberships_create_path(@board), id: "addMembershipURL"}
+            %ul.list-group.search-list.show#show-users
+
+#flash-box
+    - flash.each do |name, message|
+        .toast-container.toast-top-right#toast-container
+            .toast.toast-error{"aria-live" => "assertive", :style => "display: block;"}
+                .toast-title= name
+                .toast-message= message
+
+-# #flash-box.toast-container.toast-top-right
+-#     .toast.toast-error{"aria-live": "assertive", style: "display: block;"}
+-#         .toast.toast-error#flash-box
+-#             - flash.each do |name, msg|
+-#                 .toast-tile= name
+-#                 .toast-message= msg
 
 %h1 Board
 %p= @board.title
 %p= @board.description
 %p= @board.public
 
-- @board.users.each do |user|
-    %p Email:
-    =user.email
+#user-section
+    - @board.users.each do |user|
+        %p= user.email
+        - unless user.administrated_boards.exists?(@board.id)
+            = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: 'btn btn-primary', id: 'add_admin', method: :put
+
+
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script> 
