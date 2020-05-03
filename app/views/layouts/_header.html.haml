@@ -16,7 +16,7 @@
                 - if user_signed_in?
                   %span.user-name= current_user.email
               %span
-                %img.round{:alt => "avatar", :height => "40", :src => "", :width => "40"}/
+                =image_tag current_user.avatar, class: "round", alt: "avatar", height: "40", width: "40"
             .dropdown-menu.dropdown-menu-right.pb-0
               %a.dropdown-item{:href => edit_user_registration_path}
                 %i.bx.bx-user.mr-50

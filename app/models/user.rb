@@ -10,8 +10,6 @@ class User < ApplicationRecord
                   format: { with: EMAIL_REGEX }
   validates :first_name, length: { within: 3..100 }
   validates :last_name, length: { within: 3..100 }
-  # validates :password, length: { within: 6..255 },
-  #                 format: { with: PASSWORD_REGEX }
   validate :correct_avatar_type
 
   devise :database_authenticatable, 
