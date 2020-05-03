@@ -46,3 +46,4 @@ require('javascript/packs/error_fields.js');
 // require('frest/app-assets/vendors/js/pickers/pickadate/picker.js')
 // require('frest/app-assets/vendors/js/pickers/pickadate/picker.date.js')
 // require('frest/app-assets/js/scripts/pages/app-kanban_1.js')
+require('frest/app-assets/js/scripts/extensions/toastr.js')

@@ -1,6 +1,6 @@
 $(function () {
     const token = $('meta[name="csrf-token"]').attr('content');
-
+    
     const autoCompletejs = new autoComplete({
         data: {
             src: async () => {
@@ -8,10 +8,10 @@ $(function () {
                 // Fetch External Data Source
                 const source = await fetch(
                     `/users/index.json?search=${query}`
-                );
-                const data = await source.json();
-                // Post loading placeholder text
-                // document
+                    );
+                    const data = await source.json();
+                    // Post loading placeholder text
+                    // document
                 //     .querySelector("#autoComplete")
                 //     .setAttribute("placeholder", "Enter the user email here");
                 // Returns Fetched data
@@ -36,6 +36,7 @@ $(function () {
             render: true,
             container: source => {
                 source.setAttribute("id", "autoComplete_list");
+                source.setAttribute("style", "position:absolute; width: 95%");
             },
             destination: document.querySelector("#show-users"),
             position: "afterbegin",
@@ -73,13 +74,18 @@ $(function () {
                 },
                 body: `{"user_id": ${selectedUserId}}`
               } 
-            ).then((response) => {
-                if(response.ok) {
-                    $("#user-section").load(" #user-section > *");
-                } else {
+              ).then((response) => {
+                  if(response.ok) {
+                      $("#user-section").load(" #user-section > *");
+                      $("#flash-box").load(" #flash-box > *");
+                    } else {
                     console.log("Failed to add user to the board. Details: " +  response.statusText + "\n\n" + JSON.stringify(membership.selection.value));
                 }
-              });
+            });
         }
     });
 });
+
+// document.getElementById('add_admin').addEventListener('click', () => {
+//     document.getElementById('hide-b').style.display = "none";
+// });
