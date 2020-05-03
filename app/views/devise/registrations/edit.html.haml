@@ -30,7 +30,7 @@
                         = f.label :last_name, class: "text-bold-600"
                         = f.text_field :last_name, class: "form-control", placeholder: "Last name"
                     .field.form-group.mb-50
-                      = f.label :password, class: "text-bold-600" 
+                      = f.label :password, class: "text-bold-600"
                       %br/
                       %em.small (enter to change password, min #{@minimum_password_length} characters)
                       = f.password_field :password, autocomplete: "new-password",                   |
@@ -38,16 +38,17 @@
                     .field.form-group.mb-50
                       = f.label :password_confirmation, class: "text-bold-600"
                       = f.password_field :password_confirmation, autocomplete: "new-password",                   |
-                        class: "form-control", id: "exampleInputPassword1", placeholder: "Password confirmation" |     
+                        class: "form-control", id: "exampleInputPassword1", placeholder: "Password confirmation" |
                     .field.form-group.mb-50
-                      = f.label :current_password, class: "text-bold-600" 
+                      = f.label :current_password, class: "text-bold-600"
                       %br/
                       %em.small (enter to confirm changes)
                       = f.password_field :current_password, autocomplete: "current-password",                   |
-                        class: "form-control", id: "exampleInputPassword1", placeholder: "Current password" |                 
+                        class: "form-control", id: "exampleInputPassword1", placeholder: "Current password" |
                     .field.form-group.mb-50
-                      = f.label "Choose avatar", class: "text-bold-600 mb-50"
-                      = f.file_field :avatar, class: "form-control-file"
+                      .custom-file
+                        = f.file_field :avatar, class: "custom-file-input", id: "inputAvatar"
+                        %label.custom-file-label{:for => "inputAvatar"} Choose file
                     .actions.mt-1
                       = f.submit "Update", class: "btn btn-primary glow position-relative w-100"
                   %hr/
@@ -57,6 +58,6 @@
 
           / image section right
           .col-md-6.d-md-block.d-none.text-center.align-self-center.p-3
-            %img.img-fluid{:alt => "branding logo", :src => "/images/update-page.png"}/       
+            %img.img-fluid{:alt => "branding logo", :src => "/images/update-page.png"}/
   / edit section ends
-
+= javascript_pack_tag "input_fields.js"
