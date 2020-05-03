@@ -84,9 +84,16 @@ $(function () {
               } 
             ).then((response) => {
                 if(response.ok) {
-                    alert("User was successfully added!");
+                    // alert("User was successfully added!" + `Details: ` + JSON.stringify(membership.selection.value));
+                    // const foundUser = document.createElement("p");
+                    // const addAdminButton = document.createElement("button");
+                    // document.getElementById("user-section").appendChild(foundUser);
+                    // foundUser.appendChild(addAdminButton);
+                    // foundUser.innerHTML = membership.selection.value.email;
+                    // $("#user-section").append("= escape_javascript(render @board.users)");
+
                 } else {
-                    alert("Failed to add user to the board. Details: " +  response.statusText);
+                    alert("Failed to add user to the board. Details: " +  response.statusText + "\n\n" + JSON.stringify(membership.selection.value));
                 }
               });
         }

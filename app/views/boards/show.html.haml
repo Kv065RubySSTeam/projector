@@ -28,9 +28,13 @@
 %p= @board.description
 %p= @board.public
 
-#user-section
-    - @board.users.each do |user|
-        %p Email:
-        =user.email
+- @board.users.each do |user|
+    %p= user.email
+    %p= user.administrated_boards.exists?
+    = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: 'btn btn-primary', method: :put
 
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script>
+:javascript
+    console.log('Hello!!!!');
+
+
+<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script> 
