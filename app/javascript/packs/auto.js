@@ -4,12 +4,6 @@ $(function () {
     const autoCompletejs = new autoComplete({
         data: {
             src: async () => {
-                // Loading placeholder text
-                // document
-                //     .querySelector("#autoComplete")
-                //     .setAttribute("placeholder", "Loading...");
-
-                // Read search string entered by user
                 const query = document.querySelector("#autoComplete").value;
                 // Fetch External Data Source
                 const source = await fetch(
@@ -67,9 +61,6 @@ $(function () {
             // Clear Input
             document.querySelector("#autoComplete").value = "";
             // Change placeholder with the selected value
-            // document
-            //     .querySelector("#autoComplete")
-            //     .setAttribute("placeholder", selection);
             // Concole log autoComplete data membership
             // Send request to server to add user
             let url = document.getElementById("addMembershipURL").value;
@@ -84,16 +75,9 @@ $(function () {
               } 
             ).then((response) => {
                 if(response.ok) {
-                    // alert("User was successfully added!" + `Details: ` + JSON.stringify(membership.selection.value));
-                    // const foundUser = document.createElement("p");
-                    // const addAdminButton = document.createElement("button");
-                    // document.getElementById("user-section").appendChild(foundUser);
-                    // foundUser.appendChild(addAdminButton);
-                    // foundUser.innerHTML = membership.selection.value.email;
-                    // $("#user-section").append("= escape_javascript(render @board.users)");
-
+                    $("#user-section").load(" #user-section > *");
                 } else {
-                    alert("Failed to add user to the board. Details: " +  response.statusText + "\n\n" + JSON.stringify(membership.selection.value));
+                    console.log("Failed to add user to the board. Details: " +  response.statusText + "\n\n" + JSON.stringify(membership.selection.value));
                 }
               });
         }

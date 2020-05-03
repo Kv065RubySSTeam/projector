@@ -28,10 +28,11 @@
 %p= @board.description
 %p= @board.public
 
-- @board.users.each do |user|
-    %p= user.email
-    %p= user.administrated_boards.exists?
-    = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: 'btn btn-primary', method: :put
+#user-section
+    - @board.users.each do |user|
+        %p= user.email
+        - unless user.administrated_boards.exists?(@board.id)
+            = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: 'btn btn-primary', method: :put
 
 :javascript
     console.log('Hello!!!!');
