@@ -1,5 +1,6 @@
 class Board < ApplicationRecord
   belongs_to :user
+  has_many :columns
 
   validates :title, length: { within: 5..50 }
   validates :description, length: { within: 5..255 }
