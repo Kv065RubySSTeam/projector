@@ -1,34 +1,37 @@
 class MembershipsController < ApplicationController
   before_action :find_board!
   before_action :find_user!
-  before_action :board_admin!
+  before_action :authorize!
 
   def create
     @board.users << @user
-  rescue ActiveRecord::RecordNotSaved => e
-    flash[:danger] = e.to_s
+    flash[:success] = 'Membership Success'
+  rescue ActiveRecord::RecordInvalid => e
+    flash[:danger] = e.message
   end
 
   def admin
-    if @user.errors.empty?
-      @user.memberships.update(admin: true)
-      flash[:success] = 'Success'
+    @user.memberships.update(admin: true)
+    if @user.memberships.empty?
+      flash[:success] = 'Admin Success'
     else
-      flash[:danger] = 'Error'
+      flash[:danger] = 'Admin Error'
     end
   end
 
   private
 
   def find_board!
-    @board = Board.find(params[:board_id])
+    @board = Board.find(params[:id])
   end
 
   def find_user!
     @user = User.find(params[:user_id])
   end
 
-  def board_admin!
-    current_user.administrated_boards.exists?(@board.id)
+  def authorize!
+    unless current_user.administrated_boards.exists?(@board.id)
+      render file: "public/401.html", status: :unauthorized
+    end
   end
 end

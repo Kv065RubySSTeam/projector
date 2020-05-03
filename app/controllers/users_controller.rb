@@ -1,3 +1,9 @@
 class UsersController < ApplicationController
   def index
-    @user = User.search(params[:search])
+    @users = User.search(params[:search]).limit(10)
+
+    respond_to do |foramt|
+      foramt.json { render json: @users }
+    end
+  end
+end
