@@ -23,3 +23,8 @@ function updateColumn (columnTitle) {
 $("#kanban-wrapper").find('.dropdown:last').click(function() {
   $(this).toggleClass('show');
 });
+
+$(".flashes").empty()
+             .append("<%= j render 'shared/flash' %>")
+             .children()
+             .fadeOut( 3000, function() {});

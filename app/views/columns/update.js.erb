@@ -1,1 +1,6 @@
 $('.kanban-container').append("<%= j render @column %>");
+
+$(".flashes").empty()
+             .append("<%= j render 'shared/flash' %>")
+             .children()
+             .fadeOut( 10000, function() {});
