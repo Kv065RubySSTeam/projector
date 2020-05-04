@@ -58,9 +58,9 @@
                         %span Sort
                       .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "sortDropdown"}
                         .dropdown-item.ascending
-                          = link_to 'Ascending', sorting: 'ascending'
+                          = link_to 'Ascending', sort: 'asc'
                         .dropdown-item.descending
-                          = link_to 'Descending', sorting: 'descending'
+                          = link_to 'Descending', sort: 'desc'
                   .todo-task-list.list-group.ps.ps--active-y
                     %br
                     = will_paginate(@boards)

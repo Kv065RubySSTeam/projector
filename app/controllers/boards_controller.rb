@@ -4,7 +4,7 @@ class BoardsController < ApplicationController
   def index
     @boards = Board.filter(params[:filter], current_user)
       .search(params[:search])
-      .sorting(params[:sorting])
+      .sorting(params[:sort])
       .paginate(page: params[:page])
   end
 
