@@ -1,18 +1,18 @@
 = javascript_pack_tag 'auto', 'data-turbolinks-track': 'reload'
+= stylesheet_link_tag 'memberships'
 
 .container
     .row.justify-content-md-center
         .col-md-6
             .input-group.input-group-sm
-                %input.form-control{"data-search" => "template-search", :tabindex => "0", :type => "text", id: "autoComplete"}/
+                %input.form-control{"data-search": "template-search", tabindex: "0", type: "text", id: "autoComplete"}/
                 %input{type: "hidden", value: memberships_create_path(@board), id: "addMembershipURL"}
             %ul.list-group.search-list.show#show-users
 
-#flash-box
+#flash-box            
     - flash.each do |name, message|
-        .toast-container.toast-top-right#toast-container
-            .toast.toast-error{"aria-live" => "assertive", :style => "display: block;"}
-                .toast-title= name
+        #toast-container#remove-toast.toast-container.toast-top-right
+            .toast{class: "toast-#{name}", "aria-live": "assertive", style: "display: block;" }
                 .toast-message= message
 
 -# #flash-box.toast-container.toast-top-right

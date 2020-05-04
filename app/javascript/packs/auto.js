@@ -78,6 +78,14 @@ $(function () {
                   if(response.ok) {
                       $("#user-section").load(" #user-section > *");
                       $("#flash-box").load(" #flash-box > *");
+                    } else if (response.status == 401) {
+                        // window.location.replace('/401');
+                        //// option 2
+                        response.text().then((body) => {
+                            document.open();
+                            document.write(body);
+                            document.close();
+                        })
                     } else {
                     console.log("Failed to add user to the board. Details: " +  response.statusText + "\n\n" + JSON.stringify(membership.selection.value));
                 }
@@ -85,7 +93,3 @@ $(function () {
         }
     });
 });
-
-// document.getElementById('add_admin').addEventListener('click', () => {
-//     document.getElementById('hide-b').style.display = "none";
-// });

@@ -7,7 +7,7 @@ class MembershipsController < ApplicationController
     @board.users << @user
     flash[:success] = 'Membership Success'
   rescue ActiveRecord::RecordInvalid => e
-    flash[:danger] = e.message
+    flash[:error] = e.message
   end
 
   def admin
@@ -15,7 +15,7 @@ class MembershipsController < ApplicationController
     if @user.memberships.empty?
       flash[:success] = 'Admin Success'
     else
-      flash[:danger] = 'Admin Error'
+      flash[:error] = 'Admin Error'
     end
   end
 
@@ -31,7 +31,7 @@ class MembershipsController < ApplicationController
 
   def authorize!
     unless current_user.administrated_boards.exists?(@board.id)
-      render file: "public/401.html", status: :unauthorized
+      render file: 'public/401.html', layout: true, status: 401
     end
   end
 end
