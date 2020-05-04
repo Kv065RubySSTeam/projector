@@ -24,10 +24,9 @@ class Board < ApplicationRecord
     end
   end
   scope :sorting, ->(sorting) do
-    case sorting
-    when "descending"
+    if sorting == "descending"
       order(created_at: :desc)
-    else "ascending"
+    else
       order(created_at: :asc)
     end
   end
