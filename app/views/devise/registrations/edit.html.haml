@@ -1,4 +1,4 @@
-.content-body.mt-2.col-10.mx-auto.mb-2
+.content-body.mt-2.col-sm-10.mx-auto.mb-2
   / edit section starts
   %section.row.flexbox-container
     .col-xl-12.col-12
@@ -34,17 +34,17 @@
                       %br/
                       %em.small (enter to change password, min #{@minimum_password_length} characters)
                       = f.password_field :password, autocomplete: "new-password",                   |
-                        class: "form-control", id: "exampleInputPassword1", placeholder: "Password" |
+                        class: "form-control", placeholder: "Password" |
                     .field.form-group.mb-50
                       = f.label :password_confirmation, class: "text-bold-600"
                       = f.password_field :password_confirmation, autocomplete: "new-password",                   |
-                        class: "form-control", id: "exampleInputPassword1", placeholder: "Password confirmation" |
+                        class: "form-control", placeholder: "Password confirmation" |
                     .field.form-group.mb-50
                       = f.label :current_password, class: "text-bold-600"
                       %br/
                       %em.small (enter to confirm changes)
                       = f.password_field :current_password, autocomplete: "current-password",                   |
-                        class: "form-control", id: "exampleInputPassword1", placeholder: "Current password" |
+                        class: "form-control",  placeholder: "Current password" |
                     .field.form-group.mb-50
                       .custom-file
                         = f.file_field :avatar, class: "custom-file-input", id: "inputAvatar"

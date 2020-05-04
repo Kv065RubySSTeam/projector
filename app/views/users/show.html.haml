@@ -1,11 +1,11 @@
-.card.col-10.mt-1.mx-auto
+.card.col-sm-10.mt-2.mx-auto
   .card-content
     .card-body
       .row
         .col-12
           .row
             .col-12.col-sm-3.text-center.mb-1.mb-sm-0
-              -if @user.avatar.attached? 
+              -if @user.avatar.attached?
                 = image_tag @user.avatar, class: "rounded",      |
                 height: "120", width: "120" |
               -else
