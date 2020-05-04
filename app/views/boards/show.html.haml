@@ -1,12 +1,15 @@
-%h2= @board.title
-
-%h3	Create by:
-= link_to @board.user.email, user_path(@board.user_id)
-
-%h3 Description:
-%p= @board.description
-= link_to 'Edit', edit_board_path(@board)
-= link_to 'Destroy', @board, method: :delete,
-                                  data: { confirm: "You sure?" }
-
-= link_to 'Back', boards_path
+.col-md-12
+  .card
+    %section#kanban-wrapper.pt-2.pb-2
+      .col-md-10
+        .btn-group{:role => "group"}
+          = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1"
+          = link_to 'Board owner', @board.user, class: "btn btn-outline-primary mb-1"
+          = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1"
+          = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1", data: { confirm: "You sure?" }
+        %h2
+          = @board.title
+        .divider.col-5
+          .divider-text Descripion
+        %p.card-text
+          = @board.description

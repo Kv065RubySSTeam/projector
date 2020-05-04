@@ -11,7 +11,7 @@ class Board < ApplicationRecord
   scope :user_boards, ->(user) { where(user_id: user.id) }
   scope :public_boards, -> { where(public: true) }
   scope :private_boards, -> { where(public: false) }
-  scope :filter, ->(filter,user) do
+  scope :filter, ->(filter, user) do
     case filter
     when "my"
       user_boards(user)
@@ -21,6 +21,13 @@ class Board < ApplicationRecord
       public_boards
     else
       all
+    end
+  end
+  scope :sorting, ->(sorting) do
+    if sorting == "descending"
+      order(created_at: :desc)
+    else
+      order(created_at: :asc)
     end
   end
   self.per_page = 10

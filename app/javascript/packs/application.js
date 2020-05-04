@@ -24,16 +24,7 @@ require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')
 // BEGIN: Theme JS
 require('frest/app-assets/js/scripts/configs/horizontal-menu.js')
 require('frest/app-assets/js/core/app-menu.min.js');
-require('frest/app-assets/js/core/app.js')
-require('frest/app-assets/js/scripts/components.js')
+//require('frest/app-assets/js/core/app.js')
+//require('frest/app-assets/js/scripts/components.js')
 require('frest/app-assets/js/scripts/footer.js')
-
 require('javascript/packs/error_fields.js');
-
-//For boards
-// require('frest/app-assets/vendors/js/ui/jquery.sticky.js')
-// require('frest/app-assets/vendors/js/jkanban/jkanban.min.js')
-// require('frest/app-assets/vendors/js/editors/quill/quill.min.js')
-// require('frest/app-assets/vendors/js/pickers/pickadate/picker.js')
-// require('frest/app-assets/vendors/js/pickers/pickadate/picker.date.js')
-// require('frest/app-assets/js/scripts/pages/app-kanban_1.js')
