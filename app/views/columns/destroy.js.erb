@@ -5,4 +5,5 @@ $(".kanban-delete").on("ajax:success", function() {
 $(".flashes").empty()
              .append("<%= j render 'shared/flash' %>")
              .children()
-             .fadeOut( 3000, function() {});
+             .delay( 5000 )
+             .fadeOut( 1000, function() {});

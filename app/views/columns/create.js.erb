@@ -27,4 +27,5 @@ $("#kanban-wrapper").find('.dropdown:last').click(function() {
 $(".flashes").empty()
              .append("<%= j render 'shared/flash' %>")
              .children()
-             .fadeOut( 3000, function() {});
+             .delay( 5000 )
+             .fadeOut( 1000, function() {});
