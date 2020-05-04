@@ -2,9 +2,6 @@ class ColumnsController < ApplicationController
   before_action :find_column!, only: [:edit, :update, :destroy]
   before_action :find_board
 
-  def index
-  end
-
   def new
     respond_to do |format| 
       format.js
@@ -13,13 +10,20 @@ class ColumnsController < ApplicationController
 
   # POST /column
   def create
-    @column = @board.columns.create(column_params)
+    last_position = @board.columns.maximum(:position)
+
+    @column = @board.columns.create(
+      name: "Default Title",
+      position: last_position.nil? ? 1 : last_position + 1,
+      board_id: params[:board_id],
+      user_id: current_user.id)
+
     respond_to do |format| 
-      if @column.valid?
+      if @column.save!
         format.js
         flash[:notice] = "Column was successfully created."
       else
-        flash[:notice] = "There were an error!"
+        flash[:danger] = "With creatind were an error!"
       end
     end
   end
@@ -29,16 +33,28 @@ class ColumnsController < ApplicationController
   end
 
   def update
-    @column = @board.columns.update(column_params)
-    if @column
-      flash[:notice] = "Column was successfully created."
-    else
-      flash[:notice] = "There were an error!"
+    respond_to do |format| 
+      if @column.update(column_params)
+        format.js
+        flash[:notice] = "Column was successfully updated."
+      else
+        # показать ошибки
+        flash[:danger] = "With updating were an error!"
+      end
     end
   end
 
   # DELETE /columns/1
   def destroy
+    @column = @board.columns.find(params[:id])
+    if @column.destroy
+      flash[:success] = "Comment was successfully deleted!"
+      respond_to do |format|
+        format.js
+      end
+    else
+      flash[:danger] = "Something went wrong, the comment wasn't deleted"
+    end
   end
 
   private
@@ -52,7 +68,7 @@ class ColumnsController < ApplicationController
   end
 
   def column_params
-    params.require(:column).permit(:name, :board_id, :position)
+    params.require(:column).permit(:name, :board_id)
   end
 
 end

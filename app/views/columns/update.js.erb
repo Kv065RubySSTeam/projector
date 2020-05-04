@@ -1,0 +1,6 @@
+$(this).off('ajax:success').on('ajax:success', function() {
+  console.log("done");
+});
+
+$('.kanban-container').append("<%= j render @column %>");
+

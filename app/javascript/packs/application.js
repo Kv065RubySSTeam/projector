@@ -8,6 +8,9 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require('jquery')
+require('jquery-ujs');
+
+//import {} from 'jquery-ujs';
 
 // Uncomment to copy all static images under ../images to the output folder and reference
 // them with the image_pack_tag helper in views (e.g <%= image_pack_tag 'rails.png' %>)
@@ -27,4 +30,7 @@ require('frest/app-assets/js/core/app-menu.min.js');
 require('frest/app-assets/js/core/app.js')
 require('frest/app-assets/js/scripts/components.js')
 require('frest/app-assets/js/scripts/footer.js')
+
 require('javascript/packs/error_fields.js');
+require('javascript/packs/dropdown_toggle.js');
+require('javascript/packs/update_column.js');
