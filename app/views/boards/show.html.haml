@@ -1,7 +1,7 @@
-.kanban-overlay
-  %section#kanban-wrapper
-    .row
-      .col-12
+.col-md-12
+  .card
+    %section#kanban-wrapper.pt-2.pb-2
+      .col-md-10
         .btn-group{:role => "group"}
           = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1"
           = link_to 'Board owner', @board.user, class: "btn btn-outline-primary mb-1"
