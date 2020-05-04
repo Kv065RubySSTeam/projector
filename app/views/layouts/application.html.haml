@@ -7,7 +7,7 @@
     = csp_meta_tag
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
-  %body.vertical-layout.vertical-menu-modern.2-columns.navbar-sticky.footer-static.menu-expanded.pace-done{"data-col" => "2-columns", "data-menu" => "vertical-menu-modern", "data-open" => "click"}
+  %body.vertical-layout.2-columns.footer-static.pace-done.navbar-sticky.vertical-menu-modern.menu-collapsed{"data-col" => "2-columns", "data-menu" => "vertical-menu-modern", "data-open" => "click"}
     - if user_signed_in?
       = render 'layouts/header'
       = render 'layouts/side_menu'
@@ -19,6 +19,8 @@
             = msg
         = yield
         = javascript_pack_tag "error_fields.js"
+        = javascript_pack_tag "dropdown_toggle.js"
+        = javascript_pack_tag "update_column.js"
     .sidenav-overlay
     .drag-target
     = render 'layouts/footer'
