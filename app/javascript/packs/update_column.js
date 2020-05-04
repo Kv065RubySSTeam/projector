@@ -13,23 +13,22 @@ $(document).ready(function() {
        var column_id = Number(
          event.srcElement.closest('.kanban-board').getAttribute('data-order')
        );
-       console.log(board_id, column_id);
         updateColumn(board_id, column_id, columnTitle);
         col.closest('.kanban-board').remove();
     });
-
-    function updateColumn(board_id, column_id, columnTitle) {
-      // update column at the database
-      $.ajax({
-        url: board_id + '/columns/' + column_id,
-        method: 'PATCH',
-        headers: {
-          'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
-        },
-        data: {
-          'column[name]': columnTitle
-        }
-      });
-    }
    }
 });
+
+function updateColumn(board_id, column_id, columnTitle) {
+  // update column at the database
+  $.ajax({
+    url: board_id + '/columns/' + column_id,
+    method: 'PATCH',
+    headers: {
+      'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
+    },
+    data: {
+      'column[name]': columnTitle
+    }
+  });
+}
