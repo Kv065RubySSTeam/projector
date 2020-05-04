@@ -2,7 +2,7 @@ class User < ApplicationRecord
   has_many :boards, dependent: :nullify
   devise :database_authenticatable, 
          :registerable, :validatable,
-         :confirmable, :recoverabl
+         :confirmable, :recoverable
 
   has_many :memberships, dependent: :destroy
   has_many :boards, through: :memberships
