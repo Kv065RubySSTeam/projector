@@ -1,11 +1,12 @@
-.row.justify-content-md-center.mt-4
-  .col-lg-8
-    .card
+.row.justify-content-md-center
+  .col-lg
+    .card{"data-board-id" => "#{(@board.id)}"}
       .card-content
         .card-body
           .btn-group{:role => "group"}
-            = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1"
-            = link_to 'Board owner', @board.user, class: "btn btn-outline-primary mb-1"
+            = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1","data-no-turbolink" => true
+            .btn.btn-outline-primary.mb-1
+              = @board.user.email
             = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1"
             = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1", data: { confirm: "You sure?" }
           %h2
@@ -14,3 +15,14 @@
             .divider-text Descripion
           %p.card-text
             = @board.description
+          .kanban-overlay
+          %section#kanban-wrapper
+            = link_to new_board_column_path(@board), |
+              remote: true,                          |
+              turbolinks: false,                     |
+              id: "add-kanban",                      |
+              class: "btn btn-primary mb-1" do       |
+              %i.bx.bx-add-to-queue.mr-50>
+              Add New Column
+            .kanban-container
+              = render  @columns
