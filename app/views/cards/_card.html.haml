@@ -1,8 +1,9 @@
-%main.kanban-drag
-  %form.itemform.not-draggable
-    .form-group
-      %input.form-control.add-new-item
-      %textarea.form-control.add-new-item{:autofocus => "", :required => "", :rows => "2"}
-    .form-group
-      %button.btn.btn-primary.btn-sm.mr-50{:type => "submit"} Submit
-      %button#CancelBtn.btn.btn-sm.btn-danger{:type => "button"} Cancel
+.card-wrapper
+  .kanban-item{"data-border" => "info", "data-card-id" => "#{card.id}"}
+    .font-medium-1.text-bold-600
+      = card.title
+    - unless card.body.blank?
+      .kanban-footer.d-flex.justify-content-between.mt-1
+        .kanban-footer-left.d-flex
+          .font-small-3
+            = card.body

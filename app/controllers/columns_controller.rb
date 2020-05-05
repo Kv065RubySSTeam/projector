@@ -4,10 +4,8 @@ class ColumnsController < ApplicationController
   before_action :flash_clear, except: [:new, :edit]
 
   def new; end
-  
-  def show
-    @cards = @column.cards.order(position: :asc) 
-  end
+
+  def edit; end
 
   def create
     @column = ColumnTemplateBuilder.call(@board, current_user)
@@ -19,8 +17,6 @@ class ColumnsController < ApplicationController
       end
     end
   end
-
-  def edit; end  
 
   def update
     @previousName = @column.name
