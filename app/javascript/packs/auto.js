@@ -11,9 +11,6 @@ $(function () {
                     );
                     const data = await source.json();
                     // Post loading placeholder text
-                    // document
-                //     .querySelector("#autoComplete")
-                //     .setAttribute("placeholder", "Enter the user email here");
                 // Returns Fetched data
                 return data;
             },
@@ -57,8 +54,6 @@ $(function () {
         },
         onSelection: membership => {
             const selectedUserId = membership.selection.value.id;
-            // Render selected choice to selection div
-            // document.querySelector("#selection").value = selectedUserId;
             // Clear Input
             document.querySelector("#autoComplete").value = "";
             // Change placeholder with the selected value
@@ -88,4 +83,13 @@ $(function () {
             })
         }
     });
+
+    // $('#my-link').click(function (event) {
+    //     alert('Hooray!');
+    //     event.preventDefault(); // Prevent link from following its href
+    //   });
 });
+
+// function makeAdmin() {
+//     this.getAttribute('href');
+// }

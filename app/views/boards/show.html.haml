@@ -25,7 +25,7 @@
     - @board.users.each do |user|
         %p= user.email
         - unless user.administrated_boards.exists?(@board.id)
-            = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: 'btn btn-primary', id: 'add_admin', method: :put, remote: true
+            = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: 'btn btn-primary', method: :put, remote: true
 
 
 <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script> 
