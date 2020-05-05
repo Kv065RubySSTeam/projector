@@ -19,6 +19,7 @@ class ColumnsController < ApplicationController
   def edit; end  
 
   def update
+    @previousName = @column.name
     respond_to do |f|
       if @column.update(update_param)
         f.js { flash[:success] = "Column was successfully updated." }

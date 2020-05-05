@@ -1,3 +1,10 @@
+var className = ".kanban-board[data-id=\'" + "#{@column.id}" + "\']";
+var columnElement = $(`${className}`)[0].getElementsByClassName("kanban-title-board")[0]
+
+if (columnElement.innerText === ""){
+columnElement.innerHTML = "#{@previousName}";
+}
+
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")
 \.children()
