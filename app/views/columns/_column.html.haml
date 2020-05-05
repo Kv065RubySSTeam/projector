@@ -1,5 +1,5 @@
 .kanban-board{"data-id" => "#{(column.id)}", "data-order" => "#{(column.position)}"}
-  %span.badge.badge-pill.badge-danger.badge-up 1
+  %span.badge.badge-pill.badge-danger.badge-up
   %header.kanban-board-header
     .kanban-title-board.line-ellipsis{:contenteditable => "true"}= column.name
     %button.kanban-title-button.btn.btn-default.btn-xs
@@ -16,4 +16,3 @@
           Delete
   %main.kanban-drag
   %footer
-

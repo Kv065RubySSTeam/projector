@@ -22,3 +22,9 @@ function updateColumn (columnTitle) {
 $("#kanban-wrapper").find('.dropdown:last').click(function() {
   $(this).toggleClass('show');
 });
+
+$(".flashes").empty()
+             .append("<%= j render 'shared/flash' %>")
+             .children()
+             .delay( 5000 )
+             .fadeOut( 1000, function() {});

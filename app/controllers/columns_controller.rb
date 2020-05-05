@@ -1,9 +1,9 @@
 class ColumnsController < ApplicationController
   before_action :find_column!, only: :update
   before_action :find_board!
+  before_action :flash_clear, except: [:new, :edit]
 
-  def new
-  end
+  def new; end
 
   def create
     last_position = @board.columns.maximum(:position)
@@ -12,7 +12,6 @@ class ColumnsController < ApplicationController
       position: last_position.nil? ? 1 : last_position + 1,
       board_id: params[:board_id],
       user_id: current_user.id)
-
     if @column.save
       respond_to do |f| 
         f.js
@@ -23,18 +22,23 @@ class ColumnsController < ApplicationController
     end
   end
 
-  # PATCH /columns/:id
-  def edit
-  end
+  def edit; end  
 
   def update
     if @column.update(update_param)
+      respond_to do |format|
+        format.js
+      end
       flash[:notice] = "Column was successfully updated."
     else
-      # показать ошибки
-      flash[:error] = "With updating were an error!"
+      if @column.errors.any?
+        str = ''
+        @column.errors.full_messages.each do |message|
+          str << message << "\n"
+        end
+        flash[:error] = str
+      end
     end
-
   end
 
   # DELETE /columns/1
@@ -62,5 +66,9 @@ class ColumnsController < ApplicationController
   def update_param
     params.require(:column).permit(:name)
   end
-
+  
+  def flash_clear
+    flash.clear()
+  end
 end
+
