@@ -72,5 +72,3 @@ yarn-debug.log*
 !/storage/.keep
 
 /.vscode/launch.json
-db/schema.rb
-
