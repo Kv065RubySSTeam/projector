@@ -6,7 +6,7 @@ class ColumnsController < ApplicationController
   def new; end
   
   def show
-    @cards = @column.cards.order(position: :asc) 
+    # @cards = @column.cards.order(position: :asc) 
   end
 
   def create

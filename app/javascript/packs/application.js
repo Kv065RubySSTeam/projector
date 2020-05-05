@@ -27,8 +27,8 @@ require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')
 
 require('frest/app-assets/js/scripts/configs/horizontal-menu.js')
 require('frest/app-assets/js/core/app-menu.min.js');
-//require('frest/app-assets/js/core/app.js')
-//require('frest/app-assets/js/scripts/components.js')
+// require('frest/app-assets/js/core/app.js')
+// require('frest/app-assets/js/scripts/components.js')
 require('frest/app-assets/js/scripts/footer.js')
 
 require('javascript/packs/dropdown_toggle.js');
