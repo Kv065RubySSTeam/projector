@@ -3,7 +3,7 @@ $('.kanban-container').append("<%= j render @column %>");
 $('.kanban-title-board:last')[0].addEventListener('blur', function(event) {
   var columnTitle = event.srcElement.textContent.trim();
   updateColumn(columnTitle);
-  });
+});
 
 function updateColumn (columnTitle) {
   // update column at the database
@@ -27,4 +27,4 @@ $(".flashes").empty()
              .append("<%= j render 'shared/flash' %>")
              .children()
              .delay( 5000 )
-             .fadeOut( 1000, function() {});
+             .slideUp( 1000 );

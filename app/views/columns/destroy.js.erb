@@ -6,4 +6,4 @@ $(".flashes").empty()
              .append("<%= j render 'shared/flash' %>")
              .children()
              .delay( 5000 )
-             .fadeOut( 1000, function() {});
+             .slideUp( 1000 );
