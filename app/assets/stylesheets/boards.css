@@ -1,10 +1,2 @@
-  /* Custom CSS */
+ /* Styles for boards*/
   @import "assets/css/style.css";
-  /* Styles for boards*/
-  @import "app-assets/vendors/css/vendors.min.css";
-  @import "app-assets/vendors/css/pickers/daterange/daterangepicker.css";
-  @import "app-assets/vendors/css/forms/select/select2.min.css";
-  @import "app-assets/vendors/css/editors/quill/quill.snow.css";
-  @import "app-assets/vendors/css/extensions/dragula.min.css";
-  @import "app-assets/css/core/menu/menu-types/horizontal-menu.css";
-  @import "app-assets/css/pages/app-todo.css";

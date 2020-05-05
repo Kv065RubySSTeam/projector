@@ -11,7 +11,6 @@ class ColumnsController < ApplicationController
 
   def create
     @column = ColumnTemplateBuilder.call(@board, current_user)
-
     respond_to do |f|  
       if @column
         f.js { flash[:success] = "Column was successfully created." }
@@ -34,7 +33,6 @@ class ColumnsController < ApplicationController
     end
   end
 
-  # DELETE /columns/1
   def destroy
     @column = @board.columns.find(params[:id])
     respond_to do |f|
