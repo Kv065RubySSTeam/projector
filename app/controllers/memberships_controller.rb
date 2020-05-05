@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MembershipsController < ApplicationController
   before_action :find_board!
   before_action :find_user!
@@ -31,7 +33,7 @@ class MembershipsController < ApplicationController
 
   def authorize!
     unless current_user.administrated_boards.exists?(@board.id)
-      render file: "public/401.html", status: :unauthorized
+      render file: 'public/401.html', status: :unauthorized
     end
   end
 end

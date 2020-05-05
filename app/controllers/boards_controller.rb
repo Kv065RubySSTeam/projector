@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 class BoardsController < ApplicationController
-  before_action :find_board!, only: [:show, :edit, :update, :destroy]
+  before_action :find_board!, only: %i[show edit update destroy]
   before_action :authenticate_user!
 
   def index
     @boards = Board.filter(params[:filter], current_user)
-    .search(params[:search]).paginate(page: params[:page])
+                   .search(params[:search]).paginate(page: params[:page])
   end
 
   def show
@@ -15,8 +17,7 @@ class BoardsController < ApplicationController
     @board = Board.new
   end
 
-  def edit
-  end
+  def edit; end
 
   def create
     @board = current_user.boards.new(board_params)
@@ -29,7 +30,7 @@ class BoardsController < ApplicationController
 
   def update
     if @board.update(board_params)
-      flash[:success] = "Successfully updated!"
+      flash[:success] = 'Successfully updated!'
       redirect_to @board
     else
       render 'edit'
@@ -38,7 +39,7 @@ class BoardsController < ApplicationController
 
   def destroy
     if @board.destroy
-      flash[:success] = "Successfully deleted!"
+      flash[:success] = 'Successfully deleted!'
       redirect_to @board
     else
       flash[:error] = "Something went wrong, the acticle wasn't deleted"
