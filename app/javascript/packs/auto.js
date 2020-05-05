@@ -76,20 +76,16 @@ $(function () {
               } 
               ).then((response) => {
                   if(response.ok) {
-                      $("#user-section").load(" #user-section > *");
-                      $("#flash-box").load(" #flash-box > *");
+                        $("#user-section").load(" #user-section > *");
+                        toastr.success("Success!");
                     } else if (response.status == 401) {
-                        // window.location.replace('/401');
-                        //// option 2
-                        response.text().then((body) => {
-                            document.open();
-                            document.write(body);
-                            document.close();
-                        })
+                        toastr.info("Danger! <br\>Details: " + response.statusText);
                     } else {
-                    console.log("Failed to add user to the board. Details: " +  response.statusText + "\n\n" + JSON.stringify(membership.selection.value));
-                }
-            });
+                        response.json().then(function (parsedJson) {
+                            toastr.error("Error <br\>" + parsedJson.error);
+                        });
+                    }
+            })
         }
     });
 });

@@ -5,9 +5,10 @@ class MembershipsController < ApplicationController
 
   def create
     @board.users << @user
-    flash[:success] = 'Membership Success'
   rescue ActiveRecord::RecordInvalid => e
-    flash[:error] = e.message
+    # head 404
+    # flash[:error] = e.message
+    render json: { error: e.message }.to_json, status: 404
   end
 
   def admin
@@ -31,7 +32,7 @@ class MembershipsController < ApplicationController
 
   def authorize!
     unless current_user.administrated_boards.exists?(@board.id)
-      render file: 'public/401.html', layout: true, status: 401
+      head 401
     end
   end
 end

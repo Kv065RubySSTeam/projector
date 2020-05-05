@@ -10,6 +10,7 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require('jquery')
+// global.toastr = require("toastr")
 
 // JQuery autocomplete plugin.
 // import 'easy-autocomplete/dist/jquery.easy-autocomplete'
@@ -23,10 +24,12 @@ import '@tarekraafat/autocomplete.js'
 // const imagePath = (name) => images(name, true)
 
 // BEGIN Vendor JS
-require('frest/app-assets/vendors/js/vendors.min.js')
-require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js')
-require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js')
-require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')
+// require('frest/app-assets/vendors/js/extensions/pace.min.js')
+// require('frest/app-assets/vendors/js/vendors.min.js')
+// require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js')
+// require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js')
+// require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')
+global.toastr = require('frest/app-assets/vendors/js/extensions/toastr.min.js')
 
 
 // BEGIN: Theme JS
