@@ -1,12 +1,14 @@
 <div class="kanban-board" data-id="<%= (column.id) %>" data-order="<%= (column.position) %>">
   <span class="badge badge-pill badge-danger badge-up"></span>
   <header class="kanban-board-header">
+    <% unless column.cards.blank? %>
+      <span class="badge badge-primary badge-round mt-35"><%= column.cards.count %> </span>
+  <% end %>
     <div class="kanban-title-board line-ellipsis" contenteditable="true">
       <%= column.name %>
     </div>
-    <%= link_to "+ Add New Item", new_board_column_card_path(@column, card.id),         
+    <%= link_to "+ Add New Item", new_board_column_card_path(@board, column),
         remote: true,
-        turbolinks: false,
         id: "add-card",
         class: "kanban-title-button btn btn-default btn-xs"%>
     <div class="dropdown">
@@ -18,14 +20,14 @@
         remote: true, 
         method: :delete, 
         class: "kanban-delete dropdown-item kanban-delete" do  %>
-        <i class="bx bx-trash mr-50">></i>
+        <i class="bx bx-trash mr-50"></i>
         Delete
         <% end %>
       </div>
     </div>
   </header>
   <main class="kanban-drag">
-    <%= render @cards %>
+    <%= render column.cards.order(position: :asc) %>
   </main>
   <footer></footer>
 </div>

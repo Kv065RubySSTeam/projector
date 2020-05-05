@@ -1,10 +1,19 @@
 class CardsController < ApplicationController
-  before_action :find_card!, only: :update
+  before_action :find_card!, only: [:update, :show]
   before_action :find_column!
+  before_action :flash_clear, except: [:new, :show]
   
-  def new
+  def show; end
+  
+  def new; end
+
+  def create
+    @card = @column.cards.build(card_params)
+    @card.user = current_user
+    @card.position = @column.cards.last_position
+
     respond_to do |f|  
-      if @card
+      if @card.save
         f.js { flash[:success] = "Card was successfully created." }
       else
         f.js { flash[:error] = "With creatind card were an error!" }
@@ -13,23 +22,40 @@ class CardsController < ApplicationController
   end
 
   def update
+    @card.update(card_params)
+    if @card.valid?
+      flash[:success] = "Card was successfully updated."
+    else
+      flash[:error] = @card.errors.full_messages.join("\n")
+    end
   end
 
   def destroy
+    @card = @column.cards.find(params[:id])
+    respond_to do |f|
+      if @card.destroy
+        f.js { flash[:success] = "Card was successfully deleted!" } 
+      else
+        f.js { flash[:error] = "Something went wrong, the card wasn't deleted" }
+      end
+    end
   end
 
   private
-
   def find_card!
-    @column = Card.find(params[:id])
+    @card = Card.find(params[:id])
   end
 
   def find_column!
     @column = Column.find(params[:column_id])
   end
 
-  def update_param
-    params.require(:column).permit(:title, :body)
+  def card_params
+    params.require(:card).permit(:title, :body, :column_id, :board_id)
+  end
+
+  def flash_clear
+    flash.clear()
   end
 
 end

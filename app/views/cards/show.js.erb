@@ -1,0 +1,6 @@
+$(".edit-kanban-card").html("<%= j render 'edit_form' %>");
+$(".kanban-sidebar").addClass('show');
+
+$("body").find(".close.close-sidebar").click(function() {
+    $(".kanban-sidebar").removeClass('show');
+});

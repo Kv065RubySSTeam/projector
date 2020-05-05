@@ -1,0 +1,23 @@
+var className = ".kanban-board[data-id=\'" + "<%= @card.column_id %>" + "\']";
+
+// Hide form
+$(`${className}`).find(".kanban-drag form.form-group").remove()
+// Show button 
+$(`${className}`).find(".kanban-title-button").show()
+
+
+$(`${className}`).find(".kanban-drag").append("<%= j render @card %>");
+
+$(`${className}`).find(".kanban-item:last").click(function() {
+  $(".edit-kanban-card").html("<%= j render 'edit_form' %>");
+  $(".kanban-sidebar").addClass('show');
+
+  $("body").find(".close.close-sidebar").click(function() {
+      $(".kanban-sidebar").removeClass('show');
+  });
+});
+
+$(".flashes").empty()
+             .append("<%= j render 'shared/flash' %>")
+             .children()
+             .fadeOut( 3000 );
