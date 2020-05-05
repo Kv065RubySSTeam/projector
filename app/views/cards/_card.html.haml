@@ -1,0 +1,8 @@
+%main.kanban-drag
+  %form.itemform.not-draggable
+    .form-group
+      %input.form-control.add-new-item
+      %textarea.form-control.add-new-item{:autofocus => "", :required => "", :rows => "2"}
+    .form-group
+      %button.btn.btn-primary.btn-sm.mr-50{:type => "submit"} Submit
+      %button#CancelBtn.btn.btn-sm.btn-danger{:type => "button"} Cancel
