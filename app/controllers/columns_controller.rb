@@ -25,6 +25,7 @@ class ColumnsController < ApplicationController
   def edit; end  
 
   def update
+    @previousName = @column.name
     if @column.update(update_param)
       respond_to do |format|
         format.js
