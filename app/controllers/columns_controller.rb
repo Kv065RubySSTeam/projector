@@ -6,15 +6,10 @@ class ColumnsController < ApplicationController
   def new; end
 
   def create
-    last_position = @board.columns.maximum(:position)
-
-    @column = @board.columns.build(name: "Default Title", 
-      position: last_position.nil? ? 1 : last_position + 1,
-      board_id: params[:board_id],
-      user_id: current_user.id)
+    @column = ColumnTemplateBuilder.call(@board, current_user)
 
     respond_to do |f|  
-      if @column.save
+      if @column
         f.js { flash[:success] = "Column was successfully created." }
       else
         f.js { flash[:error] = "With creatind were an error!" }
