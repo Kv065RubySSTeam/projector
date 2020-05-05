@@ -12,31 +12,24 @@ class ColumnsController < ApplicationController
       position: last_position.nil? ? 1 : last_position + 1,
       board_id: params[:board_id],
       user_id: current_user.id)
-    if @column.save
-      respond_to do |f| 
-        f.js
+
+    respond_to do |f|  
+      if @column.save
+        f.js { flash[:success] = "Column was successfully created." }
+      else
+        f.js { flash[:error] = "With creatind were an error!" }
       end
-      flash[:notice] = "Column was successfully created."
-    else
-      flash[:error] = "With creatind were an error!"
     end
   end
 
   def edit; end  
 
   def update
-    if @column.update(update_param)
-      respond_to do |format|
-        format.js
-      end
-      flash[:notice] = "Column was successfully updated."
-    else
-      if @column.errors.any?
-        str = ''
-        @column.errors.full_messages.each do |message|
-          str << message << "\n"
-        end
-        flash[:error] = str
+    respond_to do |f|
+      if @column.update(update_param)
+        f.js { flash[:success] = "Column was successfully updated." }
+      else
+        f.js { flash[:error] = @column.errors.full_messages.join("\n") } 
       end
     end
   end
@@ -44,13 +37,12 @@ class ColumnsController < ApplicationController
   # DELETE /columns/1
   def destroy
     @column = @board.columns.find(params[:id])
-    if @column.destroy
-      respond_to do |f|
-        f.js
+    respond_to do |f|
+      if @column.destroy
+        f.js { flash[:success] = "Comment was successfully deleted!" } 
+      else
+        f.js { flash[:error] = "Something went wrong, the comment wasn't deleted" }
       end
-      flash[:success] = "Comment was successfully deleted!"   
-    else
-      flash[:error] = "Something went wrong, the comment wasn't deleted"
     end
   end
 
