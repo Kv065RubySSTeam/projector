@@ -8,7 +8,7 @@ class User < ApplicationRecord
   validates :last_name, length: { within: 1..100 }
   validate :correct_avatar_type
 
-  devise :database_authenticatable, 
+  devise :database_authenticatable,
          :registerable, :validatable,
          :confirmable, :recoverable
 
