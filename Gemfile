@@ -32,7 +32,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4', '~> 0.2.2'
-
+gem 'active_storage_validations'
 gem 'haml'
 
 group :development, :test do

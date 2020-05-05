@@ -5,25 +5,28 @@
         .col-12
           .row
             .col-12.col-sm-3.text-center.mb-1.mb-sm-0
-              -if @user.avatar.attached?
-                = image_tag @user.avatar, class: "rounded",      |
+              -if current_user.avatar.attached?
+                = image_tag current_user.avatar, class: "rounded",      |
                 height: "120", width: "120" |
+                = link_to "Delete avatar", delete_avatar_user_url,
+                method: :delete,
+                data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm mt-1"
               -else
                 = image_tag '/images/placeholder.jpg', class: "rounded",      |
                 height: "120", width: "120" |
             .col-12.col-sm-9
               %h5.card-title
-                = @user.first_name
-                = @user.last_name
+                = current_user.first_name
+                = current_user.last_name
               %p
               %ul.list-unstyled
                 %li
                   %i.bx.bx-envelope.mb-1.mr-50
-                  = @user.email
+                  = current_user.email
                 %li
                   %i.bx.bx-time.mb-1.mr-50
-                  = day_and_time(@user)
+                  = current_user.created_at.strftime("%B %d at %I:%M %P")
               .btn-group.float-right{:role => "group"}
                 = link_to "Back", :back, class: "btn"
                 = link_to "Edit", edit_user_registration_path, class:"btn"
-                = link_to "Delete account", registration_path(@user), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-outline-danger"
+                = link_to "Delete account", registration_path(current_user), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-outline-danger"

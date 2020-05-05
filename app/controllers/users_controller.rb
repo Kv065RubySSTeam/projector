@@ -1,5 +1,10 @@
 class UsersController < ApplicationController
   def show
-    @user = User.find(params[:id])
+    current_user
+  end
+
+  def delete_avatar
+    current_user.avatar.purge
+    redirect_to user_path
   end
 end
