@@ -6,8 +6,10 @@ class ColumnsController < ApplicationController
   def new; end
 
   def create
-    @column = @board.columns.build(user_id: current_user.id,
-      position: @board.columns.last_position)
+    @column = @board.columns.build
+    @column.position = @board.columns.last_position
+    @column.user = current_user
+    
     respond_to do |f|  
       if @column.save
         f.js { flash[:success] = "Column was successfully created." }
