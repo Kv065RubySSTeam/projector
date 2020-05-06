@@ -1,6 +1,5 @@
-= javascript_pack_tag 'memberships/alert'
-= javascript_pack_tag 'memberships/rights'
 = javascript_pack_tag 'memberships/autocomplete'
+= javascript_pack_tag 'memberships/rights'
 = stylesheet_link_tag 'memberships'
 
 %button#add-user.btn.btn-icon.rounded-circle.btn-outline-primary.mr-1.mb-1{:type => "button"}
@@ -19,11 +18,14 @@
                   = link_to 'Board owner', @board.user, class: "btn btn-outline-primary mb-1"
                   = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1"
                   = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1", data: { confirm: "You sure?" }
+
               .col-md-6
-                .input-group.input-group-sm
-                  %input.form-control{"data-search": "template-search", tabindex: "0", type: "text", id: "autoComplete"}/
+                .input-group-prepend
+                  %span#basic-addon1.input-group-text Add member
+                  %input.form-control{"data-search": "template-search", "aria-label" => "Username", :placeholder => "Username", :type => "text", id: "autoComplete", name: "find-user"}/
                   %input{type: "hidden", value: memberships_create_path(@board), id: "addMembershipURL"}
                 %ul.list-group.search-list.show#show-users
+
           .col-md
             %h2
               = @board.title
@@ -32,19 +34,20 @@
             %p.card-text
               = @board.description
 
-          #user-section
-            %ul
+          #user-section.pt-2
+            %h3.pl-2 Members
+            %ul.pt-1 
               - @board.users.each do |user|
                 %div.mb-2
                   - if user.administrated_boards.exists?(@board.id)
                     .checkbox.checkbox-danger.checkbox-glow
-                      %input#checkboxGlow4{:checked => "checked", :type => "checkbox"}/
-                      %label{:for => "checkboxGlow4"}= user.email
+                      %i.bx.bx-star.bxs-star.warning
+                      %span= user.email
                   - else
-                    .checkbox.checkbox-danger.checkbox-glow
-                      %p= user.email
-                      = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), 
-                                              class: "btn btn-dark shadow mr-1 mb-1", id: "#{user.email}", 
-                                              remote: true, 
-                                              method: :put, 
-                                              :onclick => 'makeAdmin(event)'
+                    %i.bx.bx-star.bxs-star
+                    %span= user.email
+                    = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), 
+                                            class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{user.email}", 
+                                            remote: true, 
+                                            method: :put, 
+                                            :onclick => 'makeAdmin(event)'

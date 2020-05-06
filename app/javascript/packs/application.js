@@ -26,7 +26,6 @@ require('jquery')
 // require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')
 
 require('frest/app-assets/vendors/js/extensions/toastr.min.js')
-// require('frest/app-assets/js/scripts/extensions/sweet-alerts.min.js');
 
 // BEGIN: Theme JS
 require('frest/app-assets/js/core/libraries/jquery.min.js')
