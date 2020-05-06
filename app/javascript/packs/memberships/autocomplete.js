@@ -1,3 +1,6 @@
+// jQuery autocomplete plugin.
+import '@tarekraafat/autocomplete.js'
+
 $(function () {
     const token = $('meta[name="csrf-token"]').attr('content');
     
@@ -7,7 +10,7 @@ $(function () {
                 const query = document.querySelector("#autoComplete").value;
                 // Fetch External Data Source
                 const source = await fetch(
-                    `/users/index.json?search=${query}`
+                    `/user.json?search=${query}`
                     );
                     const data = await source.json();
                     // Post loading placeholder text
@@ -33,7 +36,7 @@ $(function () {
             render: true,
             container: source => {
                 source.setAttribute("id", "autoComplete_list");
-                source.setAttribute("style", "position:absolute; width: 95%");
+                source.setAttribute("style", "z-index:1; position:absolute; width: 95%");
             },
             destination: document.querySelector("#show-users"),
             position: "afterbegin",
@@ -86,25 +89,3 @@ $(function () {
         }
     });
 });
-
-const token = $('meta[name="csrf-token"]').attr('content');
-window.makeAdmin = function (event) {
-    const user = event.target.id;
-    let url = event.target;
-    event.preventDefault();
-    fetch(url, {
-        method: 'PUT',
-        headers: { 
-            // 'Content-Type': 'application/json',
-            'X-CSRF-Token': token 
-            },
-            // body: `{"user_id": ${selectedUserId}}`
-        }).then((response) => {
-            if(response.ok) {
-                event.target.remove();
-                toastr.success(`Success! <br\>`+`${user}`+` is an admin now!`);
-            } else {
-                toastr.error("Error! <br\>Details: " + response.statusText);
-            }
-        })
-}

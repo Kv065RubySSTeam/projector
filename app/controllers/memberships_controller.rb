@@ -14,9 +14,9 @@ class MembershipsController < ApplicationController
   def admin
     @user.memberships.update(admin: true)
     if !@user.memberships.empty?
-      render json: {}.to_json, status: 200
+      head status: 200
     else
-      render json: {}.to_json, status: 400
+      head status: 400
     end
   end
 

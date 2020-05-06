@@ -11,7 +11,8 @@ class User < ApplicationRecord
   validates :email, uniqueness: true
 
   has_many :administrated_boards, -> { where(memberships: { admin: true }) }, class_name: 'Board',
-                                                                              through: :memberships, source: :board
+                                                                              through: :memberships,
+                                                                              source: :board
 
   scope :search, ->(email) { where('email LIKE ?', "%#{email}%") }
 end

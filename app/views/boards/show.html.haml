@@ -1,37 +1,50 @@
-= javascript_pack_tag 'auto', 'data-turbolinks-track': 'reload'
+= javascript_pack_tag 'memberships/alert'
+= javascript_pack_tag 'memberships/rights'
+= javascript_pack_tag 'memberships/autocomplete'
 = stylesheet_link_tag 'memberships'
 
+%button#add-user.btn.btn-icon.rounded-circle.btn-outline-primary.mr-1.mb-1{:type => "button"}
+  %i.bx.bx-search
+
 .container
-    .row.justify-content-md-center
-        .col-md-6
-            .input-group.input-group-sm
-                %input.form-control{"data-search": "template-search", tabindex: "0", type: "text", id: "autoComplete"}/
-                %input{type: "hidden", value: memberships_create_path(@board), id: "addMembershipURL"}
-            %ul.list-group.search-list.show#show-users
+  .row
+    .col-md-12
+      .card
+        %section#kanban-wrapper.pt-2.pb-2
+          .container
+            .row
+              .col-md-6
+                .btn-group{:role => "group"}
+                  = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1"
+                  = link_to 'Board owner', @board.user, class: "btn btn-outline-primary mb-1"
+                  = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1"
+                  = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1", data: { confirm: "You sure?" }
+              .col-md-6
+                .input-group.input-group-sm
+                  %input.form-control{"data-search": "template-search", tabindex: "0", type: "text", id: "autoComplete"}/
+                  %input{type: "hidden", value: memberships_create_path(@board), id: "addMembershipURL"}
+                %ul.list-group.search-list.show#show-users
+          .col-md
+            %h2
+              = @board.title
+            .divider.col-5
+              .divider-text Descripion
+            %p.card-text
+              = @board.description
 
--# #flash-box            
--#     - flash.each do |name, message|
--#         #toast-container.toast-container.toast-top-right
--#             #fast-duration.toast{class: "toast-#{name}", "aria-live": "assertive", style: "display: block;" }
--#                 .toast-message= message
-
-
-%h1 Board
-%p= @board.title
-%p= @board.description
-
-#user-section
-    %ul
-    - @board.users.each do |user|
-        %div.mb-2
-            - if user.administrated_boards.exists?(@board.id)
-                .checkbox.checkbox-danger.checkbox-glow
-                    %input#checkboxGlow4{:checked => "checked", :type => "checkbox"}/
-                    %label{:for => "checkboxGlow4"}= user.email
-            - else
-                .checkbox.checkbox-danger.checkbox-glow
-                    %p= user.email
-                    = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: "btn btn-dark shadow mr-1 mb-1", id: "#{user.email}", remote: true, :onclick => 'makeAdmin(event)'
-
-
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script> 
+          #user-section
+            %ul
+              - @board.users.each do |user|
+                %div.mb-2
+                  - if user.administrated_boards.exists?(@board.id)
+                    .checkbox.checkbox-danger.checkbox-glow
+                      %input#checkboxGlow4{:checked => "checked", :type => "checkbox"}/
+                      %label{:for => "checkboxGlow4"}= user.email
+                  - else
+                    .checkbox.checkbox-danger.checkbox-glow
+                      %p= user.email
+                      = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), 
+                                              class: "btn btn-dark shadow mr-1 mb-1", id: "#{user.email}", 
+                                              remote: true, 
+                                              method: :put, 
+                                              :onclick => 'makeAdmin(event)'

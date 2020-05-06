@@ -30,8 +30,11 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+# Flexible authentication solution for Rails with Warden
 gem 'devise'
+# Haml (HTML Abstraction Markup Language) is a layer on top of HTML
 gem 'haml'
+# will_paginate provides a simple API for performing paginated queries with Active Record
 gem 'will_paginate'
 
 group :development, :test do
