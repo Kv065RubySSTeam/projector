@@ -7,6 +7,7 @@ class ColumnsController < ApplicationController
 
   def create
     @column = @board.columns.build
+    @column.position = @board.columns.last_position
     @column.user = current_user
     
     respond_to do |f|  
