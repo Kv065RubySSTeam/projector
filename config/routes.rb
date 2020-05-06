@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'users/index'
   post '/boards/:id/memberships/' => 'memberships#create', as: :memberships_create
   put '/boards/:id/members/:user_id/admin' => 'memberships#admin', as: :add_admin_rights
-
+  
   resources :boards do
     # resources :memberships, only: %i[create]
   end

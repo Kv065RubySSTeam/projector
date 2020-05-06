@@ -11,9 +11,6 @@ $(function () {
                     );
                     const data = await source.json();
                     // Post loading placeholder text
-                    // document
-                //     .querySelector("#autoComplete")
-                //     .setAttribute("placeholder", "Enter the user email here");
                 // Returns Fetched data
                 return data;
             },
@@ -57,8 +54,6 @@ $(function () {
         },
         onSelection: membership => {
             const selectedUserId = membership.selection.value.id;
-            // Render selected choice to selection div
-            // document.querySelector("#selection").value = selectedUserId;
             // Clear Input
             document.querySelector("#autoComplete").value = "";
             // Change placeholder with the selected value
@@ -76,16 +71,40 @@ $(function () {
               } 
               ).then((response) => {
                   if(response.ok) {
-                      $("#user-section").load(" #user-section > *");
-                      $("#flash-box").load(" #flash-box > *");
+                        $("#user-section").load(" #user-section > *");
+                        toastr.success("Success!");
+                    } else if (response.status == 401) {
+                        response.json().then((parsedJson) => {
+                            toastr.info("Danger! <br\>Details: " + parsedJson.error);
+                        });
                     } else {
-                    console.log("Failed to add user to the board. Details: " +  response.statusText + "\n\n" + JSON.stringify(membership.selection.value));
-                }
-            });
+                        response.json().then((parsedJson) => {
+                            toastr.error("Error <br\>" + parsedJson.error);
+                        });
+                    }
+            })
         }
     });
 });
 
-// document.getElementById('add_admin').addEventListener('click', () => {
-//     document.getElementById('hide-b').style.display = "none";
-// });
+const token = $('meta[name="csrf-token"]').attr('content');
+window.makeAdmin = function (event) {
+    const user = event.target.id;
+    let url = event.target;
+    event.preventDefault();
+    fetch(url, {
+        method: 'PUT',
+        headers: { 
+            // 'Content-Type': 'application/json',
+            'X-CSRF-Token': token 
+            },
+            // body: `{"user_id": ${selectedUserId}}`
+        }).then((response) => {
+            if(response.ok) {
+                event.target.remove();
+                toastr.success(`Success! <br\>`+`${user}`+` is an admin now!`);
+            } else {
+                toastr.error("Error! <br\>Details: " + response.statusText);
+            }
+        })
+}
