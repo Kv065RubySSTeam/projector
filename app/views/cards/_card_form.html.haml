@@ -1,4 +1,4 @@
-= form_with(model: [@board, @column, @column.cards.build],  class: "form-group") do |f|
+= form_with(model: [@column.board, @column, @column.cards.build], class: "form-group") do |f|
   -# = render "shared/errors"
   .form-group
     = f.label :title, class: "text-bold-600"
@@ -7,3 +7,5 @@
     = f.label :body, class: "text-bold-600"
     = f.text_area :body, class: "form-control add-new-item", autofocus: "", rows: "2", placeholder: "Your Text"
   = f.submit "Submit", class: "btn btn-primary btn-sm mr-50"
+  -#   %button#CancelBtn.btn.btn-sm.btn-danger{:type => "button"} Cancel
+  -# = f.button "Cancel", class: "btn btn-sm btn-danger", id: "CancelBtn"
