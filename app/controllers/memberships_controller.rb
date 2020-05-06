@@ -6,17 +6,15 @@ class MembershipsController < ApplicationController
   def create
     @board.users << @user
   rescue ActiveRecord::RecordInvalid => e
-    # head 404
-    # flash[:error] = e.message
-    render json: { error: e.message }.to_json, status: 404
+    render json: { error: e.message }.to_json, status: 400
   end
 
   def admin
     @user.memberships.update(admin: true)
-    if @user.memberships.empty?
-      flash[:success] = 'Admin Success'
+    if !@user.memberships.empty?
+      render json: {}.to_json, status: 200
     else
-      flash[:error] = 'Admin Error'
+      render json: {}.to_json, status: 400
     end
   end
 
@@ -32,7 +30,7 @@ class MembershipsController < ApplicationController
 
   def authorize!
     unless current_user.administrated_boards.exists?(@board.id)
-      head 401
+      render json: { error: 'Unauthorize' }, status: 401
     end
   end
 end

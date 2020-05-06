@@ -29,7 +29,7 @@ import '@tarekraafat/autocomplete.js'
 // require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js')
 // require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js')
 // require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')
-global.toastr = require('frest/app-assets/vendors/js/extensions/toastr.min.js')
+require('frest/app-assets/vendors/js/extensions/toastr.min.js')
 
 
 // BEGIN: Theme JS

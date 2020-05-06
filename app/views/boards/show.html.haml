@@ -31,7 +31,7 @@
             - else
                 .checkbox.checkbox-danger.checkbox-glow
                     %p= user.email
-                    = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: "btn btn-dark shadow mr-1 mb-1", id: "#{user.email}", :onclick => 'makeAdmin(event)'
+                    = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: "btn btn-dark shadow mr-1 mb-1", id: "#{user.email}", remote: true, :onclick => 'makeAdmin(event)'
 
 
 <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script> 

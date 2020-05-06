@@ -74,9 +74,11 @@ $(function () {
                         $("#user-section").load(" #user-section > *");
                         toastr.success("Success!");
                     } else if (response.status == 401) {
-                        toastr.info("Danger! <br\>Details: " + response.statusText);
+                        response.json().then((parsedJson) => {
+                            toastr.info("Danger! <br\>Details: " + parsedJson.error);
+                        });
                     } else {
-                        response.json().then(function (parsedJson) {
+                        response.json().then((parsedJson) => {
                             toastr.error("Error <br\>" + parsedJson.error);
                         });
                     }
@@ -106,36 +108,3 @@ window.makeAdmin = function (event) {
             }
         })
 }
-
-// window.addEventListener("load", () => {
-//     const links = document.querySelectorAll(
-//       "a[data]"
-//     );
-//     links.forEach((element) => {
-//         debugger;
-//       element.addEventListener("click", (event) => {
-//         event.preventDefault();
-
-//         const user = event.target.id;
-//         let url = event.target;
-
-//         fetch(url, {
-//             method: 'PUT',
-//             headers: { 
-//                 // 'Content-Type': 'application/json',
-//                 'X-CSRF-Token': token 
-//                 },
-//                 // body: `{"user_id": ${selectedUserId}}`
-//             }).then((response) => {
-//                 if(response.ok) {
-//                     event.target.remove();
-//                     console.log(response.text())
-//                     toastr.success(`Success! <br\>`+`${user}`+` is an admin now!`);
-//                 } else {
-//                     toastr.error("Error! <br\>Details: " + response.statusText);
-//                 }
-//             })
-//       });
-//     });
-//   });
-            
