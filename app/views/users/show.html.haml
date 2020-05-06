@@ -8,9 +8,6 @@
               -if current_user.avatar.attached?
                 = image_tag current_user.avatar, class: "rounded",      |
                 height: "120", width: "120" |
-                = link_to "Delete avatar", delete_avatar_user_url,
-                method: :delete,
-                data: { confirm: 'Are you sure?' }, class: "btn btn-outline-danger btn-sm mt-1"
               -else
                 = image_tag '/images/placeholder.jpg', class: "rounded",      |
                 height: "120", width: "120" |

@@ -11,4 +11,13 @@ class User < ApplicationRecord
   devise :database_authenticatable,
          :registerable, :validatable,
          :confirmable, :recoverable
+
+  attribute :remove_avatar, :boolean,  default: false
+
+  after_save :purge_avatar, if: :remove_avatar
+
+  private 
+  def purge_avatar
+    avatar.purge_later
+  end
 end
