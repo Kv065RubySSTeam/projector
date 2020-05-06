@@ -1,0 +1,14 @@
+var className = ".kanban-board[data-id=\'" + "<%= @card.column_id %>" + "\']";
+
+// Hide form
+$(`${className}`).find(".kanban-drag form.form-group").remove()
+// Show button 
+$(`${className}`).find(".kanban-title-button").show()
+
+
+$(`${className}`).find(".kanban-drag").append("<%= j render @card %>");
+
+$(".flashes").empty()
+             .append("<%= j render 'shared/flash' %>")
+             .children()
+             .fadeOut( 3000 );
