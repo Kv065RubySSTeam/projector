@@ -1,13 +1,11 @@
 class CardsController < ApplicationController
-  before_action :find_card!, only: :update
+  before_action :find_card!, only: [:update, :show]
   before_action :find_column!
-  before_action :flash_clear, except: [:new, :edit]
+  before_action :flash_clear, except: [:new, :show]
   
   def show; end
   
   def new; end
-
-  def edit; end
 
   def create
     @card = @column.cards.build(card_params)
@@ -24,13 +22,26 @@ class CardsController < ApplicationController
   end
 
   def update
+    @card.update(card_params)
+    if @card.valid?
+      flash[:success] = "Card was successfully updated."
+    else
+      flash[:error] = @card.errors.full_messages.join("\n")
+    end
   end
 
   def destroy
+    @card = @column.cards.find(params[:id])
+    respond_to do |f|
+      if @card.destroy
+        f.js { flash[:success] = "Card was successfully deleted!" } 
+      else
+        f.js { flash[:error] = "Something went wrong, the card wasn't deleted" }
+      end
+    end
   end
 
   private
-
   def find_card!
     @card = Card.find(params[:id])
   end

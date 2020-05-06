@@ -1,6 +1,9 @@
 <div class="kanban-board" data-id="<%= (column.id) %>" data-order="<%= (column.position) %>">
   <span class="badge badge-pill badge-danger badge-up"></span>
   <header class="kanban-board-header">
+    <% unless column.cards.blank? %>
+      <span class="badge badge-primary badge-round mt-35"><%= column.cards.count %> </span>
+  <% end %>
     <div class="kanban-title-board line-ellipsis" contenteditable="true">
       <%= column.name %>
     </div>
@@ -24,7 +27,7 @@
     </div>
   </header>
   <main class="kanban-drag">
-    <%= render column.cards %>
+    <%= render column.cards.order(position: :asc) %>
   </main>
   <footer></footer>
 </div>

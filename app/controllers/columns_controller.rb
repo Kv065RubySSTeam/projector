@@ -3,10 +3,6 @@ class ColumnsController < ApplicationController
   before_action :find_board!
   before_action :flash_clear, except: [:new, :edit]
 
-  def show
-    @cards = @column.cards.order(position: :asc) 
-  end
-
   def new; end
 
   def edit; end
