@@ -1,5 +1,6 @@
 class Column < ApplicationRecord
   belongs_to :board
+  belongs_to :user
   validates :name, length: { within: 2..50 }, presence: true
   validates :board, presence: true
   
