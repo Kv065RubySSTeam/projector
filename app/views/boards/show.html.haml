@@ -19,13 +19,19 @@
 %h1 Board
 %p= @board.title
 %p= @board.description
-%p= @board.public
 
 #user-section
+    %ul
     - @board.users.each do |user|
-        %p= user.email
-        - unless user.administrated_boards.exists?(@board.id)
-            = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: 'btn btn-primary', method: :put, remote: true
+        %div.mb-2
+            - if user.administrated_boards.exists?(@board.id)
+                .checkbox.checkbox-danger.checkbox-glow
+                    %input#checkboxGlow4{:checked => "checked", :type => "checkbox"}/
+                    %label{:for => "checkboxGlow4"}= user.email
+            - else
+                .checkbox.checkbox-danger.checkbox-glow
+                    %p= user.email
+                    = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: "btn btn-dark shadow mr-1 mb-1", id: "#{user.email}", :onclick => 'makeAdmin(event)'
 
 
 <script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script> 

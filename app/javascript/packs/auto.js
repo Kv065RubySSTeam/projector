@@ -83,13 +83,59 @@ $(function () {
             })
         }
     });
-
-    // $('#my-link').click(function (event) {
-    //     alert('Hooray!');
-    //     event.preventDefault(); // Prevent link from following its href
-    //   });
 });
 
-// function makeAdmin() {
-//     this.getAttribute('href');
-// }
+const token = $('meta[name="csrf-token"]').attr('content');
+window.makeAdmin = function (event) {
+    const user = event.target.id;
+    let url = event.target;
+    event.preventDefault();
+    fetch(url, {
+        method: 'PUT',
+        headers: { 
+            // 'Content-Type': 'application/json',
+            'X-CSRF-Token': token 
+            },
+            // body: `{"user_id": ${selectedUserId}}`
+        }).then((response) => {
+            if(response.ok) {
+                event.target.remove();
+                toastr.success(`Success! <br\>`+`${user}`+` is an admin now!`);
+            } else {
+                toastr.error("Error! <br\>Details: " + response.statusText);
+            }
+        })
+}
+
+// window.addEventListener("load", () => {
+//     const links = document.querySelectorAll(
+//       "a[data]"
+//     );
+//     links.forEach((element) => {
+//         debugger;
+//       element.addEventListener("click", (event) => {
+//         event.preventDefault();
+
+//         const user = event.target.id;
+//         let url = event.target;
+
+//         fetch(url, {
+//             method: 'PUT',
+//             headers: { 
+//                 // 'Content-Type': 'application/json',
+//                 'X-CSRF-Token': token 
+//                 },
+//                 // body: `{"user_id": ${selectedUserId}}`
+//             }).then((response) => {
+//                 if(response.ok) {
+//                     event.target.remove();
+//                     console.log(response.text())
+//                     toastr.success(`Success! <br\>`+`${user}`+` is an admin now!`);
+//                 } else {
+//                     toastr.error("Error! <br\>Details: " + response.statusText);
+//                 }
+//             })
+//       });
+//     });
+//   });
+            
