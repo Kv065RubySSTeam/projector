@@ -1,52 +1,53 @@
-%h2= @board.title
+= javascript_pack_tag 'memberships/autocomplete'
+= javascript_pack_tag 'memberships/rights'
+= stylesheet_link_tag 'memberships'
 
-%h3	Create by:
-= link_to @board.user.email, user_path(@board.user_id)
-
-%h3 Description:
-%p= @board.description
-= link_to 'Edit', edit_board_path(@board)
-= link_to 'Destroy', @board, method: :delete,
-                                  data: { confirm: "You sure?" }
-
-= link_to 'Back', boards_path
-= form_tag users_index_url, method: :get, class: "navbar-form navbar-right", role: "search" do
-    = text_field_tag :search, params[:search], class: "form-control"
-    = submit_tag "Search", name: nil, class: "btn btn-default"
-= javascript_pack_tag 'auto', 'data-turbolinks-track': 'reload'
+%button#add-user.btn.btn-icon.rounded-circle.btn-outline-primary.mr-1.mb-1{:type => "button"}
+  %i.bx.bx-search
 
 .container
-    .row.justify-content-md-center
-        .col-md-6
-            .input-group.input-group-sm
-                %input.form-control{"data-search" => "template-search", :tabindex => "0", :type => "text", id: "autoComplete"}/
-                %input{type: "hidden", value: memberships_create_path(@board), id: "addMembershipURL"}
-            %ul.list-group.search-list.show#show-users
+  .row
+    .col-md-12
+      .card
+        %section#kanban-wrapper.pt-2.pb-2
+          .container
+            .row
+              .col-md-6
+                .btn-group{:role => "group"}
+                  = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1"
+                  = link_to 'Board owner', @board.user, class: "btn btn-outline-primary mb-1"
+                  = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1"
+                  = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1", data: { confirm: "You sure?" }
 
-#flash-box
-    - flash.each do |name, message|
-        .toast-container.toast-top-right#toast-container
-            .toast.toast-error{"aria-live" => "assertive", :style => "display: block;"}
-                .toast-title= name
-                .toast-message= message
+              .col-md-6
+                .input-group-prepend
+                  %span#basic-addon1.input-group-text Add member
+                  %input.form-control{"data-search": "template-search", "aria-label" => "Username", :placeholder => "Username", :type => "text", id: "autoComplete", name: "find-user"}/
+                  %input{type: "hidden", value: memberships_create_path(@board), id: "addMembershipURL"}
+                %ul.list-group.search-list.show#show-users
 
--# #flash-box.toast-container.toast-top-right
--#     .toast.toast-error{"aria-live": "assertive", style: "display: block;"}
--#         .toast.toast-error#flash-box
--#             - flash.each do |name, msg|
--#                 .toast-tile= name
--#                 .toast-message= msg
+          .col-md
+            %h2
+              = @board.title
+            .divider.col-5
+              .divider-text Descripion
+            %p.card-text
+              = @board.description
 
-%h1 Board
-%p= @board.title
-%p= @board.description
-%p= @board.public
-
-#user-section
-    - @board.users.each do |user|
-        %p= user.email
-        - unless user.administrated_boards.exists?(@board.id)
-            = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), class: 'btn btn-primary', id: 'add_admin', method: :put
-
-
-<script src="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/js/autoComplete.min.js"></script> 
+          #user-section.pt-2
+            %h3.pl-2 Members
+            %ul.pt-1 
+              - @board.users.each do |user|
+                %div.mb-2
+                  - if user.administrated_boards.exists?(@board.id)
+                    .checkbox.checkbox-danger.checkbox-glow
+                      %i.bx.bx-star.bxs-star.warning
+                      %span= user.email
+                  - else
+                    %i.bx.bx-star.bxs-star
+                    %span= user.email
+                    = link_to 'Make Admin', add_admin_rights_path(id: @board.id, user_id: user.id), 
+                                            class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{user.email}", 
+                                            remote: true, 
+                                            method: :put, 
+                                            :onclick => 'makeAdmin(event)'
