@@ -1,11 +1,26 @@
 class CardsController < ApplicationController
   before_action :find_card!, only: :update
   before_action :find_column!
+  before_action :flash_clear, except: [:new, :edit]
   
-  def new
-    # respond_to do |f|  
-    #   f.js 
-    # end
+  def show; end
+  
+  def new; end
+
+  def edit; end
+
+  def create
+    @card = @column.cards.build(card_params)
+    @card.user = current_user
+    @card.position = @column.cards.last_position
+
+    respond_to do |f|  
+      if @card.save
+        f.js { flash[:success] = "Card was successfully created." }
+      else
+        f.js { flash[:error] = "With creatind card were an error!" }
+      end
+    end
   end
 
   def update
@@ -17,15 +32,19 @@ class CardsController < ApplicationController
   private
 
   def find_card!
-    @column = Card.find(params[:id])
+    @card = Card.find(params[:id])
   end
 
   def find_column!
     @column = Column.find(params[:column_id])
   end
 
-  def update_param
-    params.require(:column).permit(:title, :body)
+  def card_params
+    params.require(:card).permit(:title, :body, :column_id, :board_id)
+  end
+
+  def flash_clear
+    flash.clear()
   end
 
 end
