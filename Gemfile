@@ -31,8 +31,11 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4', '~> 0.2.2'
-
 gem 'haml'
+#For sidekiq for mailers
+gem 'sidekiq'
+gem 'redis'
+gem 'devise-async'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
