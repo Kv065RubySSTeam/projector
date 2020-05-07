@@ -1,0 +1,9 @@
+$(".delete-kanban-item").on("ajax:success", function() {
+$(".kanban-item[data-card-id=\'" + "#{@card.id}" + "\']").parent().remove();
+$(this).closest(".kanban-sidebar").hide();
+});
+
+$(".flashes").empty()
+\.append("#{j render 'shared/flash'}")
+\.delay( 5000 )
+\.fadeOut( 3000 );
