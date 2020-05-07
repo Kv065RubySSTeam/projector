@@ -11,7 +11,7 @@ $(document).ready(function(){
 function showCard(boardId, columnId, cardId) {
 
   $.ajax({
-    url: `/boards/${boardId}/columns/${columnId}/cards/${cardId}`,
+    url: `/boards/${boardId}/columns/${columnId}/cards/${cardId}/edit`,
     method: 'GET',
     headers: {
       'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content

@@ -5,5 +5,6 @@ $(this).closest(".kanban-sidebar").hide();
 
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")
+\.children()
 \.delay( 5000 )
-\.fadeOut( 3000 );
+\.slideUp( 1000 );
