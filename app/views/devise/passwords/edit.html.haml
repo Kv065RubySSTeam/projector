@@ -1,19 +1,34 @@
-%h2 Change your password
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  = f.hidden_field :reset_password_token
-  .field
-    = f.label :password, "New password"
-    %br/
-    - if @minimum_password_length
-      %em
-        (#{@minimum_password_length} characters minimum)
-      %br/
-    = f.password_field :password, autofocus: true, autocomplete: "new-password"
-  .field
-    = f.label :password_confirmation, "Confirm new password"
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "new-password"
-  .actions
-    = f.submit "Change my password"
-= render "devise/shared/links"
+.content-body.mx-auto
+  / reset password start
+  %section.row.flexbox-container
+    .col-xl-8.col-10
+      .card.bg-authentication.mb-0
+        .row.m-0
+          / left section-login
+          .col-md-6.col-12.px-0
+            .card.disable-rounded-right.d-flex.justify-content-center.mb-0.p-2.h-100
+              .card-header.pb-1
+                .card-title
+                  %h4.text-center.mb-2 Reset your Password
+              .card-content
+                .card-body
+                  = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
+                    = render "devise/shared/error_messages", resource: resource
+                    = f.hidden_field :reset_password_token
+                    .form-group
+                      = f.label :password, "New password", class: "text-bold-600"
+                      %em.small
+                        (#{@minimum_password_length} characters minimum)
+                      = f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control", placeholder: "Enter a new password", type: "password"
+                    .form-group.mb-2
+                      = f.label :password_confirmation, "Confirm new password", class: "text-bold-600"
+                      = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm your new password", type: "password"
+                    .actions
+                      = f.submit "Change my password", class: "btn btn-primary glow position-relative w-100"
+                  %hr/
+                  .text-center
+                    = link_to "Back to the main page", root_path
+          / right section image
+          .col-md-6.d-md-block.d-none.text-center.align-self-center.p-3
+            %img.img-fluid{:alt => "branding logo", :src => "/images/reset-password.png"}/
+  / reset password ends
