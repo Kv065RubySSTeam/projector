@@ -19,18 +19,29 @@
                       %br/
                       = f.email_field :email, autofocus: true, autocomplete: "email",                 |
                         class: "form-control", id: "exampleInputEmail1", placeholder: "Email address" |
-                    .field.form-group
+                    .form-row
+                      .form-group.col-md-6.mb-50
+                        = f.label :first_name, class: "text-bold-600"
+                        = f.text_field :first_name, class: "form-control", placeholder: "First name"
+                      .form-group.col-md-6.mb-50
+                        = f.label :last_name, class: "text-bold-600"
+                        = f.text_field :last_name, class: "form-control", placeholder: "Last name"
+                    .field.form-group.mb-50
                       = f.label :password, class: "text-bold-600"
                       - if @minimum_password_length
-                        %em
+                        %em.small
                           (#{@minimum_password_length} characters minimum)
                       = f.password_field :password, autocomplete: "new-password",                   |
                         class: "form-control", id: "exampleInputPassword1", placeholder: "Password" |
-                    .field.form-group
+                    .field.form-group.mb-50
                       = f.label :password_confirmation, class: "text-bold-600"
                       = f.password_field :password_confirmation, autocomplete: "new-password",                   |
                         class: "form-control", id: "exampleInputPassword1", placeholder: "Password confirmation" |
-                    .actions
+                    .field.form-group.mb-50
+                      .custom-file
+                        = f.file_field :avatar, class: "custom-file-input", id: "inputAvatar"
+                        %label.custom-file-label{:for => "inputAvatar"} Choose file
+                    .actions.mt-1
                       = f.submit "Sign up", class: "btn btn-primary glow position-relative w-100"
                   %hr/
                   .text-center
@@ -44,4 +55,5 @@
           .col-md-6.d-md-block.d-none.text-center.align-self-center.p-3
             %img.img-fluid{:alt => "branding logo", :src => "/images/register.png"}/
   / register section endss
-  
+
+= javascript_pack_tag "input_fields.js"

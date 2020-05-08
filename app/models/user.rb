@@ -1,9 +1,23 @@
 class User < ApplicationRecord
   has_many :boards, dependent: :nullify
+  has_one_attached :avatar
+
+  validates :first_name, length: { within: 1..100 }
+  validates :last_name, length: { within: 1..100 }
+  validates :avatar, content_type:
+    { in: ['image/png', 'image/jpg', 'image/jpeg'],
+      message: "format is wrong, please use JPG, PNG or JPEG" }
   devise :database_authenticatable,
-         :registerable, :validatable,
-         :confirmable, :recoverable,
+         :registerable, :recoverable, :validatable,
+         :async, :confirmable,
          :omniauthable, omniauth_providers: %i[facebook]
+
+  attribute :remove_avatar, :boolean,  default: false
+  after_save :purge_avatar, if: :remove_avatar
+  
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
 
   def self.new_with_session(params, session)
     super.tap do |user|
@@ -20,5 +34,10 @@ class User < ApplicationRecord
       user.first_name = auth.info.first_name
       user.last_name = auth.info.last_name
     end
+  end
+
+  private
+  def purge_avatar
+    avatar.purge_later
   end
 end
