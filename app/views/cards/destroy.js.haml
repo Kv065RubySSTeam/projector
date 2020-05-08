@@ -1,8 +1,8 @@
 $(".delete-kanban-item").on("ajax:success", function() {
 $(".kanban-item[data-card-id=\'" + "#{@card.id}" + "\']").parent().remove();
+$(".kanban-board[data-id=\'" + "#{@card.column_id}" + "\']").find('.kanban-board-header span.badge').text("#{@column.cards.count -1}");
 $(this).closest(".kanban-sidebar").hide();
 });
-
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")
 \.children()

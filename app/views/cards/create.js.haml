@@ -7,6 +7,7 @@ $(`${className}`).find(".kanban-title-button").show()
 
 
 $(`${className}`).find(".kanban-drag").append("#{j render @card}");
+$(`${className}`).find('.kanban-board-header span.badge').text('#{@column.cards.count}');
 
 $(`${className}`).find(".kanban-item:last").click(function() {
 $(".edit-kanban-card").html("#{j render 'edit_form'}");
