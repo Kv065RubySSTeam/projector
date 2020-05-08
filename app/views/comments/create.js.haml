@@ -1,0 +1,8 @@
+$('#comments').prepend("#{j render @comment}");
+$('#comment_body').val('');
+
+$(".flashes").empty()
+\.append("#{j render 'shared/flash'}")
+\.children()
+\.delay( 5000 )
+\.slideUp( 1000 );
