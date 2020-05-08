@@ -1,6 +1,6 @@
 class Card < ApplicationRecord
   belongs_to :column
-  belongs_to :user
+  belongs_to :user, dependent: :destroy
   validates :title, length: { within: 2..50 }
   validates :position, uniqueness: { scope: :column }
   
