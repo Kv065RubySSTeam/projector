@@ -6,6 +6,9 @@ Rails.application.routes.draw do
     put 'members/:user_id/admin' => 'memberships#admin', as: :add_admin_rights
   end
 
-  devise_for :users, path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' }
-  resources :user, only: %i[index show]
+  devise_for :users, controllers: { registrations: 'registrations' },
+  path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' }
+  resource :user, only: [:show]
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
 end
