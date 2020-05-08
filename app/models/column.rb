@@ -1,7 +1,8 @@
 class Column < ApplicationRecord
   belongs_to :board
-  validates :name, length: { within: 2..50 }, presence: true
-  validates :board, presence: true
+  belongs_to :user
+  validates :name, length: { within: 2..50 }
+  validates :position, uniqueness: { scope: :board }
   
   scope :last_position, -> { maximum(:position) }
 
@@ -15,4 +16,5 @@ class Column < ApplicationRecord
   def set_position
     self.position = self.position.blank? ? 1 : self.position + 1
   end
+
 end

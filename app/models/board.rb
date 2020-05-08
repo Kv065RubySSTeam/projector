@@ -24,13 +24,13 @@ class Board < ApplicationRecord
       all
     end
   end
-  scope :sorting, ->(sorting) do
-    case sorting
-    when "descending"
-      order(created_at: :desc)
-    else "ascending"
-      order(created_at: :asc)
-    end
+  scope :sorting, -> (sort_order) do
+    sort_order = %w[asc desc].include?(sort_order) ? sort_order : 'asc'
+    order(created_at: sort_order)
   end
   self.per_page = 10
+
+  def last_column_position
+    self.columns.maximum(:position)
+  end
 end

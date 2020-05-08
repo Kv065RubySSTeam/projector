@@ -1,7 +1,7 @@
 class ColumnsController < ApplicationController
-  before_action :find_column!, only: :update
   before_action :find_board!
-  before_action :flash_clear, except: [:new, :edit]
+  before_action :find_column!, only: [:update, :destroy]  
+  before_action :flash_clear, except: :new
 
   def new; end
 
@@ -12,14 +12,13 @@ class ColumnsController < ApplicationController
       if @column.save
         f.js { flash[:success] = "Column was successfully created." }
       else
-        f.js { flash[:error] = "With creatind were an error!" }
+        f.js { flash[:error] = @column.errors.full_messages.join("\n") }
       end
     end
   end
 
-  def edit; end  
-
   def update
+    @previousName = @column.name
     respond_to do |f|
       if @column.update(update_param)
         f.js { flash[:success] = "Column was successfully updated." }
@@ -29,21 +28,19 @@ class ColumnsController < ApplicationController
     end
   end
 
-  # DELETE /columns/1
   def destroy
-    @column = @board.columns.find(params[:id])
     respond_to do |f|
       if @column.destroy
         f.js { flash[:success] = "Comment was successfully deleted!" } 
       else
-        f.js { flash[:error] = "Something went wrong, the comment wasn't deleted" }
+        f.js { flash[:error] = @column.errors.full_messages.join("\n") }
       end
     end
   end
 
   private  
   def find_column!
-    @column = Column.find(params[:id])
+    @column = @board.columns.find(params[:id])
   end
 
   def find_board!
