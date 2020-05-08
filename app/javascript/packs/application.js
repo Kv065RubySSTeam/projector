@@ -33,3 +33,4 @@ require('frest/app-assets/js/scripts/footer.js')
 
 require('javascript/packs/dropdown_toggle.js');
 require('javascript/packs/update_column.js');
+require('javascript/packs/show_card.js');

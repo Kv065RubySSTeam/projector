@@ -4,10 +4,8 @@ class ColumnsController < ApplicationController
   before_action :flash_clear, except: [:new, :edit]
 
   def new; end
-  
-  def show
-     @cards = @column.cards
-  end
+
+  def edit; end
 
   def create
     @column = ColumnTemplateBuilder.call(@board, current_user)
@@ -15,12 +13,10 @@ class ColumnsController < ApplicationController
       if @column
         f.js { flash[:success] = "Column was successfully created." }
       else
-        f.js { flash[:error] = "With creatind were an error!" }
+        flash[:error] = "With creatind were an error!"
       end
     end
   end
-
-  def edit; end  
 
   def update
     @previousName = @column.name
@@ -28,7 +24,7 @@ class ColumnsController < ApplicationController
       if @column.update(update_param)
         f.js { flash[:success] = "Column was successfully updated." }
       else
-        f.js { flash[:error] = @column.errors.full_messages.join("\n") } 
+        flash[:error] = @column.errors.full_messages.join("\n")
       end
     end
   end
@@ -37,9 +33,9 @@ class ColumnsController < ApplicationController
     @column = @board.columns.find(params[:id])
     respond_to do |f|
       if @column.destroy
-        f.js { flash[:success] = "Comment was successfully deleted!" } 
+        f.js { flash[:success] = "Column was successfully deleted!" } 
       else
-        f.js { flash[:error] = "Something went wrong, the comment wasn't deleted" }
+        flash[:error] = "Something went wrong, the column wasn't deleted" 
       end
     end
   end

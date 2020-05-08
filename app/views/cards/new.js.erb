@@ -1,4 +1,0 @@
-$('.kanban-title-button').off("ajax:success").on("ajax:success", function() {
-  $(this).hide();
-  $(this).parents('.kanban-board').find(".kanban-drag").append("<%= j render 'card_form' %>");
-});

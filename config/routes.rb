@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   root "boards#index"
   resources :boards do
-    resources :columns do 
-      resources :cards
+    resources :columns, except: [:index, :show] do 
+      resources :cards, except: [:index, :show]
     end
   end
   devise_for :users, path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' }

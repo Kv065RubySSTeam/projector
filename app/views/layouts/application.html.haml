@@ -11,6 +11,8 @@
     - if user_signed_in?
       = render 'layouts/header'
       = render 'layouts/side_menu'
+      .edit-kanban-card
+      -# = render 'cards/edit_form' 
     .app-content.content
       .content-wrapper
       .container
@@ -21,7 +23,6 @@
         = yield
         = javascript_pack_tag "error_fields.js"
         = javascript_pack_tag "dropdown_toggle.js"
-        = javascript_pack_tag "update_column.js"
     .sidenav-overlay
     .drag-target
     = render 'layouts/footer'
