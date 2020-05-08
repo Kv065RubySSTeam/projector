@@ -1,0 +1,20 @@
+
+
+<div class="card-content" id="comment-<%= comment.id %>">
+      <b><small><%= comment.user.email %></small></b>
+      
+      <p><%= comment.body %>
+      <% if current_user && current_user == comment.user %>
+      <div class="btn-group float-right mt-0 pt-0">
+        <%= link_to "Edit", edit_board_column_card_comment_path(@column.board, @column, @card, comment),
+                class: "btn btn-outline-primary btn-sm" %>
+        <%= link_to "Delete", board_column_card_comment_path(@column.board, @column, @card, comment),                                                                
+                method: :delete, remote: true,                                                         
+                class: "btn btn-light-danger btn-sm" %></p>
+        <% end %>
+      </div>
+     
+  </div>
+  
+  </br>
+ 

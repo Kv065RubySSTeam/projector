@@ -5,22 +5,27 @@
       %button.close.close-sidebar.close-icon{:type => "button"}
         %i.bx.bx-x
     .edit-kanban-item
-      .card-content.ps.ps--active-y
-        .card-body
-          = form_with(model: [@column.board, @column, @card], method: :patch, class: "form-group") do |f|
-            .form-group
-              = f.label :title, class: "text-bold-600"
-              = f.text_field :title, class: "form-control edit-kanban-item-title"
-            .form-group
-              = f.label :body, class: "text-bold-600"
-              = f.text_area :body, class: "form-control edit-kanban-item-title"
-            .card-footer.d-flex.justify-content-end
-              = button_tag(class: "btn btn-primary glow update-kanban-item d-flex align-items-center mr-1") do
-                %i.bx.bx-send.mr-50>
-                Save
-              = link_to board_column_card_path(@column.board, @column, @card),                |
-                remote: true,                                                                 |
-                method: :delete,                                                              |
-                class: "btn btn-light-danger delete-kanban-item d-flex align-items-center" do |
-                %i.bx.bx-trash.mr-50
-                Delete
+      -# .card-content.ps.ps--active-y
+      .card-body
+        = form_with(model: [@column.board, @column, @card], method: :patch, class: "form-group") do |f|
+          .form-group
+            = f.label :title, class: "text-bold-600"
+            = f.text_field :title, class: "form-control edit-kanban-item-title"
+          .form-group
+            = f.label :body, class: "text-bold-600"
+            = f.text_area :body, class: "form-control edit-kanban-item-title"
+          .card-footer.d-flex.justify-content-end
+            = button_tag(class: "btn btn-primary glow update-kanban-item d-flex align-items-center mr-1") do
+              %i.bx.bx-send.mr-50>
+              Save
+            = link_to board_column_card_path(@column.board, @column, @card),                |
+              remote: true,                                                                 |
+              method: :delete,                                                              |
+              class: "btn btn-light-danger delete-kanban-item d-flex align-items-center" do |
+              %i.bx.bx-trash.mr-50
+              Delete
+        = render 'comments/form'
+        %br
+          - if @comments
+            #comments
+              = render @comments

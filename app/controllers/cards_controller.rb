@@ -7,7 +7,9 @@ class CardsController < ApplicationController
   
   def new; end
   
-  def edit; end
+  def edit
+    @comments = @card.comments.order(created_at: :desc)
+  end
 
   def create
     @card = @column.cards.build(card_params)
