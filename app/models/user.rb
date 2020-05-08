@@ -5,18 +5,17 @@ class User < ApplicationRecord
   validates :first_name, length: { within: 1..100 }
   validates :last_name, length: { within: 1..100 }
   validates :avatar, content_type:
-                  { in: ['image/png', 'image/jpg', 'image/jpeg'],
-                  message: "format is wrong, please use JPG, PNG or JPEG" }
+    { in: ['image/png', 'image/jpg', 'image/jpeg'],
+      message: "format is wrong, please use JPG, PNG or JPEG" }
 
-  devise :database_authenticatable,
-         :registerable, :validatable,
-         :confirmable, :recoverable
+    devise :database_authenticatable,
+    :registerable, :validatable,
+    :confirmable, :recoverable
 
   attribute :remove_avatar, :boolean,  default: false
-
   after_save :purge_avatar, if: :remove_avatar
 
-  private 
+  private
   def purge_avatar
     avatar.purge_later
   end

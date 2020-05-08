@@ -21,9 +21,9 @@
                         (#{@minimum_password_length} characters minimum)
                       = f.password_field :password, autofocus: true, autocomplete: "new-password", class: "form-control", placeholder: "Enter a new password", type: "password"
                     .form-group.mb-2
-                      = f.label :password_confirmation, "Confirm new password", class: "text-bold-600"                        
-                      = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm your new password", type: "password"                          
-                    .actions 
+                      = f.label :password_confirmation, "Confirm new password", class: "text-bold-600"
+                      = f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control", placeholder: "Confirm your new password", type: "password"
+                    .actions
                       = f.submit "Change my password", class: "btn btn-primary glow position-relative w-100"
                   %hr/
                   .text-center
@@ -32,4 +32,3 @@
           .col-md-6.d-md-block.d-none.text-center.align-self-center.p-3
             %img.img-fluid{:alt => "branding logo", :src => "/images/reset-password.png"}/
   / reset password ends
-/ D: Conten
