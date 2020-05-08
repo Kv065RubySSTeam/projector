@@ -7,14 +7,16 @@ class User < ApplicationRecord
   validates :avatar, content_type:
     { in: ['image/png', 'image/jpg', 'image/jpeg'],
       message: "format is wrong, please use JPG, PNG or JPEG" }
-
-    devise :database_authenticatable,
-    :registerable, :validatable,
-    :confirmable, :recoverable
-
+  devise :database_authenticatable,
+         :registerable, :recoverable, :validatable,
+         :async,:confirmable
   attribute :remove_avatar, :boolean,  default: false
   after_save :purge_avatar, if: :remove_avatar
-
+  
+  def send_devise_notification(notification, *args)
+    devise_mailer.send(notification, self, *args).deliver_later
+  end
+  
   private
   def purge_avatar
     avatar.purge_later

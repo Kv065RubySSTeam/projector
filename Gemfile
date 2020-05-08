@@ -34,6 +34,10 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap4', '~> 0.2.2'
 gem 'active_storage_validations'
 gem 'haml'
+#For sidekiq for mailers
+gem 'sidekiq'
+gem 'redis'
+gem 'devise-async'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
