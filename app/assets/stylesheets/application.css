@@ -1,26 +1,10 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
-
-  /* BEGIN: Theme CSS--;*/
-    @import "app-assets/css/bootstrap.css";
-    @import "app-assets/css/bootstrap-extended.css";
-    @import "app-assets/css/colors.css";
-    @import "app-assets/css/components.min.css";
-    /* @import "app-assets/css/themes/dark-layout.css";
-    @import "app-assets/css/themes/semi-dark-layout.css"; */
-    @import "app-assets/vendors/css/vendors.min.css";
-    @import "app-assets/css/core/menu/menu-types/vertical-menu.min.css";
-    @import "app-assets/css/components.css";
+/* BEGIN: Theme CSS--;*/
+@import "app-assets/css/bootstrap.css";
+@import "app-assets/css/bootstrap-extended.css";
+@import "app-assets/css/colors.css";
+@import "app-assets/css/components.min.css";
+/* @import "app-assets/css/themes/dark-layout.css";
+@import "app-assets/css/themes/semi-dark-layout.css"; */
+@import "app-assets/vendors/css/vendors.min.css";
+@import "app-assets/css/core/menu/menu-types/vertical-menu.min.css";
+@import "app-assets/css/components.css";
