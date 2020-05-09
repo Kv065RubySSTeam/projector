@@ -14,13 +14,6 @@ module Columns
       )
     end
     
-    # def call
-    #   column = @board.columns.new do |column| 
-    #     column.title = 'Title Def'
-    #     column.position = calculate_new_column_postion
-    #     column.user = @user
-    # end
-
     private
     def calculate_new_column_postion
       board.last_column_position.to_i + 1
