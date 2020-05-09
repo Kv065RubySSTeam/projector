@@ -5,6 +5,8 @@
     %title Projector
     = csrf_meta_tags
     = csp_meta_tag
+    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.js"}
+    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.css", :rel => "stylesheet", :type => "text/css"}/
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   %body.vertical-layout.vertical-menu-modern.2-columns.navbar-sticky.footer-static.menu-expanded.pace-done{"data-col" => "2-columns", "data-menu" => "vertical-menu-modern", "data-open" => "click"}
@@ -12,7 +14,7 @@
       = render 'layouts/header'
       = render 'layouts/side_menu'
       .edit-kanban-card
-      -# = render 'cards/edit_form' 
+      -# = render 'cards/edit_form'
     .app-content.content
       .content-wrapper
       .container

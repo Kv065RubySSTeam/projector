@@ -2,13 +2,13 @@ class CardsController < ApplicationController
   before_action :find_card!, only: [:update, :edit]
   before_action :find_column!
   before_action :flash_clear, except: [:new, :edit]
-  
+
   def show; end
-  
+
   def new; end
-  
+
   def edit
-    @comments = @card.comments.order(created_at: :desc)
+    @comments = @card.comments.order(created_at: :desc).paginate(page: 1)
   end
 
   def create
@@ -16,7 +16,7 @@ class CardsController < ApplicationController
     @card.user = current_user
     @card.position = @column.cards.last_position
 
-    respond_to do |f|   
+    respond_to do |f|
       if @card.save
         f.js { flash[:success] = "Card was successfully created." }
       else
@@ -40,7 +40,7 @@ class CardsController < ApplicationController
     @card = @column.cards.find(params[:id])
     respond_to do |f|
       if @card.destroy
-        f.js { flash[:success] = "Card was successfully deleted!" } 
+        f.js { flash[:success] = "Card was successfully deleted!" }
       else
         flash[:error] = "Something went wrong, the card wasn't deleted"
       end

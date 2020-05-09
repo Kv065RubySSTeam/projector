@@ -4,15 +4,19 @@ class CommentsController < ApplicationController
   before_action :find_card!, except: [:new]
   before_action :flash_clear, except: [:new, :edit]
 
+  def index
+    @comments = @card.comments.order(created_at: :desc).paginate(page: params[:page])
+  end
+
   def new
     @card = Card.find(params[:id])  # Only here card id in params
   end
-  
+
   def create
     @comment = @card.comments.build(comment_params)
-    @comment.user = current_user  
+    @comment.user = current_user
     respond_to do |f|
-      if @comment.save 
+      if @comment.save
         f.js { flash[:success] = "Comment was successfully created." }
       else
         f.js { flash[:error] = @comment.errors.full_messages.join("\n") }
@@ -32,7 +36,7 @@ class CommentsController < ApplicationController
       end
     end
   end
-  
+
   def destroy
     respond_to do |f|
       if @comment.destroy

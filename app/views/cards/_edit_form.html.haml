@@ -5,7 +5,6 @@
       %button.close.close-sidebar.close-icon{:type => "button"}
         %i.bx.bx-x
     .edit-kanban-item
-      -# .card-content.ps.ps--active-y
       .card-body
         = form_with(model: [@column.board, @column, @card], method: :patch, class: "form-group") do |f|
           .form-group
@@ -28,4 +27,5 @@
         %br
           - if @comments
             #comments
-              = render @comments
+              = render 'comments/index'
+

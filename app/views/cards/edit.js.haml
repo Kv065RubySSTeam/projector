@@ -4,3 +4,10 @@ $(".kanban-sidebar").addClass('show');
 $("body").find(".close.close-sidebar").click(function() {
 $(".kanban-sidebar").removeClass('show');
 });
+
+if($(".kanban-sidebar").length > 0) {
+var sidebarMenuList = new PerfectScrollbar(".kanban-sidebar", {
+theme: "dark",
+wheelPropagation: false
+});
+}

@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :boards do
     resources :columns do
       resources :cards do
-        resources :comments, except: [:index, :show]
+        resources :comments, except: [:show]
       end
     end
   end
