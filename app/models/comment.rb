@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :card
-  validates :name, length: { within: 2..255 }
+  validates :body, presence: true, length: { maximum: 1000 }
 end

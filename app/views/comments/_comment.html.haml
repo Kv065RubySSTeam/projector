@@ -1,11 +1,11 @@
 .card-content{:id => "comment-#{comment.id}"}
   .row
-    .col-sm
+    .col-sm-6
       %b
         %small= comment.user.email
       %p
         = comment.body
-    .col-sm
+    .col-sm-2
       - if current_user && current_user == comment.user
         .btn-group.mt-0.pt-0.mx-auto
           = link_to "Edit", edit_board_column_card_comment_path(@column.board, @column, @card, comment), |

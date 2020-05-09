@@ -2,6 +2,7 @@ class CommentsController < ApplicationController
   before_action :find_column!
   before_action :find_comment!, only: [:edit, :update, :destroy]
   before_action :find_card!, except: [:new]
+  before_action :flash_clear, except: [:new, :edit]
 
   def new
     @card = Card.find(params[:id])  # Only here card id in params
@@ -9,13 +10,12 @@ class CommentsController < ApplicationController
   
   def create
     @comment = @card.comments.build(comment_params)
-    @comment.user = current_user
-    
-    respond_to do |f|   
-      if @comment.save
+    @comment.user = current_user  
+    respond_to do |f|
+      if @comment.save 
         f.js { flash[:success] = "Comment was successfully created." }
       else
-        f.js { flash[:error] = "With creatind comment were an error!" }
+        f.js { flash[:error] = @comment.errors.full_messages.join("\n") }
       end
     end
   end
@@ -24,11 +24,23 @@ class CommentsController < ApplicationController
 
   def update
     @comment.update(comment_params)
-    @comments = @card.comments.order(created_at: :desc)
+    respond_to do |f|
+      if @comment.valid?
+        f.js { flash[:success] = "Comment was successfully updated." }
+      else
+        f.js { flash[:error] = @comment.errors.full_messages.join("\n") }
+      end
+    end
   end
   
   def destroy
-    @comment.destroy
+    respond_to do |f|
+      if @comment.destroy
+        f.js { flash[:success] = "Comment was successfully deleted." }
+      else
+        f.js { flash[:error] = @comment.errors.full_messages.join("\n") }
+      end
+    end
   end
 
   private
@@ -47,5 +59,9 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:body)
+  end
+
+  def flash_clear
+    flash.clear()
   end
 end

@@ -1,5 +1,9 @@
-.form-group.mb-3{:id => "edit-comment-form-#{@comment.id}"}
-  = form_with(model: [@column.board, @column, @card, @comment], method: :patch, class: "form-group") do |f|
-    = f.label "Edit comment", class: "text-bold-600"
-    = f.text_field :body, class: "form-control border rounded p-1"
-    = f.submit "Edit", class: "btn btn-primary float-right btn-sm mt-1"
+.row{:id => "edit-form-#{@comment.id}"}
+  .col-sm-12
+    .form-group.mb-3
+      = form_with(model: [@column.board, @column, @card, @comment], method: :patch, class: "form-group") do |f|
+        = f.label "Edit comment", class: "text-bold-600"
+        = f.text_field :body, class: "form-control border rounded p-1"
+        .mx-auto
+          = f.submit "Edit", class: "btn btn-primary float-right btn-sm my-1 mx-auto"
+    

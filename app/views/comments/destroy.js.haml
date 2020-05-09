@@ -1,1 +1,7 @@
 $('#comment-#{@comment.id}').fadeOut()
+
+$(".flashes").empty()
+\.append("#{j render 'shared/flash'}")
+\.children()
+\.delay( 3000 )
+\.slideUp( 1000 );

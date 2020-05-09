@@ -1,1 +1,13 @@
-$('#comment-#{@comment.id}').html("#{j render 'comment', comment: @comment}");
+- unless @comment.errors.any?
+  $('#comment-#{@comment.id}').html("#{j render 'comment', comment: @comment}");
+- if @comment.errors.any?
+  $('.errors').empty();
+  $('#edit-form-#{@comment.id}').prepend("#{j render 'shared/errors', object: @comment}");
+  $('.errors').delay( 3000 ).slideUp( 1000 );
+  $('#edit-form-#{@comment.id} #comment_body').addClass('is-invalid');
+
+$(".flashes").empty()
+\.html("#{j render 'shared/flash'}")
+\.children()
+\.delay( 3000 )
+\.slideUp( 1000 );
