@@ -1,5 +1,4 @@
 class ColumnsController < ApplicationController
-
   before_action :find_board!
   before_action :find_column!, only: [:update, :destroy]  
   before_action :flash_clear, except: :new
