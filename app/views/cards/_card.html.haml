@@ -1,5 +1,6 @@
 .card-wrapper
-  .kanban-item{"data-border" => "info", "data-card-id" => "#{card.id}"}
+  .kanban-item{"data-border" => "info", "data-card-id" => "#{card.id}", |
+                          "data-position" => "#{card.position}"}
     .font-medium-1.text-bold-600
       = card.title
     - unless card.body.blank?
