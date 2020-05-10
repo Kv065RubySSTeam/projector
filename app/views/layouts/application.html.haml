@@ -5,8 +5,6 @@
     %title Projector
     = csrf_meta_tags
     = csp_meta_tag
-    %script{:src => "https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/perfect-scrollbar.js"}
-    %link{:href => "https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/1.5.0/css/perfect-scrollbar.css", :rel => "stylesheet", :type => "text/css"}/
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
     = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
   %body.vertical-layout.vertical-menu-modern.2-columns.navbar-sticky.footer-static.menu-expanded.pace-done{"data-col" => "2-columns", "data-menu" => "vertical-menu-modern", "data-open" => "click"}
