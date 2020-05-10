@@ -1,36 +1,60 @@
-%h2
-  Edit #{resource_name.to_s.humanize}
-= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
-  = render "devise/shared/error_messages", resource: resource
-  .field
-    = f.label :email
-    %br/
-    = f.email_field :email, autofocus: true, autocomplete: "email"
-  - if devise_mapping.confirmable? && resource.pending_reconfirmation?
-    %div
-      Currently waiting confirmation for: #{resource.unconfirmed_email}
-  .field
-    = f.label :password
-    %i (leave blank if you don't want to change it)
-    %br/
-    = f.password_field :password, autocomplete: "new-password"
-    - if @minimum_password_length
-      %br/
-      %em
-        = @minimum_password_length
-        characters minimum
-  .field
-    = f.label :password_confirmation
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "new-password"
-  .field
-    = f.label :current_password
-    %i (we need your current password to confirm your changes)
-    %br/
-    = f.password_field :current_password, autocomplete: "current-password"
-  .actions
-    = f.submit "Update"
-%h3 Cancel my account
-%p
-  Unhappy? #{button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete}
-= link_to "Back", :back
+.content-body.mt-2.col-10.mx-auto.mb-2
+  / edit section starts
+  %section.row.flexbox-container
+    .col-xl-12.col-12
+      .card.bg-authentication.mb-0
+        .row.m-0
+          / edit section left
+          .col-md-6.col-12.px-0
+            .card.disable-rounded-right.mb-0.p-2.h-100.d-flex.justify-content-center
+              .card-header.pb-1
+                .card-title
+                  %h4.text-center.mb-2 Update account
+              .card-content
+                .card-body
+                  = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f|
+                    = render "devise/shared/error_messages", resource: resource
+                    .field.form-group.mb-50
+                      = f.label 'Email address', class: "text-bold-600"
+                      %br/
+                      = f.email_field :email, autofocus: true, autocomplete: "email",                 |
+                        class: "form-control", id: "exampleInputEmail1", placeholder: "Email address" |
+                    - if devise_mapping.confirmable? && resource.pending_reconfirmation?
+                      %div
+                        Currently waiting confirmation for: #{resource.unconfirmed_email}
+                    .form-row
+                      .form-group.col-md-6.mb-50
+                        = f.label :first_name, class: "text-bold-600"
+                        = f.text_field :first_name, class: "form-control", placeholder: "First name"
+                      .form-group.col-md-6.mb-50
+                        = f.label :last_name, class: "text-bold-600"
+                        = f.text_field :last_name, class: "form-control", placeholder: "Last name"
+                    .field.form-group.mb-50
+                      = f.label :password, class: "text-bold-600"
+                      %br/
+                      %em.small (enter to change password, min #{@minimum_password_length} characters)
+                      = f.password_field :password, autocomplete: "new-password",                   |
+                        class: "form-control", id: "exampleInputPassword1", placeholder: "Password" |
+                    .field.form-group.mb-50
+                      = f.label :password_confirmation, class: "text-bold-600"
+                      = f.password_field :password_confirmation, autocomplete: "new-password",                   |
+                        class: "form-control", id: "exampleInputPassword1", placeholder: "Password confirmation" |
+                    - if resource.avatar.attached?
+                      .checkbox.mb-1
+                        = f.check_box :remove_avatar, class: "checkbox-input"
+                        = f.label :remove_avatar
+                    .field.form-group.mb-50
+                      .custom-file
+                        = f.file_field :avatar, class: "custom-file-input", id: "inputAvatar"
+                        %label.custom-file-label{:for => "inputAvatar"} Choose file
+                    .actions.mt-1
+                      = f.submit "Update", class: "btn btn-primary glow position-relative w-100"
+                  %hr/
+                  .btn-group.btn-block
+                    = link_to "Back", :back, class: "btn"
+                    = link_to "Delete account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-outline-danger"
+          / image section right
+          .col-md-6.d-md-block.d-none.text-center.align-self-center.p-3
+            %img.img-fluid{:alt => "branding logo", :src => "/images/update-page.png"}/
+  / edit section ends
+= javascript_pack_tag "input_fields.js"

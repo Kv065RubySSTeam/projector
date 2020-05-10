@@ -1,26 +1,23 @@
-%body
-  .kanban-board{"data-id" => "#{(column.id)}", "data-order" => "#{(column.position)}"}
-    %span.badge.badge-pill.badge-danger.badge-up
-    %header.kanban-board-header
-      - unless column.cards.blank?
-        %span.badge.badge-primary.badge-round.mt-35
-          = column.cards.count
-      .kanban-title-board.line-ellipsis{:contenteditable => "true"}
-        = column.name
-      = link_to "+ Add New Item", new_board_column_card_path(@board, column), |
-        remote: true,                                                         |
-        id: "add-card",                                                       |
-        class: "kanban-title-button btn btn-default btn-xs"                   |
-      .dropdown
-        #dropdownMenuButton.dropdown-toggle.cursor-pointer{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :role => "button"}
-          %i.bx.bx-dots-vertical-rounded
-        .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "dropdownMenuButton"}
-          = link_to board_column_path(@board, column.id),         |
-            remote: true,                                         |
-            method: :delete,                                      |
-            class: "kanban-delete dropdown-item kanban-delete" do |
-            %i.bx.bx-trash.mr-50
-            Delete
-    %main.kanban-drag
-      = render column.cards.order(position: :asc)
-    %footer
+.kanban-board{"data-id" => "#{(column.id)}"}
+  %header.kanban-board-header
+    %span.badge.badge-primary.badge-round.mt-35
+      = column.cards.count
+    .kanban-title-board.line-ellipsis{:contenteditable => "true"}
+      = column.name
+    = link_to "+ Add New Item", new_board_column_card_path(@board, column), |
+      remote: true,                                                         |
+      id: "add-card",                                                       |
+      class: "kanban-title-button btn btn-default btn-xs"                   |
+    .dropdown
+      #dropdownMenuButton.dropdown-toggle.cursor-pointer{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", role: "button"}
+        %i.bx.bx-dots-vertical-rounded
+      .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "dropdownMenuButton"}
+        = link_to board_column_path(@board, column.id),         |
+          remote: true,                                         |
+          method: :delete,                                      |
+          class: "kanban-delete dropdown-item kanban-delete" do |
+          %i.bx.bx-trash.mr-50
+          Delete
+  %main.kanban-drag
+    = render column.cards.order(position: :asc)
+  %footer

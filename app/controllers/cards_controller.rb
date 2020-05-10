@@ -1,8 +1,9 @@
 class CardsController < ApplicationController
-  before_action :find_card!, only: [:update, :edit]
-  before_action :find_column!
-  before_action :flash_clear, except: [:new, :edit]
 
+  before_action :find_column!
+  before_action :find_card!, only: [:update, :edit, :destroy]
+  before_action :flash_clear, except: :new
+  
   def show; end
 
   def new; end
@@ -14,42 +15,39 @@ class CardsController < ApplicationController
   def create
     @card = @column.cards.build(card_params)
     @card.user = current_user
-    @card.position = @column.cards.last_position
-
-    respond_to do |f|
+    respond_to do |f|   
       if @card.save
         f.js { flash[:success] = "Card was successfully created." }
       else
-        f.js { flash[:error] = "With creatind card were an error!" }
+        f.js { flash[:error] = @card.errors.full_messages.join("\n") }
       end
     end
   end
 
   def update
     @card.update(card_params)
-    if @card.valid?
-      respond_to do |f|
+    respond_to do |f|
+      if @card.valid?
         f.js { flash[:success] = "Card was successfully updated." }
+      else
+        f.js { flash[:error] = @card.errors.full_messages.join("\n") }
       end
-    else
-      flash[:error] = @card.errors.full_messages.join("\n")
     end
   end
 
   def destroy
-    @card = @column.cards.find(params[:id])
     respond_to do |f|
       if @card.destroy
         f.js { flash[:success] = "Card was successfully deleted!" }
       else
-        flash[:error] = "Something went wrong, the card wasn't deleted"
+        f.js { flash[:error] = @card.errors.full_messages.join("\n") }
       end
     end
   end
 
   private
   def find_card!
-    @card = Card.find(params[:id])
+    @card = @column.cards.find(params[:id])
   end
 
   def find_column!
@@ -57,7 +55,7 @@ class CardsController < ApplicationController
   end
 
   def card_params
-    params.require(:card).permit(:title, :body )
+    params.require(:card).permit(:title, :body)
   end
 
   def flash_clear

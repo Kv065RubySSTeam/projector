@@ -1,19 +1,19 @@
 class ColumnsController < ApplicationController
-  before_action :find_column!, only: :update
   before_action :find_board!
-  before_action :flash_clear, except: [:new, :edit]
+  before_action :find_column!, only: [:update, :destroy]  
+  before_action :flash_clear, except: :new
 
   def new; end
 
   def edit; end
 
   def create
-    @column = ColumnTemplateBuilder.call(@board, current_user)
+    @column = Columns::CreateService.call(@board, current_user)
     respond_to do |f|  
-      if @column
+      if @column.save
         f.js { flash[:success] = "Column was successfully created." }
       else
-        flash[:error] = "With creatind were an error!"
+        f.js { flash[:error] = @column.errors.full_messages.join("\n") }
       end
     end
   end
@@ -24,25 +24,24 @@ class ColumnsController < ApplicationController
       if @column.update(update_param)
         f.js { flash[:success] = "Column was successfully updated." }
       else
-        flash[:error] = @column.errors.full_messages.join("\n")
+        f.js { flash[:error] = @column.errors.full_messages.join("\n") } 
       end
     end
   end
 
   def destroy
-    @column = @board.columns.find(params[:id])
     respond_to do |f|
       if @column.destroy
         f.js { flash[:success] = "Column was successfully deleted!" } 
       else
-        flash[:error] = "Something went wrong, the column wasn't deleted" 
+        f.js { flash[:error] = @column.errors.full_messages.join("\n") }
       end
     end
   end
 
   private  
   def find_column!
-    @column = Column.find(params[:id])
+    @column = @board.columns.find(params[:id])
   end
 
   def find_board!
@@ -57,4 +56,3 @@ class ColumnsController < ApplicationController
     flash.clear()
   end
 end
-
