@@ -6,8 +6,6 @@ class ColumnsController < ApplicationController
 
   def new; end
 
-  def edit; end
-
   def create
     @column = Columns::CreateService.call(@board, current_user)
     if @column.errors.empty?

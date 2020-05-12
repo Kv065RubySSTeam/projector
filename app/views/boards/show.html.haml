@@ -1,7 +1,9 @@
 = javascript_pack_tag "columns/update_column.js"
+= javascript_pack_tag "cards/show_card.js"
 = javascript_pack_tag 'memberships/autocomplete'
 = javascript_pack_tag 'memberships/rights'
 = stylesheet_link_tag 'memberships'
+= stylesheet_link_tag 'columns'
 .container
   .row
     .col-md-12
@@ -30,8 +32,9 @@
               = @board.description
             .kanban-overlay
             %section#kanban-wrapper
-              = link_to new_board_column_path(@board), |
+              = link_to board_columns_path(@board), |
                 remote: true,                          |
+                method: :post,                          |
                 turbolinks: false,                     |
                 id: "add-kanban",                      |
                 class: "btn btn-primary mb-1" do       |
@@ -39,7 +42,6 @@
                 Add New Column
               .kanban-container
                 = render  @columns
-
           #user-section.pt-2
             %h3.pl-2 Members
             %ul.pt-1

@@ -17,9 +17,9 @@ class CommentsController < ApplicationController
     @comment = @card.comments.build(comment_params)
     @comment.user = current_user
     if @comment.save
-      flash[:success] = "Comment was successfully created." }
+      flash[:success] = "Comment was successfully created." 
     else
-      flash[:error] = @comment.errors.full_messages.join("\n") }
+      flash[:error] = @comment.errors.full_messages.join("\n") 
     end
   end
 
@@ -27,17 +27,17 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      flash[:success]  = "Comment was successfully updated." }
+      flash[:success]  = "Comment was successfully updated." 
     else
-      flash[:error] = @comment.errors.full_messages.join("\n") }
+      flash[:error] = @comment.errors.full_messages.join("\n") 
     end
   end
 
   def destroy
     if @comment.destroy
-      flash[:success]  = "Comment was successfully deleted." }
+      flash[:success]  = "Comment was successfully deleted." 
     else
-      flash[:error] = @comment.errors.full_messages.join("\n") }
+      flash[:error] = @comment.errors.full_messages.join("\n") 
     end
   end
 
