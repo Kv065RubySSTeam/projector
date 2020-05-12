@@ -71,5 +71,8 @@ yarn-debug.log*
 !/storage/.keep
 
 /.vscode/launch.json
+<<<<<<< HEAD
 
 /config/master.key
+=======
+>>>>>>> 2ff5adf... refactoring column and board model, column controller, services
