@@ -2,11 +2,7 @@ var className = ".kanban-board[data-id=\'" + "#{@column.id}" + "\']";
 var columnElement = $(`${className}`)[0].getElementsByClassName("kanban-title-board")[0];
 var columnLength = columnElement.innerText.trim().length;
 
-<<<<<<< HEAD
 if (columnLength <= 1){
-=======
-if (columnElement.innerText.length <= 1){
->>>>>>> 2ff5adf... refactoring column and board model, column controller, services
 columnElement.innerHTML = "#{@previousName}";
 }
 

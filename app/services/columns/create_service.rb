@@ -14,16 +14,6 @@ module Columns
       )
     end
     
-<<<<<<< HEAD
-    # def call
-    #   column = @board.columns.new do |column| 
-    #     column.title = 'Title Def'
-    #     column.position = calculate_new_column_postion
-    #     column.user = @user
-    # end
-
-=======
->>>>>>> 2ff5adf... refactoring column and board model, column controller, services
     private
     def calculate_new_column_postion
       board.last_column_position.to_i + 1
