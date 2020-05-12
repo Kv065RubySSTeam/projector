@@ -1,5 +1,8 @@
 class User < ApplicationRecord
-  has_many :boards, dependent: :nullify
+  has_many :memberships, dependent: :destroy
+  has_many :boards, through: :memberships
+  validates :email, uniqueness: true
+  
   has_one_attached :avatar
 
   validates :first_name, length: { within: 1..100 }
@@ -16,6 +19,14 @@ class User < ApplicationRecord
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end
+  
+  has_many :administrated_boards, -> { where(memberships: { admin: true }) }, class_name: 'Board',
+                                                                              through: :memberships, 
+                                                                              source: :board
+
+  scope :search, lambda { |user|
+    where("concat(' OR ', LOWER(first_name), LOWER(last_name), LOWER(email)) LIKE LOWER(?)", "%#{user}%")
+  }
   
   private
   def purge_avatar
