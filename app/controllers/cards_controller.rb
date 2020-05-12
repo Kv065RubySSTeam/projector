@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
   before_action :find_column!
-  before_action :find_card!, only: [:update, :edit, :destroy]
+  before_action :find_card!, only: [:edit, :update, :destroy]
   before_action :flash_clear, except: :new
   respond_to :js
   
@@ -13,6 +13,7 @@ class CardsController < ApplicationController
   def create
     @card = @column.cards.build(card_params)
     @card.user = current_user
+
     if @card.save
       flash[:success] = "Card was successfully created."
     else
@@ -21,11 +22,15 @@ class CardsController < ApplicationController
   end
 
   def update
-    @card.update(card_params)
-    if @card.valid?
-      flash[:success] = "Card was successfully updated."
+    if params[:card]
+      if @card.update(card_params)
+        flash[:success] = "Card was successfully updated."
+      else
+         flash[:error] = @card.errors.full_messages.join("\n")
+      end
     else
-      flash[:error] = @card.errors.full_messages.join("\n")
+      Cards::UpdatePositionService.call(
+        @card, @column, params[:target_cards_id], params[:source_cards_id])
     end
   end
 
@@ -39,7 +44,7 @@ class CardsController < ApplicationController
 
   private
   def find_card!
-    @card = @column.cards.find(params[:id])
+    @card = Card.find(params[:id])
   end
 
   def find_column!
