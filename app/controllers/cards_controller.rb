@@ -30,7 +30,7 @@ class CardsController < ApplicationController
         end
       end
     else
-      Cards::UpdateService.call(
+      Cards::UpdatePositionService.call(
         @card, @column, params[:target_cards_id], params[:source_cards_id])
     end
   end
