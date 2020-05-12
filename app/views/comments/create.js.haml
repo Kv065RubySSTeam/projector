@@ -1,0 +1,20 @@
+- unless @comment.errors.any?
+  -# Add comment
+  $('#comments').prepend("#{j render @comment}");
+  -# Crear input
+  $('#comment_body').val('');
+  -# Clear errors
+  $('.errors').empty();
+  -# Remove error class
+  $('#comments-form textarea').removeClass('is-invalid');
+- else
+  $('.errors').empty();
+  $('#comments-form').prepend("#{j render 'shared/errors', object: @comment}");
+  $('.errors').delay( 3000 ).slideUp( 1000 );
+  $('#comments-form textarea').addClass('is-invalid');
+
+$(".flashes").empty()
+\.append("#{j render 'shared/flash'}")
+\.children()
+\.delay( 3000 )
+\.slideUp( 1000 );

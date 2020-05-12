@@ -33,4 +33,7 @@ class Board < ApplicationRecord
   def last_column_position
     self.columns.maximum(:position)
   end
+  
+  has_many :memberships, dependent: :destroy
+  has_many :users, through: :memberships
 end

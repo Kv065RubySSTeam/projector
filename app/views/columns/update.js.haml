@@ -1,7 +1,8 @@
 var className = ".kanban-board[data-id=\'" + "#{@column.id}" + "\']";
-var columnElement = $(`${className}`)[0].getElementsByClassName("kanban-title-board")[0]
+var columnElement = $(`${className}`)[0].getElementsByClassName("kanban-title-board")[0];
+var columnLength = columnElement.innerText.trim().length;
 
-if (columnElement.innerText.length <= 1){
+if (columnLength <= 1){
 columnElement.innerHTML = "#{@previousName}";
 }
 
