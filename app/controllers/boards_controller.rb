@@ -8,7 +8,9 @@ class BoardsController < ApplicationController
       .paginate(page: params[:page])
   end
 
-  def show; end
+  def show
+    @columns = @board.columns.order(position: :asc) 
+  end
 
   def new
     @board = Board.new

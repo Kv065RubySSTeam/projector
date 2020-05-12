@@ -1,3 +1,4 @@
+= javascript_pack_tag "columns/update_column.js"
 = javascript_pack_tag 'memberships/autocomplete'
 = javascript_pack_tag 'memberships/rights'
 = stylesheet_link_tag 'memberships'
@@ -5,14 +6,13 @@
 .container
   .row
     .col-md-12
-      .card
+      .card{"data-board-id" => "#{(@board.id)}"}
         %section#kanban-wrapper.pt-2.pb-2
           .container
             .row
               .col-md-6
                 .btn-group{:role => "group"}
                   = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1"
-                  = link_to 'Board owner', @board.user, class: "btn btn-outline-primary mb-1"
                   = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1"
                   = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1", data: { confirm: "You sure?" }
               - if current_user.administrated_boards.exists?(@board.id)
@@ -30,6 +30,17 @@
               .divider-text Descripion
             %p.card-text
               = @board.description
+            .kanban-overlay
+            %section#kanban-wrapper
+              = link_to new_board_column_path(@board), |
+                remote: true,                          |
+                turbolinks: false,                     |
+                id: "add-kanban",                      |
+                class: "btn btn-primary mb-1" do       |
+                %i.bx.bx-add-to-queue.mr-50>
+                Add New Column
+              .kanban-container
+                = render  @columns
 
           #user-section.pt-2
             %h3.pl-2 Members

@@ -10,8 +10,9 @@
                 %i.ficon.bx.bx-menu
           %ul.nav.navbar-nav.bookmark-icons
         %ul.nav.navbar-nav.float-right
+
           %li.dropdown.dropdown-user.nav-item
-            %a.dropdown-toggle.nav-link.dropdown-user-link{"data-toggle" => "dropdown", :href => "#"}
+            .dropdown-toggle.nav-link.dropdown-user-link{"data-toggle" => "dropdown", "aria-expanded" => "false"}
               .user-nav.d-sm-flex.d-none
                 - if user_signed_in?
                   %span.user-name= current_user.email

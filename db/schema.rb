@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(version: 2020_05_07_125433) do
     t.index ["user_id"], name: "index_boards_on_user_id"
   end
 
+  create_table "columns", force: :cascade do |t|
+    t.string "name"
+    t.integer "position", null: false
+    t.bigint "board_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["board_id"], name: "index_columns_on_board_id"
+    t.index ["user_id"], name: "index_columns_on_user_id"
+
   create_table "memberships", force: :cascade do |t|
     t.bigint "board_id", null: false
     t.bigint "user_id", null: false
@@ -80,6 +90,8 @@ ActiveRecord::Schema.define(version: 2020_05_07_125433) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "boards", "users"
+  add_foreign_key "columns", "boards"
+  add_foreign_key "columns", "users"
   add_foreign_key "memberships", "boards"
   add_foreign_key "memberships", "users"
 end
