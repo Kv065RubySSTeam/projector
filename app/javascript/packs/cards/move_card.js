@@ -1,14 +1,19 @@
+let drake = dragula();
+
 $(document).ready(function () {
-  let allColumns = [].slice.call(document.querySelectorAll('.kanban-drag'));
-  let drake = dragula(allColumns, {
-    moves: function (el,source, handle, sibling) {
+
+  // Dragula setup
+  let allColumns = $('.kanban-drag').toArray();
+  drake = dragula(allColumns, {
+      moves: function (el, source, handle, sibling) {
           if (el.classList.contains('form-group')) {
               return false;
           }
-          return true;
+        return true;
       }
-    });
+  });
 
+  // Sends information to cards#update controller on drop
   drake.on('drop', function (el, target, source, sibling) {
     let cardId = $(el).find(".kanban-item").data("card-id");
     let columnId = $(el).closest(".kanban-board").data("id");
@@ -17,16 +22,11 @@ $(document).ready(function () {
     let targetCards = $(target).find(".kanban-item");
     let sourceCardsArray = new Array();
     let sourceCards = $(source).find(".kanban-item");
-    let sourceId = $(source).closest(".kanban-board").data("id");;
 
-    targetCards.each(function(){
-      targetCardsArray.push($(this).data('card-id'));
-    });
+    createCardsIdArray(target, targetCards, targetCardsArray);
 
     if(sourceCards.length > 0){
-      sourceCards.each(function(){
-        sourceCardsArray.push($(this).data('card-id'));
-      });
+      createCardsIdArray(source, sourceCards, sourceCardsArray);
     };
 
     console.log(targetCardsArray);
@@ -34,10 +34,9 @@ $(document).ready(function () {
     console.log("card id " + cardId);
     console.log("col id " + columnId);
     console.log("board id " + boardId);
-    console.log("source id " + sourceId);
 
     $.ajax({
-      url: `/boards/${boardId}/columns/${columnId}/cards/${cardId}?source_id=${sourceId}`,
+      url: `/boards/${boardId}/columns/${columnId}/cards/${cardId}`,
       method: 'PUT',
       headers: {
         'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
@@ -47,3 +46,19 @@ $(document).ready(function () {
     });
   });
 });
+
+// Resets dragula containers
+setInterval(function() {
+  let currentDragConteiners = $('.kanban-drag')
+  if(drake.containers.length != currentDragConteiners.length){
+    drake.containers = currentDragConteiners.toArray();
+  }
+}, 500);
+
+// Function to create array with cards id
+function createCardsIdArray(dragArea, cards, emptyArray) {
+  $(dragArea).closest(".kanban-board").find(".badge").text(`${cards.length}`);
+  cards.each(function(){
+    emptyArray.push($(this).data('card-id'));
+  });
+}
