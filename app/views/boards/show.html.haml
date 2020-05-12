@@ -51,8 +51,8 @@
                   - else
                     %i.bx.bx-star.bxs-star
                     %span= user.email
-                    = link_to 'Make Admin', board_add_admin_rights_path(board_id: @board.id, user_id: user.id), 
-                                            class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{user.email}", 
-                                            remote: true, 
-                                            method: :put, 
+                    = link_to 'Make Admin', board_add_admin_rights_path(board_id: @board.id, user_id: user.id),
+                                            class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{user.email}",
+                                            remote: true,
+                                            method: :put,
                                             :onclick => 'makeAdmin(event)'
