@@ -1,43 +1,37 @@
 class CardsController < ApplicationController
-
   before_action :find_column!
   before_action :find_card!, only: [:update, :edit, :destroy]
   before_action :flash_clear, except: :new
-  
+  respond_to :js
+
   def new; end
-  
+
   def edit; end
 
   def create
     @card = @column.cards.build(card_params)
     @card.user = current_user
-    respond_to do |f|   
-      if @card.save
-        f.js { flash[:success] = "Card was successfully created." }
-      else
-        f.js { flash[:error] = @card.errors.full_messages.join("\n") }
-      end
+    if @card.save
+      flash[:success] = "Card was successfully created."
+    else
+      flash[:error] = @card.errors.full_messages.join("\n")
     end
   end
 
   def update
     @card.update(card_params)
-    respond_to do |f|
-      if @card.valid?
-        f.js { flash[:success] = "Card was successfully updated." }
-      else
-        f.js { flash[:error] = @card.errors.full_messages.join("\n") }
-      end
+    if @card.valid?
+      flash[:success] = "Card was successfully updated."
+    else
+      flash[:error] = @card.errors.full_messages.join("\n")
     end
   end
 
   def destroy
-    respond_to do |f|
-      if @card.destroy
-        f.js { flash[:success] = "Card was successfully deleted!" } 
-      else
-        f.js { flash[:error] = @card.errors.full_messages.join("\n") }
-      end
+    if @card.destroy
+      flash[:success] = "Card was successfully deleted!"
+    else
+      flash[:error] = @card.errors.full_messages.join("\n")
     end
   end
 
@@ -57,5 +51,5 @@ class CardsController < ApplicationController
   def flash_clear
     flash.clear()
   end
-
+  
 end
