@@ -1,30 +1,61 @@
 = javascript_pack_tag "columns/update_column.js"
+= javascript_pack_tag 'memberships/autocomplete'
+= javascript_pack_tag 'memberships/rights'
+= stylesheet_link_tag 'memberships'
 
-.row.justify-content-md-center
-  .col-lg
-    .card{"data-board-id" => "#{(@board.id)}"}
-      .card-content
-        .card-body
-          .btn-group{:role => "group"}
-            = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1","data-no-turbolink" => true
-            .btn.btn-outline-primary.mb-1
-              = @board.user.email
-            = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1"
-            = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1", data: { confirm: "You sure?" }
-          %h2
-            = @board.title
-          .divider
-            .divider-text Descripion
-          %p.card-text
-            = @board.description
-          .kanban-overlay
-          %section#kanban-wrapper
-            = link_to new_board_column_path(@board), |
-              remote: true,                          |
-              turbolinks: false,                     |
-              id: "add-kanban",                      |
-              class: "btn btn-primary mb-1" do       |
-              %i.bx.bx-add-to-queue.mr-50>
-              Add New Column
-            .kanban-container
-              = render  @columns
+.container
+  .row
+    .col-md-12
+      .card{"data-board-id" => "#{(@board.id)}"}
+        %section#kanban-wrapper.pt-2.pb-2
+          .container
+            .row
+              .col-md-6
+                .btn-group{:role => "group"}
+                  = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1"
+                  = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1"
+                  = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1", data: { confirm: "You sure?" }
+              - if current_user.administrated_boards.exists?(@board.id)
+                .col-md-6
+                  .input-group-prepend
+                    %span#basic-addon1.input-group-text Add member
+                    %input.form-control{"data-search": "template-search", "aria-label" => "Username", :placeholder => "Username", :type => "text", id: "autoComplete", name: "find-user"}/
+                    %input{type: "hidden", value: board_memberships_create_path(@board), id: "addMembershipURL"}
+                  %ul.list-group.search-list.show#show-users
+
+          .col-md
+            %h2
+              = @board.title
+            .divider.col-5
+              .divider-text Descripion
+            %p.card-text
+              = @board.description
+            .kanban-overlay
+            %section#kanban-wrapper
+              = link_to new_board_column_path(@board), |
+                remote: true,                          |
+                turbolinks: false,                     |
+                id: "add-kanban",                      |
+                class: "btn btn-primary mb-1" do       |
+                %i.bx.bx-add-to-queue.mr-50>
+                Add New Column
+              .kanban-container
+                = render  @columns
+
+          #user-section.pt-2
+            %h3.pl-2 Members
+            %ul.pt-1 
+              - @board.users.each do |user|
+                %div.mb-2
+                  - if user.administrated_boards.exists?(@board.id)
+                    .checkbox.checkbox-danger.checkbox-glow
+                      %i.bx.bx-star.bxs-star.warning
+                      %span= user.email
+                  - else
+                    %i.bx.bx-star.bxs-star
+                    %span= user.email
+                    = link_to 'Make Admin', board_add_admin_rights_path(board_id: @board.id, user_id: user.id), 
+                                            class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{user.email}", 
+                                            remote: true, 
+                                            method: :put, 
+                                            :onclick => 'makeAdmin(event)'
