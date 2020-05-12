@@ -3,10 +3,12 @@ class CardsController < ApplicationController
   before_action :find_card!, only: [:update, :edit, :destroy]
   before_action :flash_clear, except: :new
   respond_to :js
-
+  
   def new; end
 
-  def edit; end
+  def edit
+    @comments = @card.comments.order(created_at: :desc).paginate(page: 1)
+  end
 
   def create
     @card = @column.cards.build(card_params)

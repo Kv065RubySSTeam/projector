@@ -1,12 +1,13 @@
 class User < ApplicationRecord
   has_many :columns, dependent: :destroy
   has_many :cards, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :boards, through: :memberships
-  validates :email, uniqueness: true
-
   has_one_attached :avatar
-
+  
+  validates :email, uniqueness: true
+  validates :email, uniqueness: true
   validates :first_name, length: { within: 1..100 }
   validates :last_name, length: { within: 1..100 }
   validates :avatar, content_type:

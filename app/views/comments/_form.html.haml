@@ -1,0 +1,6 @@
+#comments-form
+  .form-group.mb-3
+    = form_with(model: [@column.board, @column, @card, @card.comments.build], method: :post, class: "form-group") do |f|
+      = f.label "Comment", class: "text-bold-600"
+      = f.text_area :body, class: "form-control snow-container border rounded p-1"
+      = f.submit "Comment", class: "btn btn-primary float-right mt-1"

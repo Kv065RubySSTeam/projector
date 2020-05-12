@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   root "boards#index"
   resources :boards do
     resources :columns, except: [:index, :show, :edit] do 
-      resources :cards, except: [:index, :show]
+      resources :cards, except: [:index, :show] do
+        resources :comments, except: [:show]
+      end
     end
   end
  
