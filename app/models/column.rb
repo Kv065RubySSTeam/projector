@@ -1,6 +1,5 @@
 class Column < ApplicationRecord
-  DEFAULT_TITLE = 'Default Title'
-  DEFAULT_TITLE.freeze
+  DEFAULT_TITLE = 'Default Title'.freeze
 
   belongs_to :board
   belongs_to :user
