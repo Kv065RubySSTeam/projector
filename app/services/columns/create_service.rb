@@ -7,7 +7,7 @@ module Columns
     end
 
     def call
-      column = board.columns.build(
+      board.columns.create(
         name: Column::DEFAULT_TITLE,
         position: calculate_new_column_postion,
         user: user
