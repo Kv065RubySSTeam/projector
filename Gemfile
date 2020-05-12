@@ -22,8 +22,9 @@ gem 'jbuilder', '~> 2.7'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+# Use Active Storage
+gem 'image_processing'
+gem 'aws-sdk-s3', require: false
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -31,8 +32,15 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 gem 'will_paginate'
 gem 'will_paginate-bootstrap4', '~> 0.2.2'
-
+gem 'active_storage_validations'
 gem 'haml'
+#For sidekiq for mailers
+gem 'sidekiq'
+gem 'redis'
+gem 'devise-async'
+
+# Facebook OAuth2 Strategy for OmniAuth
+gem 'omniauth-facebook', '~> 6.0'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
