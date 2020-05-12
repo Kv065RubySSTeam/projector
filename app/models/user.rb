@@ -9,6 +9,7 @@ class User < ApplicationRecord
   validates :avatar, content_type:
     { in: ['image/png', 'image/jpg', 'image/jpeg'],
       message: "format is wrong, please use JPG, PNG or JPEG" }
+
   devise :database_authenticatable,
          :registerable, :recoverable, :validatable,
          :async,:confirmable
