@@ -3,6 +3,7 @@ class CommentsController < ApplicationController
   before_action :find_comment!, only: [:edit, :update, :destroy]
   before_action :find_card!, except: [:new]
   before_action :flash_clear, except: [:new, :edit]
+  respond_to :js
 
   def index
     @comments = @card.comments.order(created_at: :desc).paginate(page: params[:page])
@@ -15,35 +16,28 @@ class CommentsController < ApplicationController
   def create
     @comment = @card.comments.build(comment_params)
     @comment.user = current_user
-    respond_to do |f|
-      if @comment.save
-        f.js { flash[:success] = "Comment was successfully created." }
-      else
-        f.js { flash[:error] = @comment.errors.full_messages.join("\n") }
-      end
+    if @comment.save
+      flash[:success] = "Comment was successfully created." }
+    else
+      flash[:error] = @comment.errors.full_messages.join("\n") }
     end
   end
 
   def edit; end
 
   def update
-    @comment.update(comment_params)
-    respond_to do |f|
-      if @comment.valid?
-        f.js { flash[:success] = "Comment was successfully updated." }
-      else
-        f.js { flash[:error] = @comment.errors.full_messages.join("\n") }
-      end
+    if @comment.update(comment_params)
+      flash[:success]  = "Comment was successfully updated." }
+    else
+      flash[:error] = @comment.errors.full_messages.join("\n") }
     end
   end
 
   def destroy
-    respond_to do |f|
-      if @comment.destroy
-        f.js { flash[:success] = "Comment was successfully deleted." }
-      else
-        f.js { flash[:error] = @comment.errors.full_messages.join("\n") }
-      end
+    if @comment.destroy
+      flash[:success]  = "Comment was successfully deleted." }
+    else
+      flash[:error] = @comment.errors.full_messages.join("\n") }
     end
   end
 
