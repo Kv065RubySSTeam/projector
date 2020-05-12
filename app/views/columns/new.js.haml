@@ -1,0 +1,8 @@
+$("#add-kanban").off('ajax:success').on('ajax:success', function() {
+\// check if we have event listener at the ajax
+$.ajax({
+url: #{@board.id}+"/columns",
+method: "POST",
+headers: { 'X-CSRF-Token': document.getElementsByName( "csrf-token" )[0].content },
+});
+});

@@ -1,5 +1,6 @@
 class Board < ApplicationRecord
   belongs_to :user
+  has_many :columns, dependent: :destroy
 
   validates :title, length: { within: 5..50 }
   validates :description, length: { within: 5..255 }
@@ -32,4 +33,8 @@ class Board < ApplicationRecord
     end
   end
   self.per_page = 10
+
+  def last_column_position
+    self.columns.maximum(:position)
+  end
 end

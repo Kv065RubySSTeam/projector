@@ -14,11 +14,13 @@
     .app-content.content
       .content-wrapper
       .container
-        - flash.each do |type, msg|
-          .alert.alert-info
-            = msg
+        .flashes
+        -# - flash.each do |type, msg|
+        -#   .alert.alert-info
+        -#     = msg
         = yield
         = javascript_pack_tag "error_fields.js"
+        = javascript_pack_tag "dropdown_toggle.js"
     .sidenav-overlay
     .drag-target
     = render 'layouts/footer'
