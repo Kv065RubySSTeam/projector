@@ -9,6 +9,7 @@
               .card-header.pb-1
                 .card-title
                   %h4.text-center.mb-2 Welcome Back!
+
               .card-content
                 .card-body
                   = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
@@ -28,6 +29,12 @@
                     .text-right
                       %small
                         = link_to "Forgot password?", new_password_path(resource_name), class:"card-link"
+                  .form-group
+                    .d-flex.flex-md-row.flex-column.justify-content-around
+                    = link_to user_facebook_omniauth_authorize_path do
+                      .btn.btn-social.btn-block.mt-0.btn-facebook.font-small-3
+                        %i.bx.bxl-facebook-square.font-medium-3
+                        %span.pl-50.d-block.text-center Facebook
                   %hr/
                   .text-center
                     %small.mr-25

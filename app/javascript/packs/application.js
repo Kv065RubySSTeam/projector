@@ -17,10 +17,12 @@ require('jquery-ujs');
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
+
+// BEGIN Vendor JS
 require('frest/app-assets/vendors/js/vendors.min.js')
-require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js')
-require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js')
-require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')
+// require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js')
+// require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js')
+// require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')
 
 // BEGIN: Theme JS
 
@@ -31,3 +33,8 @@ require('frest/app-assets/js/core/app-menu.min.js');
 require('frest/app-assets/js/scripts/footer.js')
 
 require('javascript/packs/dropdown_toggle.js');
+require('javascript/packs/columns/update_column.js');
+
+// Toastr - extension for cute alerts
+require('frest/app-assets/js/scripts/extensions/toastr.min.js');
+require('frest/app-assets/vendors/js/extensions/toastr.min.js');
