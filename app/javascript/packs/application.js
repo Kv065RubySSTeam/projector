@@ -29,13 +29,12 @@ require('frest/app-assets/vendors/js/vendors.min.js')
 
 require('frest/app-assets/js/scripts/configs/horizontal-menu.js')
 require('frest/app-assets/js/core/app-menu.min.js');
-//require('frest/app-assets/js/core/app.js')
-//require('frest/app-assets/js/scripts/components.js')
+// require('frest/app-assets/js/core/app.js')
+// require('frest/app-assets/js/scripts/components.js')
 require('frest/app-assets/js/scripts/footer.js')
 
 require('javascript/packs/dropdown_toggle.js');
 require('javascript/packs/columns/update_column.js');
-
 
 // Toastr - extension for cute alerts
 require('frest/app-assets/js/scripts/extensions/toastr.min.js');

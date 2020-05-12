@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :columns, dependent: :destroy
+  has_many :cards, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :boards, through: :memberships
   validates :email, uniqueness: true

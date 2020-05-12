@@ -2,7 +2,6 @@
 = javascript_pack_tag 'memberships/autocomplete'
 = javascript_pack_tag 'memberships/rights'
 = stylesheet_link_tag 'memberships'
-
 .container
   .row
     .col-md-12
@@ -22,7 +21,6 @@
                     %input.form-control{"data-search": "template-search", "aria-label" => "Username", :placeholder => "Username", :type => "text", id: "autoComplete", name: "find-user"}/
                     %input{type: "hidden", value: board_memberships_create_path(@board), id: "addMembershipURL"}
                   %ul.list-group.search-list.show#show-users
-
           .col-md
             %h2
               = @board.title
@@ -44,7 +42,7 @@
 
           #user-section.pt-2
             %h3.pl-2 Members
-            %ul.pt-1 
+            %ul.pt-1
               - @board.users.each do |user|
                 %div.mb-2
                   - if user.administrated_boards.exists?(@board.id)
@@ -54,8 +52,8 @@
                   - else
                     %i.bx.bx-star.bxs-star
                     %span= user.email
-                    = link_to 'Make Admin', board_add_admin_rights_path(board_id: @board.id, user_id: user.id), 
-                                            class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{user.email}", 
-                                            remote: true, 
-                                            method: :put, 
+                    = link_to 'Make Admin', board_add_admin_rights_path(board_id: @board.id, user_id: user.id),
+                                            class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{user.email}",
+                                            remote: true,
+                                            method: :put,
                                             :onclick => 'makeAdmin(event)'

@@ -1,0 +1,22 @@
+- unless @card.errors.any?
+  cardClass = `.kanban-item[data-card-id=#{@card.id}]`;
+  
+  $(this).off("ajax:success").on("ajax:success", function() {
+  $(cardClass).parent().html("#{j render @card}");
+  
+  className = `.kanban-board[data-id=#{@card.column_id}]`;
+  
+  $(className).find(cardClass).click(function() {
+  $(".edit-kanban-card").html("#{j render 'edit_form'}");
+  $(".kanban-sidebar").addClass('show');
+  
+  $("body").find(".close.close-sidebar").click(function() {
+  $(".kanban-sidebar").removeClass('show');
+  });
+  });
+  });
+$(".flashes").empty()
+\.append("#{j render 'shared/flash'}")
+\.children()
+\.delay( 5000 )
+\.slideUp( 1000 );
