@@ -28,4 +28,7 @@ class Board < ApplicationRecord
     order(created_at: sort_order)
   end
   self.per_page = 10
+
+  has_many :memberships, dependent: :destroy
+  has_many :users, through: :memberships
 end
