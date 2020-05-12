@@ -69,7 +69,6 @@ ActiveRecord::Schema.define(version: 2020_05_07_174619) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["board_id"], name: "index_columns_on_board_id"
     t.index ["user_id"], name: "index_columns_on_user_id"
-  end
 
   create_table "memberships", force: :cascade do |t|
     t.bigint "board_id", null: false

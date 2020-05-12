@@ -10,5 +10,4 @@ class Column < ApplicationRecord
   def last_card_position
     self.cards.maximum(:position)
   end
-  
 end

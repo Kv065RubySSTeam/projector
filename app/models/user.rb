@@ -5,13 +5,15 @@ class User < ApplicationRecord
   has_many :memberships, dependent: :destroy
   has_many :boards, through: :memberships
   has_one_attached :avatar
- 
+  
+  validates :email, uniqueness: true
   validates :email, uniqueness: true
   validates :first_name, length: { within: 1..100 }
   validates :last_name, length: { within: 1..100 }
   validates :avatar, content_type:
     { in: ['image/png', 'image/jpg', 'image/jpeg'],
       message: "format is wrong, please use JPG, PNG or JPEG" }
+
   devise :database_authenticatable,
          :registerable, :recoverable, :validatable,
          :async, :confirmable,
