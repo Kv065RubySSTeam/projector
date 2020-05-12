@@ -10,7 +10,7 @@ class ColumnsController < ApplicationController
 
   def create
     @column = Columns::CreateService.call(@board, current_user)
-    if @column.valid?
+    if @column.errors.empty?
       flash[:success] = "Column was successfully created."
     else
       flash[:error] = @column.errors.full_messages.join("\n")
