@@ -69,14 +69,6 @@ ActiveRecord::Schema.define(version: 2020_05_07_174619) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["board_id"], name: "index_columns_on_board_id"
     t.index ["user_id"], name: "index_columns_on_user_id"
-
-  create_table "memberships", force: :cascade do |t|
-    t.bigint "board_id", null: false
-    t.bigint "user_id", null: false
-    t.boolean "admin", default: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["board_id", "user_id"], name: "index_memberships_on_board_id_and_user_id", unique: true
   end
 
   create_table "comments", force: :cascade do |t|
@@ -87,6 +79,15 @@ ActiveRecord::Schema.define(version: 2020_05_07_174619) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["card_id"], name: "index_comments_on_card_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "memberships", force: :cascade do |t|
+    t.bigint "board_id", null: false
+    t.bigint "user_id", null: false
+    t.boolean "admin", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["board_id", "user_id"], name: "index_memberships_on_board_id_and_user_id", unique: true
   end
 
   create_table "users", force: :cascade do |t|
