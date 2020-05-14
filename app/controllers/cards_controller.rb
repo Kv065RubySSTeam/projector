@@ -1,9 +1,9 @@
 class CardsController < ApplicationController
   before_action :find_column!
-  before_action :find_card!, only: [:edit, :update, :destroy]
+  before_action :find_card!, only: [:edit, :update, :update_position, :destroy]
   before_action :flash_clear, except: :new
   respond_to :js
-
+  
   def new; end
 
   def edit
@@ -30,7 +30,6 @@ class CardsController < ApplicationController
   end
 
   def update_position
-    @card = Card.find(params[:id])
     result, errors = Cards::UpdatePositionService.call(
       @card, @column, params[:target_cards_id], params[:source_cards_id])
     respond_to do |f|
@@ -52,7 +51,7 @@ class CardsController < ApplicationController
 
   private
   def find_card!
-    @card = @column.cards.find(params[:id])
+    @card = Card.find(params[:id])
   end
 
   def find_column!
