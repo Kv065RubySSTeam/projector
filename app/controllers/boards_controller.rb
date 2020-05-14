@@ -19,9 +19,9 @@ class BoardsController < ApplicationController
   def edit; end
 
   def create
-    @board = current_user.boards.new(board_params)
-    if @board.save
-      redirect_to @board
+    @board = Boards::CreateService.call(current_user, board_params)
+    if @board.errors.empty?
+      redirect_to @board 
     else
       render 'new'
     end
