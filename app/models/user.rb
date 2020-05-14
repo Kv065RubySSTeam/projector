@@ -52,7 +52,7 @@ class User < ApplicationRecord
                                                                               source: :board
 
   scope :search, lambda { |user|
-    where("concat(' OR ', LOWER(first_name), LOWER(last_name), LOWER(email)) LIKE LOWER(?)", "%#{user}%")
+    where("concat_ws('OR', LOWER(email), LOWER(first_name), LOWER(last_name)) LIKE LOWER(?)", "%#{user}%")
   }
 
   private

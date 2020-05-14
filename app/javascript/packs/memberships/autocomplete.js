@@ -10,14 +10,14 @@ $(function () {
                 const query = document.querySelector("#autoComplete").value;
                 // Fetch External Data Source
                 const source = await fetch(
-                    `/user.json?search=${query}`
+                    `/users.json?search=${query}`
                     );
                     const data = await source.json();
                     // Post loading placeholder text
                 // Returns Fetched data
                 return data;
             },
-            key: ["first_name", "last_name", "email"],
+            key: ["email" || "first_name" , "last_name"],
             cache: false
         },
         sort: (a, b) => {
@@ -45,12 +45,11 @@ $(function () {
         resultItem: {
             content: (data, source) => {
                 source.setAttribute("class", "list-group-item list-group-item-action");
-                source.innerHTML = `<p class="small mb-0"> ${data.match} </p>`
+                source.innerHTML = `<p class="small mb-0"> ${data.value.email} </p>`
                 const userData = document.createElement("p");
                 userData.setAttribute("class", "mb-0")
                 userData.innerHTML = `${data.value.first_name} ${data.value.last_name}`
                 source.appendChild(userData);
-
             },
             element: "li"
         },

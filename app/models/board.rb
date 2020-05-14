@@ -1,6 +1,8 @@
 class Board < ApplicationRecord
   belongs_to :user
   has_many :columns, dependent: :destroy
+  has_many :users, through: :memberships
+  has_many :memberships, dependent: :destroy
 
   validates :title, length: { within: 5..50 }
   validates :description, length: { within: 5..255 }
@@ -33,7 +35,4 @@ class Board < ApplicationRecord
   def last_column_position
     self.columns.maximum(:position)
   end
-  
-  has_many :memberships, dependent: :destroy
-  has_many :users, through: :memberships
 end

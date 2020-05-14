@@ -20,10 +20,14 @@ Rails.application.routes.draw do
               path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' }
 
   resources :boards do
-    post 'memberships/' => 'memberships#create', as: :memberships_create
-    put 'members/:user_id/admin' => 'memberships#admin', as: :add_admin_rights
+    resources :memberships, only: [:create] do
+      put :admin, on: :member
+    end
   end
+
   resource :user, only: [:show]
+  resources :users, only: %i[index]
+
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
 end
