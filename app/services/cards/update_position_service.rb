@@ -1,30 +1,29 @@
 module Cards
   class UpdatePositionService < ApplicationService
-    attr_accessor :card,
-                  :column,
-                  :target_card_ids,
-                  :source_card_ids
-
+    attr_reader :card,
+                :column,
+                :target_cards_ids,
+                :source_cards_ids
     def initialize(card, column, target_cards_ids, source_cards_ids = nil)
       @card, @column = card, column
       @target_cards_ids = eval(target_cards_ids)
       @source_cards_ids = eval(source_cards_ids) if source_cards_ids.is_a? String
     end
-
     def call
-      @card.update(column_id: @column.id, position: 0)
-      update_cards_position(@target_cards_ids)
-      if @source_cards_ids
-        update_cards_position(@source_cards_ids)
+      Card.transaction do
+        update_cards_position(target_cards_ids)
+        update_cards_position(source_cards_ids) if source_cards_ids.present?
+        return true, []
+      rescue ActiveRecord::RecordInvalid => e
+        return false, e.record.errors.full_messages
       end
     end
-
     private
     def update_cards_position(card_ids)
-      cards_to_update = Card.where(id: card_ids)
-      cards_to_update.each_with_index do |card_to_update, index|
-        card_to_update.position = index + 1
-        card_to_update.save(validate: false)
+      card_ids.each_with_index do |card_id, index|
+        card_to_update = Card.find(card_id)
+        card_to_update.column = column if card_to_update == card
+        card_to_update.update_attribute(:position, index + 1)
       end
     end
   end

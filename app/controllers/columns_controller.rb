@@ -6,6 +6,8 @@ class ColumnsController < ApplicationController
 
   def new; end
 
+  def edit; end
+
   def create
     @column = Columns::CreateService.call(@board, current_user)
     if @column.errors.empty?
@@ -48,5 +50,5 @@ class ColumnsController < ApplicationController
   def flash_clear
     flash.clear()
   end
-  
+
 end

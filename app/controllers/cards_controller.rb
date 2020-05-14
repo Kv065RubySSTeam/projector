@@ -3,7 +3,7 @@ class CardsController < ApplicationController
   before_action :find_card!, only: [:edit, :update, :destroy]
   before_action :flash_clear, except: :new
   respond_to :js
-  
+
   def new; end
 
   def edit
@@ -22,15 +22,23 @@ class CardsController < ApplicationController
   end
 
   def update
-    if params[:card]
-      if @card.update(card_params)
-        flash[:success] = "Card was successfully updated."
-      else
-         flash[:error] = @card.errors.full_messages.join("\n")
-      end
+    if @card.update(card_params)
+      flash[:success] = "Card was successfully updated."
     else
-      Cards::UpdatePositionService.call(
-        @card, @column, params[:target_cards_id], params[:source_cards_id])
+      flash[:error] = @card.errors.full_messages.join("\n")
+    end
+  end
+
+  def update_position
+    @card = Card.find(params[:id])
+    result, errors = Cards::UpdatePositionService.call(
+      @card, @column, params[:target_cards_id], params[:source_cards_id])
+    respond_to do |f|
+      if result
+        f.js { flash[:success] = "Cards positions was successfully updated." }
+      else
+        f.js { flash[:error] = errors.join("\n") }
+      end
     end
   end
 
@@ -44,7 +52,7 @@ class CardsController < ApplicationController
 
   private
   def find_card!
-    @card = Card.find(params[:id])
+    @card = @column.cards.find(params[:id])
   end
 
   def find_column!
@@ -58,5 +66,4 @@ class CardsController < ApplicationController
   def flash_clear
     flash.clear()
   end
-  
 end
