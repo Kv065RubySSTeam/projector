@@ -42,7 +42,11 @@ class User < ApplicationRecord
       user.last_name = auth.info.last_name
     end
   end
-  
+
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   has_many :administrated_boards, -> { where(memberships: { admin: true }) }, class_name: 'Board',
                                                                               through: :memberships, 
                                                                               source: :board

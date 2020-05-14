@@ -38,3 +38,6 @@ require('javascript/packs/columns/update_column.js');
 // Toastr - extension for cute alerts
 require('frest/app-assets/js/scripts/extensions/toastr.min.js');
 require('frest/app-assets/vendors/js/extensions/toastr.min.js');
+
+// Generate ID for ActionCabel csv exporter
+import './exporter/data'
