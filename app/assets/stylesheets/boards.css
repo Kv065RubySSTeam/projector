@@ -1,3 +1,5 @@
   /* Styles for boards*/
   @import "assets/css/style.css";
 
+  /* dragula */
+  @import "app-assets/vendors/css/extensions/dragula.min.css";

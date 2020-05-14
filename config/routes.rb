@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   resources :boards do
     resources :columns, except: [:index, :show, :edit] do 
       resources :cards, except: [:index, :show] do
+        member do
+          put :update_position
+        end
         resources :comments, except: [:show]
       end
     end
