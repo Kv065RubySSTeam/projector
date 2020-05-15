@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  before_action :find_board!, only: [:show, :edit, :update, :destroy]
+  before_action :find_board!, only: [:show, :edit, :update, :destroy, :export]
 
   def index
     @boards = Board.filter(params[:filter], current_user)
@@ -42,6 +42,14 @@ class BoardsController < ApplicationController
       redirect_to @board
     else
       flash[:error] = "Something went wrong, the acticle wasn't deleted"
+    end
+  end
+
+  def export
+    if !params[:export_id].nil?
+      BoardJobs::ExportJob.perform_later(params[:export_id], @board)
+    else
+      BoardJobs::ExportMailJob.perform_later(current_user.email, @board)
     end
   end
 

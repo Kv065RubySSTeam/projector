@@ -12,18 +12,21 @@
         %section#kanban-wrapper.pt-2.pb-2
           .container
             .row
-              .col-md-6
+              .col-md-4
                 .btn-group{:role => "group"}
                   = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1"
                   = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1"
                   = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1", data: { confirm: "You sure?" }
-              - if current_user.administrated_boards.exists?(@board.id)
-                .col-md-6
+              .col-md-6
+                - if current_user.administrated_boards.exists?(@board.id)
                   .input-group-prepend
                     %span#basic-addon1.input-group-text Add member
                     %input.form-control{"data-search": "template-search", "aria-label" => "Username", :placeholder => "Username", :type => "text", id: "autoComplete", name: "find-user"}/
                     %input{type: "hidden", value: board_memberships_create_path(@board), id: "addMembershipURL"}
                   %ul.list-group.search-list.show#show-users
+              .col-md-2
+                = link_to '', export_board_path, class: 'bx bx-download btn btn-icon btn-dark glow mr-1 mb-1 export-btn'
+                = link_to '', export_board_path, class: 'bx bx-mail-send btn btn-icon btn-dark glow mr-1 mb-1 export-and-email-btn'
           .col-md
             %h2
               = @board.title
@@ -38,7 +41,7 @@
                 method: :post,                          |
                 turbolinks: false,                     |
                 id: "add-kanban",                      |
-                class: "btn btn-primary mb-1" do       |
+                class: "btn btn-primary mb-1" do
                 %i.bx.bx-add-to-queue.mr-50>
                 Add New Column
               .kanban-container

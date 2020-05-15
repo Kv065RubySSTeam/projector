@@ -9,8 +9,12 @@ Rails.application.routes.draw do
         resources :comments, except: [:show]
       end
     end
+
+    member do
+      get 'export'
+    end
   end
- 
+
   devise_for :users, 
               controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'registrations' },
               path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' }
