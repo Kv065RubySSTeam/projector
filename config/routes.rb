@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       resources :cards, except: [:index, :show] do
         member do
           put :update_position
+          post :add_assignee
+          delete :remove_assignee
         end
         resources :tags, only: [:create, :destroy]
         resources :comments, except: [:show]
@@ -13,6 +15,7 @@ Rails.application.routes.draw do
 
     member do
       get 'export'
+      get 'members'
     end
   end
 

@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  before_action :find_board!, only: [:show, :edit, :update, :destroy, :export]
+  before_action :find_board!, only: [:show, :edit, :update, :destroy, :export, :members]
 
   def index
     @boards = Board.filter(params[:filter], current_user)
@@ -50,6 +50,12 @@ class BoardsController < ApplicationController
       BoardJobs::ExportJob.perform_later(params[:export_id], @board)
     else
       BoardJobs::ExportMailJob.perform_later(current_user.email, @board)
+    end
+  end
+
+  def members
+    respond_to do |f|
+      f.json { render json: @board.users }
     end
   end
 

@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :columns, dependent: :destroy
   has_many :cards, dependent: :destroy
+  has_many :assigned_card, class_name: 'Card'
   has_many :comments, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :boards, through: :memberships

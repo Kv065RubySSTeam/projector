@@ -1,27 +1,39 @@
 .card-wrapper
   .kanban-item{"data-border" => "info", "data-card-id" => "#{card.id}", |
-                          "data-position" => "#{card.position}"}
+              "data-position" => "#{card.position}"}
     .font-medium-1.text-bold-600
       = card.title
-    - unless card.body.blank?
       .kanban-footer.d-flex.justify-content-between.mt-1
         .kanban-footer-left.d-flex
           .font-small-3
-            = card.body
-    %p{:class => "tag-items-#{card.id}"}
-      - if card.tags.present?
-        %b Tags:
-        %br
-        - card.tags.each do |tag|
-          %span.tag-item{"data-tag-name" => "#{tag.name}",
-            "data-tag-id" => "#{tag.id}", 
-            :class => "mt-1 btn btn-sm round btn-primary align-middle tag-item tag-#{tag.id}",
-            :style => "font-weight:bold;height:40px"}
-            = tag.name
-            = link_to board_column_card_tag_path(card.column.board,card.column,card,tag),
-                                          class: "btn.btn-icon.p-0.rm-tag-btn",
-                                          style: "color:#f5f5f5",
-                                          remote: true,
-                                          method: :delete,
-                                          :onclick => 'sendTagDeleteRequest(event)' do
-              %i.bx.bx-x-circle
+            - unless card.body.blank?
+              = card.body
+      %p{:class => "tag-items-#{card.id}"}
+        - if card.tags.present?
+          %b Tags:
+          %br
+          - card.tags.each do |tag|
+            %span.tag-item{"data-tag-name" => "#{tag.name}",
+              "data-tag-id" => "#{tag.id}", 
+              :class => "mt-1 btn btn-sm round btn-primary align-middle tag-item tag-#{tag.id}",
+              :style => "font-weight:bold;height:40px"}
+              = tag.name
+              = link_to board_column_card_tag_path(card.column.board,card.column,card,tag),
+                                            class: "btn.btn-icon.p-0.rm-tag-btn",
+                                            style: "color:#f5f5f5",
+                                            remote: true,
+                                            method: :delete,
+                                            :onclick => 'sendTagDeleteRequest(event)' do
+                %i.bx.bx-x-circle
+      .kanban-footer-right.d-flex.justify-content-between.mt-1{id: "card-#{card.id}"}
+        - if card.assignee
+          .kanban-users
+            -if card.assignee.avatar.attached?
+              = image_tag card.assignee.avatar, class: "rounded",      |
+              height: "30", width: "30" |
+            -else
+              = image_tag '/images/placeholder.jpg', class: "rounded",      |
+              height: "30", width: "30" |
+        - else
+          = link_to '', class: "btn btn-icon rounded-circle btn-info members-request", remote: true do
+            %i.bx.bx-plus

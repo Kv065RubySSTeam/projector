@@ -1,9 +1,10 @@
 class CardsController < ApplicationController
   before_action :find_column!, except: :index
-  before_action :find_card!, only: [:edit, :update, :update_position, :destroy, :delete_tag]
+  before_action :find_card!, except: %i[new create]
   before_action :flash_clear, except: :new
   before_action :find_board!, only: [:update]
   helper_method :sort_column, :sort_direction
+  before_action :find_user_by_email!, only: %i[add_assignee]
   respond_to :js
 
   def new; end
@@ -59,6 +60,29 @@ class CardsController < ApplicationController
     end
   end
 
+  def add_assignee
+    membership = @column.board.memberships.find_by(user: @user)
+
+    unless membership
+      render json: { error: 'User is not a member of this board' }, status: 404
+      return
+    end
+
+    if @card.assign!(@user)
+      render json: {}, status: 200
+    else
+      render json: { error: @card.errors.full_messages }, status: 422
+    end
+  end
+
+  def remove_assignee
+    if @card.remove_assign!
+      flash[:success] = 'Assignee was successfully deleted!'
+    else
+      flash[:error] = @card.errors.full_messages.join("\n")
+    end
+  end
+
   private
 
   def find_card!
@@ -71,6 +95,11 @@ class CardsController < ApplicationController
 
   def find_column!
     @column = Column.find(params[:column_id])
+  end
+
+  def find_user_by_email!
+    @user = User.find_by(email: params[:email])
+    render json: { error: 'User doesn\'t exist' }, status: 404 unless @user
   end
 
   def card_params

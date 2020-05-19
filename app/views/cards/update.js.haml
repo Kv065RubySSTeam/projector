@@ -1,7 +1,10 @@
 - unless @card.errors.any?
-  var cardClass = `.kanban-item[data-card-id=#{@card.id}]`;
   if ($("#kanban-wrapper").length){
 
+  = render partial: 'click', formats: [:js]
+
+  cardClass = `.kanban-item[data-card-id=#{@card.id}]`;
+  
   $(cardClass).parent().html("#{j render @card}");
 
   $(cardClass).click(function() {
@@ -19,8 +22,10 @@
   row.find(".card-body").text("#{short_text(@card.body)}")
   $("body").find(".kanban-sidebar").removeClass('show');
   }
+
+  $(cardClass).find('.members-request').on('click', onClick);
+
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")
-\.children()
 \.delay( 5000 )
 \.slideUp( 1000 );

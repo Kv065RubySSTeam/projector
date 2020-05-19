@@ -1,6 +1,7 @@
 class Card < ApplicationRecord
   belongs_to :column
   belongs_to :user
+  belongs_to :assignee, class_name: "User", foreign_key: "assignee_id", optional: true
   has_many :comments, dependent: :destroy
   has_many :taggings
   has_many :tags, through: :taggings
@@ -19,6 +20,14 @@ class Card < ApplicationRecord
   before_validation(on: :create) do
     self.position = self.column.last_card_position.to_i + 1
   end
+
   self.per_page = 10
 
+  def assign!(user)
+    update(assignee: user)
+  end
+
+  def remove_assign!
+    update(assignee: nil)
+  end
 end

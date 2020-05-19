@@ -13,6 +13,14 @@ require('jquery')
 require('frest/app-assets/vendors/js/extensions/toastr.min.js');
 window.toastr = toastr
 
+// Sweet Alerts from frest theme
+require('frest/app-assets/vendors/js/extensions/sweetalert2.all.min.js');
+window.Swal = Swal;
+
+// JS autocomplete module
+require('@tarekraafat/autocomplete.js');
+window.autoComplete = autoComplete;
+
 require('jquery-ujs');
 
 // Uncomment to copy all static images under ../images to the output folder and reference
