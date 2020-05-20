@@ -6,6 +6,7 @@ Rails.application.routes.draw do
         member do
           put :update_position
         end
+        resources :tags, only: [:create, :destroy]
         resources :comments, except: [:show]
       end
     end
@@ -30,4 +31,5 @@ Rails.application.routes.draw do
 
   require 'sidekiq/web'
   mount Sidekiq::Web => '/sidekiq'
+
 end

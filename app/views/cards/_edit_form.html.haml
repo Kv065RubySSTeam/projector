@@ -6,7 +6,7 @@
         %i.bx.bx-x
     .edit-kanban-item
       .card-body
-        = form_with(model: [@column.board, @column, @card], method: :patch, class: "form-group") do |f|
+        = form_with(model: [@column.board, @column, @card], method: :patch, class: "form-group edit-form mb-0 pb-0") do |f|
           .form-group
             = f.label :title, class: "text-bold-600"
             = f.text_field :title, class: "form-control edit-kanban-item-title"
@@ -14,7 +14,7 @@
             = f.label :body, class: "text-bold-600"
             = f.text_area :body, class: "form-control edit-kanban-item-title"
           .card-footer.d-flex.justify-content-end
-            = button_tag(class: "btn btn-primary glow update-kanban-item d-flex align-items-center mr-1") do
+            = button_tag(class: "btn btn-primary glow update-kanban-item d-flex align-items-center mr-1 save-card-button") do
               %i.bx.bx-send.mr-50>
               Save
             = link_to board_column_card_path(@column.board, @column, @card),                |
@@ -23,9 +23,30 @@
               class: "btn btn-light-danger delete-kanban-item d-flex align-items-center" do |
               %i.bx.bx-trash.mr-50
               Delete
+        - if @card.tags.present?
+          .tags-container
+            - @card.tags.each do |tag|
+              %span.tag-item.mt-0{"data-tag-name" => "#{tag.name}",
+                "data-tag-id" => "#{tag.id}", 
+                :class => "mt-1 btn btn-sm round btn-primary align-middle tag-item tag-#{tag.id}",
+                :style => "font-weight:bold;height:40px"}
+                = tag.name
+                = link_to board_column_card_tag_path(@card.column.board,@card.column,@card,tag),
+                                              class: "btn.btn-icon.p-0.rm-tag-btn",
+                                              style: "color:#f5f5f5",
+                                              remote: true,
+                                              method: :delete,
+                                              :onclick => 'sendTagDeleteRequest(event)' do
+                  %i.bx.bx-x-circle
+        %fieldset.form-group.mt-1
+          %label.mb-0.pb-0{:for => "tags", :class => "text-bold-600"} New Tag
+          %br
+            %small.mt-0.pt-0 (write tag name and press enter)
+            %input#tagName.form-control.mt-1{:type => "text"}
         = render 'comments/form'
         %br
           - if @comments
             #comments
               = render 'comments/index'
 = javascript_pack_tag "cards/scrollbar"
+= javascript_pack_tag "tags/create_tag"

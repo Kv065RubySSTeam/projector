@@ -8,3 +8,20 @@
         .kanban-footer-left.d-flex
           .font-small-3
             = card.body
+    %p{:class => "tag-items-#{card.id}"}
+      - if card.tags.present?
+        %b Tags:
+        %br
+        - card.tags.each do |tag|
+          %span.tag-item{"data-tag-name" => "#{tag.name}",
+            "data-tag-id" => "#{tag.id}", 
+            :class => "mt-1 btn btn-sm round btn-primary align-middle tag-item tag-#{tag.id}",
+            :style => "font-weight:bold;height:40px"}
+            = tag.name
+            = link_to board_column_card_tag_path(card.column.board,card.column,card,tag),
+                                          class: "btn.btn-icon.p-0.rm-tag-btn",
+                                          style: "color:#f5f5f5",
+                                          remote: true,
+                                          method: :delete,
+                                          :onclick => 'sendTagDeleteRequest(event)' do
+              %i.bx.bx-x-circle

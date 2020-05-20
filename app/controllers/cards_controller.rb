@@ -1,7 +1,8 @@
 class CardsController < ApplicationController
   before_action :find_column!
-  before_action :find_card!, only: [:edit, :update, :update_position, :destroy]
+  before_action :find_card!, only: [:edit, :update, :update_position, :destroy, :delete_tag]
   before_action :flash_clear, except: :new
+  before_action :find_board!, only: [:update]
   respond_to :js
   
   def new; end
@@ -52,6 +53,10 @@ class CardsController < ApplicationController
   private
   def find_card!
     @card = Card.find(params[:id])
+  end
+
+  def find_board!
+    @board = Board.find(params[:board_id])
   end
 
   def find_column!

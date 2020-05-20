@@ -8,6 +8,11 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require('jquery')
+
+// Toastr - extension for cute alerts
+require('frest/app-assets/vendors/js/extensions/toastr.min.js');
+window.toastr = toastr 
+
 require('jquery-ujs');
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -35,9 +40,8 @@ require('frest/app-assets/js/scripts/footer.js')
 require('javascript/packs/dropdown_toggle.js');
 require('javascript/packs/columns/update_column.js');
 
-// Toastr - extension for cute alerts
-require('frest/app-assets/js/scripts/extensions/toastr.min.js');
-require('frest/app-assets/vendors/js/extensions/toastr.min.js');
+require('javascript/packs/tags/create_tag.js');
+require('javascript/packs/tags/remove_tag.js');
 
 // Generate ID for ActionCabel csv exporter
 import './exporter/data'
