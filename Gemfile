@@ -3,6 +3,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.5.5'
 
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
 # Use postgresql as the database for Active Record
@@ -34,6 +35,7 @@ gem 'will_paginate'
 gem 'will_paginate-bootstrap4', '~> 0.2.2'
 gem 'active_storage_validations'
 gem 'haml'
+gem 'acts-as-taggable-on', '~> 6.5'
 #For sidekiq for mailers
 gem 'sidekiq'
 gem 'redis'

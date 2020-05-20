@@ -1,0 +1,5 @@
+- if @card.errors.empty?
+  $(".tag-item[data-tag-id=#{@tag.id}]").fadeOut(300);
+- if @card.tags.empty?
+  $(".tag-items-#{@card.id}").fadeOut(300);
+= render partial: 'shared/toaster'

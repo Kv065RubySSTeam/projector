@@ -6,3 +6,5 @@
 #     https: false
 #   )
 # end
+
+ActsAsTaggableOn.remove_unused_tags = true
