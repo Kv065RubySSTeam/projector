@@ -11,12 +11,15 @@
           %i.toggle-icon.font-medium-4.d-none.d-xl-block.primary.bx.bx-disc{"data-ticon" => "bx-disc"}
   .shadow-bottom
   .main-menu-content.ps.ps--active-y
-    %ul#main-menu-navigation.navigation.navigation-main{"data-menu" => "menu-navigation", "data-icon-style" =>"lines"}
+    %ul#main-menu-navigation.navigation.navigation-main{"data-icon-style" => "lines", "data-menu" => "menu-navigation"}
       %li.nav-item
-        = link_to boards_path,   |
-          class: "menu-title" do |
-          %i.bx.bx-desktop>      
+        = link_to boards_path, class: "menu-title" do
+          %i.bx.bx-desktop
           Boards
+      %li.nav-item
+        = link_to cards_path, class: "menu-title" do
+          %i.bx.bx-task{"data-icon" => "check-alt"}
+          Cards
     .ps__rail-x
       .ps__thumb-x{:tabindex => "0"}
     .ps__rail-y

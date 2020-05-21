@@ -1,11 +1,20 @@
 class CardsController < ApplicationController
-  before_action :find_column!
+  before_action :find_column!, except: :index
   before_action :find_card!, only: [:edit, :update, :update_position, :destroy, :delete_tag]
   before_action :flash_clear, except: :new
   before_action :find_board!, only: [:update]
+  helper_method :sort_column, :sort_direction
   respond_to :js
-  
+
   def new; end
+
+  def index
+    @load_new = params[:load_new] || false
+    @cards = Card.available_for(current_user)
+                 .order(sort_column + " " + sort_direction)
+                 .search(params[:search])
+    paginate_cards
+  end
 
   def edit
     @comments = @card.comments.order(created_at: :desc).paginate(page: 1)
@@ -51,6 +60,7 @@ class CardsController < ApplicationController
   end
 
   private
+
   def find_card!
     @card = Card.find(params[:id])
   end
@@ -70,4 +80,27 @@ class CardsController < ApplicationController
   def flash_clear
     flash.clear()
   end
+
+  def sort_column
+    params[:sort] || "title"
+  end
+
+  def sort_direction
+    params[:direction] || "asc"
+  end
+
+  protected
+
+  def paginate_cards
+    if @load_new
+      @cards = @cards.limit(Card.per_page * params[:page].to_i)
+      @current_page = params[:page].to_i
+      @total_pages = (Card.available_for(current_user).count() / Card.per_page.to_f).ceil
+    else
+      @cards = @cards.paginate(page: params[:page])
+      @current_page = @cards.current_page
+      @total_pages = @cards.total_pages
+    end
+  end
+
 end

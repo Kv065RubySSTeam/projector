@@ -10,15 +10,13 @@
                 %i.ficon.bx.bx-menu
           %ul.nav.navbar-nav.bookmark-icons
         %ul.nav.navbar-nav.float-right
-
           %li.dropdown.dropdown-user.nav-item
-            .dropdown-toggle.nav-link.dropdown-user-link{"data-toggle" => "dropdown", "aria-expanded" => "false"}
+            %a.dropdown-toggle.nav-link.dropdown-user-link{"aria-disabled" => "true", "aria-expanded" => "false", "data-toggle" => "dropdown", "data-turbolinks" => "false", :href => "#"}
               .user-nav.d-sm-flex.d-none
                 - if user_signed_in?
-                  %span.user-name= current_user.email
-              %span
-              - if current_user.avatar.attached?
-                =image_tag current_user.avatar, class: "round", alt: "avatar", height: "40", width: "40"
+                  %span.user-name
+                    = get_full_user_name(current_user)
+              = image_tag get_avatar(current_user), class: "round", alt: "avatar", height: "40", width: "40"
             .dropdown-menu.dropdown-menu-right.pb-0
               %a.dropdown-item{:href => user_path}
                 %i.bx.bx-user.mr-50
@@ -28,6 +26,6 @@
                 Edit Profile
               = link_to destroy_user_session_path, |
                 method: :delete,                   |
-                class: "dropdown-item"  do         |
-                %i.bx.bx-power-off.mr-50>
+                class: "dropdown-item" do          |
+                %i.bx.bx-power-off.mr-50
                 Logout

@@ -1,0 +1,51 @@
+var direction = "#{sort_direction}";
+var opposite_direction = direction == "asc" ? "desc" : "asc";
+var sort_column = "#{sort_column}";
+var current_page_number = "#{@current_page}";
+var next_page_number = (+current_page_number + 1).toString();
+- if @load_new
+  $('.kanban-item').remove();
+- unless @total_pages > @current_page
+  $('ul.pagination').remove();
+$('ul.pagination').find("#more_cards").attr('href', `/cards?page=${next_page_number}&amp;direction=${direction}&amp;sort=${sort_column}`);
+- @cards.each do |card|
+  $('#cards').append("#{j render('card_for_index', card: card)}");
+
+$("#cards_table th.sorting_asc").removeClass("sorting_asc").addClass("sorting");
+$("#cards_table th.sorting_desc").removeClass("sorting_desc").addClass("sorting");
+$(`#cards_table th[data-name=${sort_column}]`).removeClass("sorting").addClass(`sorting_${direction}`);
+
+var links = $('#cards_table th a');
+links.each(function (i, link) {
+col_name = $(link).parent().data('name');
+col_dir = sort_column == col_name ? opposite_direction : "asc";
+new_href = `/cards?page=${current_page_number}&amp;direction=${col_dir}&amp;sort=${col_name}&amp;load_new=true`;
+$(link).attr('href', new_href);
+})
+
+$('#cards_table').find('.kanban-item')
+\.click(function() {
+var cardId = $(this).data('card-id');
+var columnId = $(this).data('column-id');
+var boardId = $(this).data('board-id');
+showCard(boardId, columnId, cardId);
+});
+
+function showCard(boardId, columnId, cardId) {
+$.ajax({
+url: `/boards/${boardId}/columns/${columnId}/cards/${cardId}/edit`,
+method: 'GET',
+headers: {
+'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
+},
+});
+}
+
+$('.edit-kanban-card').html("\#{j render 'cards/edit_form'}");
+$('.kanban-sidebar').addClass('show');
+
+$('body')
+\.find('.close.close-sidebar')
+\.click(function() {
+$('.kanban-sidebar').removeClass('show');
+});

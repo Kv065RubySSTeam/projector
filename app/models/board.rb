@@ -1,8 +1,8 @@
 class Board < ApplicationRecord
   belongs_to :user
   has_many :columns, dependent: :destroy
-  has_many :users, through: :memberships
   has_many :memberships, dependent: :destroy
+  has_many :users, through: :memberships
 
   validates :title, length: { within: 5..50 }
   validates :description, length: { within: 5..255 }

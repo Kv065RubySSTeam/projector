@@ -1,8 +1,9 @@
 - unless @card.errors.any?
-  cardClass = `.kanban-item[data-card-id=#{@card.id}]`;
-  
+  var cardClass = `.kanban-item[data-card-id=#{@card.id}]`;
+  if ($("#kanban-wrapper").length){
+
   $(cardClass).parent().html("#{j render @card}");
-  
+
   $(cardClass).click(function() {
   $.ajax({
   url: `/boards/#{@card.column.board_id}/columns/#{@card.column_id}/cards/#{@card.id}/edit`,
@@ -12,6 +13,12 @@
   },
   });
   });
+  } else {
+  var row = $("#cards_table #cards").find(".kanban-item[data-card-id=#{@card.id}]")
+  row.find(".card-title").text("#{short_text(@card.title)}")
+  row.find(".card-body").text("#{short_text(@card.body)}")
+  $("body").find(".kanban-sidebar").removeClass('show');
+  }
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")
 \.children()
