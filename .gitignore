@@ -74,3 +74,5 @@ yarn-debug.log*
 
 /config/master.key
 
+#Redis
+dump.rdb 

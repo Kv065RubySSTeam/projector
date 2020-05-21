@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root "boards#index"
   resources :boards do
-    resources :columns, except: [:index, :show, :edit] do 
+    resources :columns, except: [:index, :show, :edit] do
       resources :cards, except: [:index, :show] do
         member do
           put :update_position
@@ -16,7 +16,9 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, 
+  resources :cards, only: [:index]
+
+  devise_for :users,
               controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'registrations' },
               path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' }
 

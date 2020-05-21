@@ -11,7 +11,7 @@ require('jquery')
 
 // Toastr - extension for cute alerts
 require('frest/app-assets/vendors/js/extensions/toastr.min.js');
-window.toastr = toastr 
+window.toastr = toastr
 
 require('jquery-ujs');
 
@@ -36,9 +36,6 @@ require('frest/app-assets/js/core/app-menu.min.js');
 // require('frest/app-assets/js/core/app.js')
 // require('frest/app-assets/js/scripts/components.js')
 require('frest/app-assets/js/scripts/footer.js')
-
-require('javascript/packs/dropdown_toggle.js');
-require('javascript/packs/columns/update_column.js');
 
 require('javascript/packs/tags/create_tag.js');
 require('javascript/packs/tags/remove_tag.js');

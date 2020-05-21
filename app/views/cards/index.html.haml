@@ -1,0 +1,40 @@
+= stylesheet_link_tag 'columns'
+%section.invoice-list-wrapper
+  .action-dropdown-btn.d-none
+  .table-responsive
+    #DataTables_Table_0_wrapper.dataTables_wrapper.dt-bootstrap4.no-footer
+      .top.d-flex.flex-wrap
+        .action-filters.flex-grow-1
+          #DataTables_Table_0_filter.dataTables_filter
+            / Search bar
+            = form_with(url: cards_path, method: "get", local: true) do
+              %label
+                = text_field_tag :search, nil, class: "form-control form-control-sm", type: "search", placeholder: "Search Cards"
+              = hidden_field_tag(:available_for, current_user)
+              .form-control-position
+                %i.bx.bx-search
+      .clear
+      %table#cards_table.table.invoice-data-table.dt-responsive.nowrap.dataTable.no-footer.dtr-column.collapsed{:role => "grid"}
+        %thead
+          %tr{:role => "row"}
+            %th.sorting_asc{"data-name" => "title"}
+              = sortable "title"
+            %th.sorting{"data-name" => "body"}
+              = sortable "body"
+            %th.sorting{:colspan => "1", "data-name" => "created_at", :rowspan => "1", :tabindex => "0"}
+              = sortable "created_at"
+            %th.sorting{"data-name" => "updated_at"}
+              = sortable "updated_at"
+            %th.sorting{:colspan => "1", "data-name" => "user_id", :rowspan => "1", :tabindex => "0"}
+              = sortable "user_id"
+            %th{:colspan => "1", :rowspan => "1", :tabindex => "0"} Avatar
+        %tbody#cards
+          - @cards.each do |card|
+            = render partial: "card_for_index", locals: {card: card}
+      .bottom
+        .dataTables_paginate.paging_simple_numbers
+          %ul.pagination
+            %li.paginate_button.page-item.active
+              - if @current_page < @total_pages
+                = link_to "Load more", cards_path( page: @current_page + 1), class: "btn btn-primary page-link", id: "more_cards", remote: true
+= javascript_pack_tag "cards/show_card.js"
