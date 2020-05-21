@@ -1,6 +1,6 @@
 - unless @card.errors.any?
   = render partial: 'click', formats: [:js]
-  className = `.kanban-board[data-id=#{@card.column_id}]`;
+  className = `.kanban-board[data-column-id=#{@card.column_id}]`;
   cardId = `.kanban-item[data-card-id=#{@card.id}]`;
   \// Hide form
   $(className).find(".kanban-drag form.form-group").remove();

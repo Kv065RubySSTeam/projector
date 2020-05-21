@@ -2,7 +2,7 @@ $(() => {
   $('.members-request').click(function (event) {
     const token = $('meta[name="csrf-token"]').attr('content');
     var boardId = $('.card').data('board-id');
-    var columnId = $(this).closest('.kanban-board').data('id');
+    var columnId = $(this).closest('.kanban-board').data('column-id');
     var cardId = $(this).parents('.kanban-item').data('card-id');
     Swal.fire({
       title: 'Assign User',

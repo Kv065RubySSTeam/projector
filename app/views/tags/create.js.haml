@@ -1,3 +1,6 @@
+if ($("#kanban-wrapper").length){
 = render partial: 'shared/update_card', formats: [:js]
+}
 = render partial: 'shared/toaster'
+
 $('.tags-container').append("#{j render 'tag', tag: @tag}")

@@ -2,11 +2,13 @@
 = render partial: 'shared/toaster'
 
 $(".delete-assignee").on("ajax:success", function() {
+$(".assignee-in-sidebar").remove();
+
+if ($("#kanban-wrapper").length){
 cardClass = `.kanban-item[data-card-id=#{@card.id}]`;
 
 $(cardClass).parent().html("#{j render @card}");
 
-$(".assignee-in-sidebar").remove();
 
 $(cardClass).click(function() {
 $(".edit-kanban-card").html("#{j render 'edit_form'}");
@@ -18,4 +20,5 @@ $(".kanban-sidebar").removeClass('show');
 });
 
 $(cardClass).parent().find('.members-request').on('click', onClick);
+}
 });

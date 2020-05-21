@@ -13,3 +13,6 @@
 @import "app-assets/vendors/css/tables/datatable/datatables.min.css";
 /* Swal */
 @import "app-assets/vendors/css/extensions/sweetalert2.min.css";
+
+/* Toastr */
+@import "app-assets/vendors/css/extensions/toastr.css";

@@ -1,6 +1,6 @@
 class CardsController < ApplicationController
   before_action :find_column!, except: :index
-  before_action :find_card!, except: %i[new create]
+  before_action :find_card!, except: %i[index new create]
   before_action :flash_clear, except: :new
   before_action :find_board!, only: [:update]
   helper_method :sort_column, :sort_direction

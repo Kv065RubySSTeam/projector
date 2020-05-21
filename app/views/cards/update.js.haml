@@ -16,6 +16,7 @@
   },
   });
   });
+  $(cardClass).find('.members-request').on('click', onClick);
   } else {
   var row = $("#cards_table #cards").find(".kanban-item[data-card-id=#{@card.id}]")
   row.find(".card-title").text("#{short_text(@card.title)}")
@@ -23,7 +24,6 @@
   $("body").find(".kanban-sidebar").removeClass('show');
   }
 
-  $(cardClass).find('.members-request').on('click', onClick);
 
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")
