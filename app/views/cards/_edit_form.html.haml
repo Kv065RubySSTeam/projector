@@ -6,6 +6,22 @@
         %i.bx.bx-x
     .edit-kanban-item
       .card-body
+        - if @card.assignee
+          .kanban-users.d-flex.assignee-in-sidebar
+            .text-bold-600.d-flex.align-items-center.mr-1
+              Assignee:
+            -if @card.assignee.avatar.attached?
+              = image_tag @card.assignee.avatar, class: "rounded d-flex align-items-center",      |
+              height: "30", width: "30" 
+            -else
+              = image_tag '/images/placeholder.jpg', class: "rounded",      |
+              height: "30", width: "30" 
+            = link_to remove_assignee_board_column_card_path(@column.board, @column, @card),  |
+              remote: true,                                                                 |
+              method: :delete,                                                              |
+              class: "close delete-assignee close-icon" do |
+              %i.bx.bx-x
+        
         = form_with(model: [@column.board, @column, @card], method: :patch, class: "form-group edit-form mb-0 pb-0") do |f|
           .form-group
             = f.label :title, class: "text-bold-600"
@@ -23,8 +39,8 @@
               class: "btn btn-light-danger delete-kanban-item d-flex align-items-center" do |
               %i.bx.bx-trash.mr-50
               Delete
-        - if @card.tags.present?
-          .tags-container
+        .tags-container
+          - if @card.tags.present?
             - @card.tags.each do |tag|
               %span.tag-item.mt-0{"data-tag-name" => "#{tag.name}",
                 "data-tag-id" => "#{tag.id}", 

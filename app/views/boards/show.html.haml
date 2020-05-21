@@ -1,6 +1,7 @@
 = javascript_pack_tag "columns/update_column.js"
 = javascript_pack_tag "cards/show_card.js"
 = javascript_pack_tag "cards/move_card.js"
+= javascript_pack_tag 'cards/members'
 = javascript_pack_tag 'memberships/autocomplete'
 = javascript_pack_tag 'memberships/rights'
 = stylesheet_link_tag 'memberships'
@@ -45,7 +46,7 @@
                 class: "btn btn-primary mb-1" do
                 %i.bx.bx-add-to-queue.mr-50>
                 Add New Column
-              .kanban-container
+              .kanban-container#kanban-container
                 = render  @columns
           #user-section.pt-2
             %h3.pl-2 Members

@@ -1,25 +1,26 @@
-var className = ".kanban-board[data-column-id=\'" + "#{@card.column_id}" + "\']";
+- unless @card.errors.any?
+  = render partial: 'click', formats: [:js]
+  className = `.kanban-board[data-column-id=#{@card.column_id}]`;
+  cardId = `.kanban-item[data-card-id=#{@card.id}]`;
+  \// Hide form
+  $(className).find(".kanban-drag form.form-group").remove();
+  \// Show button
+  $(className).find(".kanban-title-button").show();
+  $(className).find(".kanban-drag").append("#{j render @card}");
+  $(className).find('.kanban-board-header span.badge').text('#{@column.cards.count}');
+  $(cardId).click(function() {
+  $.ajax({
+  url: `/boards/#{@card.column.board_id}/columns/#{@card.column_id}/cards/#{@card.id}/edit`,
+  method: 'GET',
+  headers: {
+  'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
+  },
+  });
+  });
 
-\// Hide form
-$(`${className}`).find(".kanban-drag form.form-group").remove()
-\// Show button
-$(`${className}`).find(".kanban-title-button").show()
-
-
-$(`${className}`).find(".kanban-drag").append("#{j render @card}");
-$(`${className}`).find('.kanban-board-header span.badge').text('#{@column.cards.count}');
-
-$(`${className}`).find(".kanban-item:last").click(function() {
-$(".edit-kanban-card").html("#{j render 'edit_form'}");
-$(".kanban-sidebar").addClass('show');
-
-$("body").find(".close.close-sidebar").click(function() {
-$(".kanban-sidebar").removeClass('show');
-});
-});
+  $(cardId).find('.members-request').on('click', onClick);
 
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")
-\.children()
 \.delay( 5000 )
 \.slideUp( 1000 );

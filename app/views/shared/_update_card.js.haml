@@ -1,7 +1,10 @@
 - unless @card.errors.any?
+  = render partial: 'cards/click', formats: [:js]
   cardClass = `.kanban-item[data-card-id=#{@card.id}]`;
   
   $(cardClass).parent().html("#{j render @card}");
+  
+  $(cardClass).parent().find('.members-request').on('click', onClick);
   
   $(cardClass).click(function() {
   $.ajax({
