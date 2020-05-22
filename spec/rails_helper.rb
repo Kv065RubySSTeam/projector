@@ -1,6 +1,5 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
-
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
@@ -13,6 +12,8 @@ require 'support/shoulda_matchers'
 require 'support/shoulda_matchers_controller'
 require 'support/devise'
 require 'support/rspec_html_matchers'
+require 'support/controller_macros'
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end
