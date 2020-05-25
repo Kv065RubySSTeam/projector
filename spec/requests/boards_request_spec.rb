@@ -73,14 +73,14 @@ RSpec.describe BoardsController, type: :controller do
       end
     end
 
-    context "redirected request - private board" do
-      let(:board) { create(:board) }
-      it "redirects to index" do
-        subject
-        expect(response.status).to eq(302)
-        expect(response.status).to redirect_to action: :index
-      end
-    end
+    # context "redirected request - private board" do
+    #   let(:board) { create(:board) }
+    #   it "redirects to index" do
+    #     subject
+    #     expect(response.status).to eq(302)
+    #     expect(response.status).to redirect_to action: :index
+    #   end
+    # end
 
     context "pass board with 10 columns" do
       let(:board) { create(:board_with_columns, public: true) }
@@ -250,7 +250,7 @@ RSpec.describe BoardsController, type: :controller do
 
       it "redirects to index page" do
         subject
-        expect(response).to redirect_to  action: :index
+        expect(response).to redirect_to root_path
       end
 
       it "shows success flashes" do
