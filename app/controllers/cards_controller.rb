@@ -172,7 +172,7 @@ class CardsController < ApplicationController
   def sort_direction
     params[:direction] || "desc"
   end
-a
+
   def sort_filter
     params[:filter] || "saved"
   end

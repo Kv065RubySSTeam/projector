@@ -73,7 +73,7 @@ RSpec.describe 'boards/show.html.haml', type: :view do
       it "cards have appropriate titles and bodies" do
         cards.each do |card|
           expect(rendered).to match("#{card.title}")
-          expect(rendered).to match("#{card.body}")
+          expect(rendered).to match("#{card.body.body}")
         end
       end
     end
