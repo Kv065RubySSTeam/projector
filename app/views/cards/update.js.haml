@@ -1,8 +1,5 @@
 - unless @card.errors.any?
   if ($("#kanban-wrapper").length){
-
-  = render partial: 'click', formats: [:js]
-
   cardClass = `.kanban-item[data-card-id=#{@card.id}]`;
   
   $(cardClass).parent().html("#{j render @card}");
@@ -16,7 +13,7 @@
   },
   });
   });
-  $(cardClass).find('.members-request').on('click', onClick);
+  $(cardClass).find('.members-request').on('click', assignClickHandler);
   } else {
   var row = $("#cards_table #cards").find(".kanban-item[data-card-id=#{@card.id}]")
   row.find(".card-title").text("#{short_text(@card.title)}")
