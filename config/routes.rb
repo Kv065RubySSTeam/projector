@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   resources :users, only: %i[index]
 
   require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
-
+  authenticate :user do
+    mount Sidekiq::Web => '/sidekiq'
+  end
 end
