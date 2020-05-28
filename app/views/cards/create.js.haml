@@ -1,5 +1,4 @@
 - unless @card.errors.any?
-  = render partial: 'click', formats: [:js]
   className = `.kanban-board[data-column-id=#{@card.column_id}]`;
   cardId = `.kanban-item[data-card-id=#{@card.id}]`;
   \// Hide form
@@ -18,7 +17,7 @@
   });
   });
 
-  $(cardId).find('.members-request').on('click', onClick);
+  $(cardId).find('.members-request').on('click', assignClickHandler);
 
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")
