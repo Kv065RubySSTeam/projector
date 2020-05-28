@@ -1,4 +1,6 @@
 class ColumnsController < ApplicationController
+  load_and_authorize_resource :board
+  load_and_authorize_resource :column, through: :board
   before_action :find_board!
   before_action :find_column!, only: [:update, :destroy]
   before_action :flash_clear, except: :new

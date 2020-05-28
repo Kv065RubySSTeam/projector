@@ -1,4 +1,5 @@
 class BoardsController < ApplicationController
+  load_and_authorize_resource :board, except: [:create]
   before_action :find_board!, only: [:show, :edit, :update, :destroy, :export, :members]
 
   def index
