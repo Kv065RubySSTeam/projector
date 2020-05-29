@@ -11,9 +11,11 @@ class CardsController < ApplicationController
 
   def index
     @load_new = params[:load_new] || false
-    @cards = Card.available_for(current_user)
+    @cards = Card.kept
+                 .available_for(current_user)
                  .order(sort_column + " " + sort_direction)
                  .search(params[:search])
+                 .filter(params[:filter])
     paginate_cards
   end
 
@@ -53,7 +55,7 @@ class CardsController < ApplicationController
   end
 
   def destroy
-    if @card.destroy
+    if @card.discard
       flash[:success] = "Card was successfully deleted!"
     else
       flash[:error] = @card.errors.full_messages.join("\n")
@@ -111,11 +113,11 @@ class CardsController < ApplicationController
   end
 
   def sort_column
-    params[:sort] || "title"
+    params[:sort] || "updated_at"
   end
 
   def sort_direction
-    params[:direction] || "asc"
+    params[:direction] || "desc"
   end
 
   protected

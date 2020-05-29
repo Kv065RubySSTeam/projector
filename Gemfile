@@ -36,10 +36,14 @@ gem 'will_paginate-bootstrap4', '~> 0.2.2'
 gem 'active_storage_validations'
 gem 'haml'
 gem 'acts-as-taggable-on', '~> 6.5'
+
 #For sidekiq for mailers
 gem 'sidekiq'
 gem 'redis'
 gem 'devise-async'
+
+# ActiveRecord mixin to add conventions for flagging records as discarded
+gem 'discard'
 
 # Facebook OAuth2 Strategy for OmniAuth
 gem 'omniauth-facebook', '~> 6.0'
