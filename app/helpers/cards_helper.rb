@@ -10,4 +10,9 @@ module CardsHelper
     truncate(text, :length => 20)
   end
   
+  def style_for_deleted(card)
+    if card.discarded_at?
+      "background-color: #a9a9a959"
+    end
+  end
 end
