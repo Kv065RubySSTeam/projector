@@ -14,7 +14,7 @@
           %br
           - card.tags.each do |tag|
             %span.tag-item{"data-tag-name" => "#{tag.name}",
-              "data-tag-id" => "#{tag.id}", 
+              "data-tag-id" => "#{tag.id}",
               :class => "mt-1 btn btn-sm round btn-primary align-middle tag-item tag-#{tag.id}",
               :style => "font-weight:bold;height:40px"}
               = tag.name
@@ -26,6 +26,8 @@
                                             :onclick => 'sendTagDeleteRequest(event)' do
                 %i.bx.bx-x-circle
       .kanban-footer-right.d-flex.justify-content-between.mt-1{id: "card-#{card.id}"}
+        = link_to '', board_column_card_emoji_path(card.column.board,card.column), class: 'btn btn-icon btn-outline-primary mr-1 mb-1', remote: true do
+          %i.bx.bx-like
         - if card.assignee
           .kanban-users
             -if card.assignee.avatar.attached?

@@ -5,8 +5,9 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :boards, through: :memberships
+  has_many :emojis, dependent: :destroy
   has_one_attached :avatar
-  
+
   validates :email, uniqueness: true
   validates :email, uniqueness: true
   validates :first_name, length: { within: 1..100 }
@@ -22,7 +23,7 @@ class User < ApplicationRecord
 
   attribute :remove_avatar, :boolean,  default: false
   after_save :purge_avatar, if: :remove_avatar
-  
+
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end
@@ -49,7 +50,7 @@ class User < ApplicationRecord
   end
 
   has_many :administrated_boards, -> { where(memberships: { admin: true }) }, class_name: 'Board',
-                                                                              through: :memberships, 
+                                                                              through: :memberships,
                                                                               source: :board
 
   scope :search, lambda { |user|

@@ -3,13 +3,16 @@ Rails.application.routes.draw do
   resources :boards do
     resources :columns, except: [:index, :show, :edit] do
       resources :cards, except: [:index, :show] do
+        resource :emoji, only: :show
         member do
           put :update_position
           post :add_assignee
           delete :remove_assignee
         end
         resources :tags, only: [:create, :destroy]
-        resources :comments, except: [:show]
+        resources :comments, except: [:show] do
+          resource :emoji, only: :show
+        end
       end
     end
 

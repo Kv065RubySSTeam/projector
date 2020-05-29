@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_17_141613) do
+ActiveRecord::Schema.define(version: 2020_05_29_152731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,6 +83,16 @@ ActiveRecord::Schema.define(version: 2020_05_17_141613) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "emojis", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "emojible_type", null: false
+    t.bigint "emojible_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["emojible_type", "emojible_id"], name: "index_emojis_on_emojible_type_and_emojible_id"
+    t.index ["user_id"], name: "index_emojis_on_user_id"
+  end
+
   create_table "memberships", force: :cascade do |t|
     t.bigint "board_id", null: false
     t.bigint "user_id", null: false
@@ -149,6 +159,7 @@ ActiveRecord::Schema.define(version: 2020_05_17_141613) do
   add_foreign_key "columns", "users"
   add_foreign_key "comments", "cards"
   add_foreign_key "comments", "users"
+  add_foreign_key "emojis", "users"
   add_foreign_key "memberships", "boards"
   add_foreign_key "memberships", "users"
   add_foreign_key "taggings", "tags"

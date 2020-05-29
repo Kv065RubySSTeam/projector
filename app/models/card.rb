@@ -5,6 +5,7 @@ class Card < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :taggings
   has_many :tags, through: :taggings
+  has_many :emojis, as: :emojible, dependent: :destroy
   validates :title, length: { within: 2..50 }
   validates :position, uniqueness: { scope: :column }
 
