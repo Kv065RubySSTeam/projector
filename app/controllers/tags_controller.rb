@@ -1,6 +1,5 @@
 class TagsController < ApplicationController
   load_and_authorize_resource :card
-  # load_and_authorize_resource class: ActsAsTaggableOn::Tag
   before_action :find_card!, only: [:create, :destroy]
   respond_to :js
 

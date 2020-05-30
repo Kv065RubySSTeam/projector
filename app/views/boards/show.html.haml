@@ -1,6 +1,7 @@
 = javascript_pack_tag "columns/update_column.js"
-= javascript_pack_tag "cards/show_card.js"
-= javascript_pack_tag "cards/move_card.js"
+- if can? :manage, @column
+  = javascript_pack_tag "cards/move_card.js"
+  = javascript_pack_tag "cards/show_card.js"
 = javascript_pack_tag 'cards/members'
 = javascript_pack_tag 'memberships/autocomplete'
 = javascript_pack_tag 'memberships/rights'
@@ -15,11 +16,12 @@
           .container
             .row
               .col-md-4
-                .btn-group{:role => "group"}
-                  = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1"
-                  = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1"
-                  = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1", data: { confirm: "You sure?" }
-              - if current_user.administrated_boards.exists?(@board.id)
+                .btn-group.manage-board{:role => "group"}
+                  = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1 back-board-btn"
+                  - if can? :manage, @board
+                    = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1 edit-board-btn"
+                    = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1 destroy-board-btn", data: { confirm: "You sure?" }
+              - if can? :manage, @board
                 .col-md-6#addMember
                   .input-group-prepend
                     %span#basic-addon1.input-group-text Add member
@@ -30,14 +32,16 @@
                 = link_to '', export_board_path, class: 'bx bx-download btn btn-icon btn-dark glow mr-1 mb-1 export-btn'
                 = link_to '', export_board_path, class: 'bx bx-mail-send btn btn-icon btn-dark glow mr-1 mb-1 export-and-email-btn'
           .col-md
-            %h2
-              = @board.title
-            .divider.col-5
-              .divider-text Descripion
-            %p.card-text
-              = @board.description
+            .board-title-desc.mb-2{:style => "cursor: default"}
+              %h2
+                = @board.title
+              .divider.col-5
+                .divider-text Descripion
+              %p.card-text
+                = @board.description
             .kanban-overlay
             %section#kanban-wrapper
+            - if can? :manage, @column
               = link_to board_columns_path(@board), |
                 remote: true,                          |
                 method: :post,                          |
@@ -46,10 +50,10 @@
                 class: "btn btn-primary mb-1" do
                 %i.bx.bx-add-to-queue.mr-50>
                 Add New Column
-              .kanban-container#kanban-container
-                = render  @columns
+            .kanban-container#kanban-container
+              = render  @columns
           #user-section.pt-2
-            %h3.pl-2 Members
+            %h3.pl-2{:style => "cursor: default"} Members
             %input{type: "hidden", value: User.find(@board.user_id).email, id: "creator"}
             %ul.pt-1
               - @board.memberships.each do |member|
@@ -57,17 +61,19 @@
                   .checkbox.checkbox-danger.checkbox-glow
                     - if member.user.administrated_boards.exists?(@board.id)
                       %i.bx.bx-star.bxs-star.warning
-                      %span= member.user.email
-                      = link_to 'Remove Admin', admin_board_membership_path(board_id: @board.id, id: member.id, user_id: member.user.id),
-                                            class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{member.user.email}",
-                                            remote: true,
-                                            method: :put,
-                                            :onclick => 'changeRights(event)'
+                      %span{:style => "cursor: default"}= member.user.email
+                      - if can? :manage, @board
+                        = link_to 'Remove Admin', admin_board_membership_path(board_id: @board.id, id: member.id, user_id: member.user.id),
+                                              class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1 rmv-admin", id: "#{member.user.email}",
+                                              remote: true,
+                                              method: :put,
+                                              :onclick => 'changeRights(event)'
                     - else
                       %i.bx.bx-star.bxs-star
                       %span= member.user.email
-                      = link_to 'Add Admin', admin_board_membership_path(board_id: @board.id, id: member.id, user_id: member.user.id),
-                                              class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{member.user.email}",
-                                      remote: true,
-                                      method: :put,
-                                      :onclick => 'changeRights(event)'
+                      - if can? :manage, @board
+                        = link_to 'Add Admin', admin_board_membership_path(board_id: @board.id, id: member.id, user_id: member.user.id),
+                                                class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1 add-admin", id: "#{member.user.email}",
+                                        remote: true,
+                                        method: :put,
+                                        :onclick => 'changeRights(event)'

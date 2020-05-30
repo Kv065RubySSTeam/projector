@@ -11,7 +11,7 @@ $(document).ready(function() {
         event.srcElement.closest('.card').getAttribute('data-board-id')
       );
       var column_id = Number(
-        event.srcElement.closest('.kanban-board').getAttribute('data-id')
+        event.srcElement.closest('.kanban-board').getAttribute('data-column-id')
       );
 
       updateColumn(board_id, column_id, columnTitle);

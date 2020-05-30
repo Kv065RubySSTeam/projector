@@ -6,11 +6,11 @@
       %p
         = comment.body
     .col-sm-2
-      -# - if current_user && current_user == comment.user
-      .btn-group.mt-0.pt-0.mx-auto
-        = link_to "Edit", edit_board_column_card_comment_path(@column.board, @column, @card, comment), |
-          class: "btn btn-outline-primary btn-sm d-inline", remote: true                                        
-        = link_to "Delete", board_column_card_comment_path(@column.board, @column, @card, comment), |
-          method: :delete, remote: true,                                                            |
-          class: "btn btn-light-danger btn-sm d-inline"                                                    |
+      - if can? :manage, comment
+        .btn-group.mt-0.pt-0.mx-auto
+          = link_to "Edit", edit_board_column_card_comment_path(@column.board, @column, @card, comment), |
+            class: "btn btn-outline-primary btn-sm d-inline", remote: true                                        
+          = link_to "Delete", board_column_card_comment_path(@column.board, @column, @card, comment), |
+            method: :delete, remote: true,                                                            |
+            class: "btn btn-light-danger btn-sm d-inline"                                                    |
   %hr

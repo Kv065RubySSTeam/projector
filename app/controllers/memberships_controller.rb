@@ -1,9 +1,9 @@
 class MembershipsController < ApplicationController
-  load_and_authorize_resource :membership
   before_action :find_board!
   before_action :find_user!
-  # before_action :authorize!
+  before_action :membership_authorize!
   before_action :find_membership!, only: %i[admin]
+  respond_to :json
 
   def create
     @membership = @board.memberships.create(user: @user)
@@ -17,7 +17,7 @@ class MembershipsController < ApplicationController
   def admin
     @membership.admin? ? @membership.remove_admin! : @membership.admin!
     if @membership.errors.empty?
-      render json: {}, status: 200
+      respond_to :js
     else
       render json: {}, status: 422
     end
@@ -37,9 +37,9 @@ class MembershipsController < ApplicationController
     @user = User.find(params[:user_id])
   end
 
-  # def authorize!
-  #   unless current_user.administrated_boards.exists?(@board.id)
-  #     render json: { error: 'Unauthorize' }, status: 401
-  #   end
-  # end
+  def membership_authorize!
+    unless current_user.administrated_boards.exists?(@board.id)
+      render json: { error: 'Unauthorize' }, status: 401
+    end
+  end
 end

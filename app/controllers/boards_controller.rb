@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  load_and_authorize_resource :board, except: [:create]
+  load_and_authorize_resource :board, except: [:create, :export, :members]
   before_action :find_board!, only: [:show, :edit, :update, :destroy, :export, :members]
 
   def index
@@ -10,7 +10,8 @@ class BoardsController < ApplicationController
   end
 
   def show
-    @columns = @board.columns.order(position: :asc) 
+    @columns = @board.columns.order(position: :asc)
+    @column = @board.columns.new
   end
 
   def new

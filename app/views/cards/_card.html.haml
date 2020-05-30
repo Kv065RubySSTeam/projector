@@ -16,15 +16,16 @@
             %span.tag-item{"data-tag-name" => "#{tag.name}",
               "data-tag-id" => "#{tag.id}", 
               :class => "mt-1 btn btn-sm round btn-primary align-middle tag-item tag-#{tag.id}",
-              :style => "font-weight:bold;height:40px"}
+              :style => "font-weight:bold;font-size:14px;height:35px;padding-top:7px"}
               = tag.name
-              = link_to board_column_card_tag_path(card.column.board,card.column,card,tag),
-                                            class: "btn.btn-icon.p-0.rm-tag-btn",
-                                            style: "color:#f5f5f5",
-                                            remote: true,
-                                            method: :delete,
-                                            :onclick => 'sendTagDeleteRequest(event)' do
-                %i.bx.bx-x-circle
+              - if can? :manage, card
+                = link_to board_column_card_tag_path(card.column.board,card.column,card,tag),
+                                              class: "btn.btn-icon.p-0.rm-tag-btn",
+                                              style: "color:#f5f5f5",
+                                              remote: true,
+                                              method: :delete,
+                                              :onclick => 'sendTagDeleteRequest(event)' do
+                  %i.bx.bx-x-circle
       .kanban-footer-right.d-flex.justify-content-between.mt-1{id: "card-#{card.id}"}
         - if card.assignee
           .kanban-users
@@ -34,6 +35,6 @@
             -else
               = image_tag '/images/placeholder.jpg', class: "rounded",      |
               height: "30", width: "30" |
-        - else
+        - elsif can? :manage, card
           = link_to '', class: "btn btn-icon rounded-circle btn-info members-request", remote: true do
             %i.bx.bx-plus
