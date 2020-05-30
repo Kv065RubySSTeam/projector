@@ -7,10 +7,11 @@
             .todo-app-menu
               .form-group.text-center.add-task
                 /new board button
-                .btn.btn-primary.add-task-btn.btn-block.my-1{:type => "button"}
+                = link_to new_board_path,                             |
+                  type: "button",                                     |
+                  class: "btn btn-primary add-task-btn btn-block my-1" do |
                   %i.bx.bx-plus
-                  %span
-                    = link_to "Add New Board", new_board_path, class: "text-white"
+                  Add New Board
               /sidebar list start
               .sidebar-menu-list
                 .list-group
