@@ -1,7 +1,7 @@
 - unless @card.errors.any?
   if ($("#kanban-wrapper").length){
   cardClass = `.kanban-item[data-card-id=#{@card.id}]`;
-  
+
   $(cardClass).parent().html("#{j render @card}");
 
   $(cardClass).click(function() {
@@ -17,7 +17,7 @@
   } else {
   var row = $("#cards_table #cards").find(".kanban-item[data-card-id=#{@card.id}]")
   row.find(".card-title").text("#{short_text(@card.title)}")
-  row.find(".card-body").text("#{short_text(@card.body)}")
+  row.find(".card-body").text("#{short_text(@card.body.to_plain_text)}")
   $("body").find(".kanban-sidebar").removeClass('show');
   }
 
