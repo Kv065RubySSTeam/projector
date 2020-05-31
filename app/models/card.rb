@@ -1,5 +1,13 @@
 class Card < ApplicationRecord
   include Discard::Model
+  include PgSearch::Model
+  pg_search_scope :search_everywhere,
+    against: [:title, :body], 
+    associated_against: {
+    assignee: [:first_name, :last_name], user: [:first_name, :last_name] },
+    using: { tsearch: { prefix: true } }
+
+  scope :search, ->(input) { input ? search_everywhere(input) : all }
 
   belongs_to :column
   belongs_to :user
@@ -14,22 +22,25 @@ class Card < ApplicationRecord
 
   scope :available_for, -> (user) { joins(column: { board: :memberships })
                                   .where(memberships: { user_id: user.id }) }
-  scope :search, ->(input) { joins(:user).where("cards.title ilike :search
-                                                or cards.body ilike :search
-                                                or users.first_name ilike :search
-                                                or users.last_name ilike :search ",
-                                                search: "%#{input}%") }
-  scope :filter, ->(filter) do 
-    case filter 
+  scope :by_board, -> (title) { joins(column: :board).where(boards: { title: title }) }
+  scope :filter_by_board, ->(board_title) { board_title ? by_board(board_title) : all }
+  scope :assigned, ->(user) { where(assignee_id: user.id) }
+  scope :created, ->(user) { where(user_id: user.id) }
+  scope :filter, ->(filter, user) do 
+    case filter
     when "all"
       with_discarded
     when "deleted"
-      with_discarded.discarded  
+      with_discarded.discarded
+    when "assigned"
+      assigned(user)
+    when "created"
+      created(user)
     else
       all
     end
   end
-  
+
   before_validation(on: :create) do
     self.position = self.column.last_card_position.to_i + 1
   end

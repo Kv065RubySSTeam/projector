@@ -1,6 +1,12 @@
 if ($("#kanban-wrapper").length){
 = render partial: 'shared/update_card', formats: [:js]
 }
-= render partial: 'shared/toaster'
-
+var array = $(".edit-kanban-card").find('.tag-item').map(function(){
+return $.trim($(this).text());
+}).get();
+if (array.includes($('#lastAddedTag').val())) {
+toastr.error("This tag already exists at this card!")
+} else {
 $('.tags-container').append("#{j render 'tag', tag: @tag}")
+toastr.success("Tag was successfully added!")
+}

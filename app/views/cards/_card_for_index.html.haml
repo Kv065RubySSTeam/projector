@@ -15,6 +15,22 @@
       = time_ago_in_words(card.updated_at)
   %td
     %span.invoice-customer
-      = get_full_user_name(card.user)
+      %small.text-muted
+        = image_tag get_avatar(card.user), class: "avatar",  width: "40"
+        %br
+        = get_full_user_name(card.user)
   %td
-    = image_tag get_avatar(card.user), class: "avatar ml-1",  width: "40"
+    %span.invoice-customer
+      %small.text-muted
+    - if card.assignee_id?
+      = image_tag get_avatar(card.assignee), class: "avatar",  width: "40"
+      %br
+      %small.text-muted
+        = get_full_user_name(card.assignee)
+  %td
+    %span
+      - card.tags.each do |tag|
+        %span.bullet.bullet-primary.bullet-sm
+        %small.text-muted
+        = short_text(tag.name)
+        %br  

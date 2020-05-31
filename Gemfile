@@ -36,6 +36,7 @@ gem 'will_paginate-bootstrap4', '~> 0.2.2'
 gem 'active_storage_validations'
 gem 'haml'
 gem 'acts-as-taggable-on', '~> 6.5'
+gem 'pg_search'
 
 #For sidekiq for mailers
 gem 'sidekiq'
