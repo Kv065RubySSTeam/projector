@@ -1,0 +1,18 @@
+- if liked_by?(likable)
+  = button_to likable_path, 
+              class: 'like-link btn btn-icon btn-outline-primary mr-1 mb-1',
+              remote: true,
+              method: :post,
+              :onclick => 'stopPropagationToButtons(event)' do
+    %i.bx.bx-like
+    %span 
+      = likable.likes.count
+- else
+  = button_to likable_path, 
+              class: 'like-link btn btn-icon btn-primary mr-1 mb-1',
+              remote: true,
+              method: :delete,
+              :onclick => 'stopPropagationToButtons(event)' do
+    %i.bx.bx-like
+    %span 
+      = likable.likes.count

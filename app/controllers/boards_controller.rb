@@ -1,6 +1,6 @@
 class BoardsController < ApplicationController
   load_and_authorize_resource :board, except: [:create, :export, :members]
-  before_action :find_board!, only: [:show, :edit, :update, :destroy, :export, :members]
+  before_action :find_board!, except: [:index, :new, :create]
 
   def index
     @boards = Board.filter(params[:filter], current_user)
