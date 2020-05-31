@@ -8,5 +8,6 @@ if (array.includes($('#lastAddedTag').val())) {
 toastr.error("This tag already exists at this card!")
 } else {
 $('.tags-container').append("#{j render 'tag', tag: @tag}")
+$(".small_tags-container-#{@card.id}").append("#{j render 'small_tag', tag: @tag}")
 toastr.success("Tag was successfully added!")
 }

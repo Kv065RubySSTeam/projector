@@ -7,9 +7,9 @@ module CardsHelper
   end
 
   def short_text(text)
-    truncate(text, :length => 20)
+    truncate(text, :length => 17)
   end
-  
+
   def style_for_deleted(card)
     card.discarded_at? ? "background-color: #a9a9a959" : ""
   end

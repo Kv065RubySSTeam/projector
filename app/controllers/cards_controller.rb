@@ -15,10 +15,11 @@ class CardsController < ApplicationController
   def index
     @load_new = params[:load_new] || false
     @cards = Card.kept
-                 .available_for(current_user)
-                 .order(sort_column + " " + sort_direction)
-                 .search(params[:search])
-                 .filter(params[:filter])
+            .available_for(current_user)
+            .search(params[:search])
+            .order(sort_column + " " + sort_direction)
+            .filter(params[:filter], current_user)
+            .filter_by_board(params[:board_title])
     paginate_cards
   end
 
