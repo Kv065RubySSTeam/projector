@@ -17,6 +17,7 @@ class CommentsController < ApplicationController
     @comment = @card.comments.build(comment_params)
     @comment.user = current_user
     if @comment.save
+      CardMailer.with(card: @card).added_comment.deliver_later
       flash[:success] = "Comment was successfully created." 
     else
       flash[:error] = @comment.errors.full_messages.join("\n") 

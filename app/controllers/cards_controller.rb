@@ -43,8 +43,12 @@ class CardsController < ApplicationController
   end
 
   def update_position
+    is_column_changed = @card.column.id != @column.id
     result, errors = Cards::UpdatePositionService.call(
       @card, @column, params[:target_cards_id], params[:source_cards_id])
+    if is_column_changed && result
+      CardMailer.with(card: @card).update_card_position.deliver_later
+    end
     respond_to do |f|
       if result
         f.js { flash[:success] = "Cards positions was successfully updated." }
@@ -69,8 +73,8 @@ class CardsController < ApplicationController
       render json: { error: 'User is not a member of this board' }, status: 404
       return
     end
-
     if @card.assign!(@user)
+      CardMailer.with(card: @card).new_assignee.deliver_later
       render json: {}, status: 200
     else
       render json: { error: @card.errors.full_messages }, status: 422
@@ -133,5 +137,4 @@ class CardsController < ApplicationController
       @total_pages = @cards.total_pages
     end
   end
-
 end

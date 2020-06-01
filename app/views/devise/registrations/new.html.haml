@@ -41,6 +41,9 @@
                       .custom-file
                         = f.file_field :avatar, class: "custom-file-input", id: "inputAvatar"
                         %label.custom-file-label{:for => "inputAvatar"} Choose file
+                    .checkbox
+                      = f.check_box :receive_emails, class: "checkbox-input"
+                      = f.label :receive_emails, class: "text-bold-600"
                     .actions.mt-1
                       = f.submit "Sign up", class: "btn btn-primary glow position-relative w-100"
                   %hr/

@@ -25,7 +25,7 @@
                                             method: :delete,
                                             :onclick => 'sendTagDeleteRequest(event)' do
                 %i.bx.bx-x-circle
-      .kanban-footer-right.d-flex.justify-content-between.mt-1{id: "card-#{card.id}"}
+      .kanban-footer-right.d-flex.mt-1{id: "card-#{card.id}"}
         - if card.assignee
           .kanban-users
             -if card.assignee.avatar.attached?
@@ -37,3 +37,6 @@
         - else
           = link_to '', class: "btn btn-icon rounded-circle btn-info members-request", remote: true do
             %i.bx.bx-plus
+        .kanban-comment.d-flex.align-items-center.mr-50
+        = card_date(card.created_at)
+        = card_comment(card)
