@@ -14,7 +14,7 @@
           %br
           - card.tags.each do |tag|
             %span.tag-item{"data-tag-name" => "#{tag.name}",
-              "data-tag-id" => "#{tag.id}", 
+              "data-tag-id" => "#{tag.id}",
               :class => "mt-1 btn btn-sm round btn-primary align-middle tag-item tag-#{tag.id}",
               :style => "font-weight:bold;font-size:14px;height:35px;padding-top:7px"}
               = tag.name
@@ -27,14 +27,17 @@
                                               :onclick => 'sendTagDeleteRequest(event)' do
                   %i.bx.bx-x-circle
       .kanban-footer-right.d-flex.justify-content-between.mt-1{id: "card-#{card.id}"}
-        - if card.assignee
-          .kanban-users
+        .likable-link-wrapper 
+          = render 'application/likable_link', likable: card, 
+                      likable_path: board_column_card_cards_likes_path(card.column.board, card.column, card)
+        .kanban-users
+          - if card.assignee
             -if card.assignee.avatar.attached?
               = image_tag card.assignee.avatar, class: "rounded",      |
               height: "30", width: "30" |
             -else
               = image_tag '/images/placeholder.jpg', class: "rounded",      |
               height: "30", width: "30" |
-        - elsif can? :manage, card
-          = link_to '', class: "btn btn-icon rounded-circle btn-info members-request", remote: true do
-            %i.bx.bx-plus
+          - elsif can? :manage, card
+            = link_to '', class: "btn btn-icon rounded-circle btn-info members-request", remote: true do
+              %i.bx.bx-plus
