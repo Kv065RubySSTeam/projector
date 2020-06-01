@@ -2,6 +2,7 @@
 
 $(".delete-assignee").on("ajax:success", function() {
 $(".assignee-in-sidebar").remove();
+$('.card-assignee-#{@card.id}').empty();
 
 if ($("#kanban-wrapper").length){
 cardClass = `.kanban-item[data-card-id=#{@card.id}]`;

@@ -1,4 +1,5 @@
 class TagsController < ApplicationController
+  load_and_authorize_resource :card
   before_action :find_card!, only: [:create, :destroy]
   respond_to :js
 

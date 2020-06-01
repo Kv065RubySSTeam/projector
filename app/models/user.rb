@@ -5,8 +5,9 @@ class User < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :boards, through: :memberships
+  has_many :likes, dependent: :destroy
   has_one_attached :avatar
-  
+
   validates :email, uniqueness: true
   validates :email, uniqueness: true
   validates :first_name, length: { within: 1..100 }
@@ -49,7 +50,7 @@ class User < ApplicationRecord
   end
 
   has_many :administrated_boards, -> { where(memberships: { admin: true }) }, class_name: 'Board',
-                                                                              through: :memberships, 
+                                                                              through: :memberships,
                                                                               source: :board
 
   scope :search, lambda { |user|
@@ -60,4 +61,10 @@ class User < ApplicationRecord
   def purge_avatar
     avatar.purge_later
   end
+  
+  protected
+  def confirmation_required?
+    false
+  end
+
 end

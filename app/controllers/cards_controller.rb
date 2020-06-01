@@ -1,9 +1,12 @@
 class CardsController < ApplicationController
+  load_and_authorize_resource :column
+  load_and_authorize_resource :card, through: :column,
+                                  except: [:index, :update_position]
   before_action :find_column!, except: :index
   before_action :find_card!, except: %i[index new create]
   before_action :flash_clear, except: :new
   before_action :find_board!, only: [:update]
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :sort_filter
   before_action :find_user_by_email!, only: %i[add_assignee]
   respond_to :js
 
@@ -13,9 +16,10 @@ class CardsController < ApplicationController
     @load_new = params[:load_new] || false
     @cards = Card.kept
                  .available_for(current_user)
-                 .order(sort_column + " " + sort_direction)
                  .search(params[:search])
-                 .filter(params[:filter])
+                 .order(sort_column + " " + sort_direction)
+                 .filter(params[:filter], current_user)
+                 .filter_by_board(params[:board_title])
     paginate_cards
   end
 
@@ -70,7 +74,7 @@ class CardsController < ApplicationController
       return
     end
     if @card.assign!(@user)
-      email_receivers(@card).each do |user|
+      @card.notification_receivers.each do |user|
         CardMailer.with(card: @card, user: user).new_assignee.deliver_later if user.receive_emails
       end
       render json: {}, status: 200
@@ -122,6 +126,10 @@ class CardsController < ApplicationController
     params[:direction] || "desc"
   end
 
+  def sort_filter
+    params[:filter] || "saved"
+  end
+
   protected
 
   def paginate_cards
@@ -136,8 +144,4 @@ class CardsController < ApplicationController
     end
   end
   
-  def email_receivers(card)
-    [card.user, card.assignee].compact
-  end
-
 end

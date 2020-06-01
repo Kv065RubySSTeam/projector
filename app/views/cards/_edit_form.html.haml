@@ -12,23 +12,23 @@
               Assignee:
             -if @card.assignee.avatar.attached?
               = image_tag @card.assignee.avatar, class: "rounded d-flex align-items-center",      |
-              height: "30", width: "30" 
+              height: "30", width: "30"
             -else
               = image_tag '/images/placeholder.jpg', class: "rounded",      |
-              height: "30", width: "30" 
+              height: "30", width: "30"
             = link_to remove_assignee_board_column_card_path(@column.board, @column, @card),  |
               remote: true,                                                                 |
               method: :delete,                                                              |
               class: "close delete-assignee close-icon" do |
               %i.bx.bx-x
-        
+
         = form_with(model: [@column.board, @column, @card], method: :patch, class: "form-group edit-form mb-0 pb-0") do |f|
           .form-group
             = f.label :title, class: "text-bold-600"
             = f.text_field :title, class: "form-control edit-kanban-item-title"
           .form-group
             = f.label :body, class: "text-bold-600"
-            = f.text_area :body, class: "form-control edit-kanban-item-title"
+            = f.rich_text_area :body, class: "form-control edit-kanban-item-title"
           .card-footer.d-flex.justify-content-end
             = button_tag(class: "btn btn-primary glow update-kanban-item d-flex align-items-center mr-1 save-card-button") do
               %i.bx.bx-send.mr-50>
@@ -43,7 +43,7 @@
           - if @card.tags.present?
             - @card.tags.each do |tag|
               %span.tag-item.mt-0{"data-tag-name" => "#{tag.name}",
-                "data-tag-id" => "#{tag.id}", 
+                "data-tag-id" => "#{tag.id}",
                 :class => "mt-1 btn btn-sm round btn-primary align-middle tag-item tag-#{tag.id}",
                 :style => "font-weight:bold;height:40px"}
                 = tag.name
@@ -59,6 +59,7 @@
           %br
             %small.mt-0.pt-0 (write tag name and press enter)
             %input#tagName.form-control.mt-1{:type => "text"}
+            %input{type: "hidden", id: "lastAddedTag"}
         = render 'comments/form'
         %br
           - if @comments

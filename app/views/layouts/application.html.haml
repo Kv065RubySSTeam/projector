@@ -16,9 +16,7 @@
       .content-wrapper
       .container
         .flashes
-        -# - flash.each do |type, msg|
-        -#   .alert.alert-info
-        -#     = msg
+          = render 'shared/permission_flash'
         = yield
         = javascript_pack_tag "error_fields.js"
         = javascript_pack_tag "dropdown_toggle.js"

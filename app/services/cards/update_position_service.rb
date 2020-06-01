@@ -23,10 +23,10 @@ module Cards
     end
     
     def send_email
-      if @card.column != @column
-        email_receivers(@card).each do |user|
-          CardMailer.with(card: @card, user: user).update_card_position.deliver_later if user.receive_emails
-        end
+      return if card.column == column
+      
+      card.notification_receivers.each do |user|
+        CardMailer.with(card: card, user: user).update_card_position.deliver_later if user.receive_emails
       end
     end
 
@@ -40,10 +40,5 @@ module Cards
         card_to_update.save(validate: false)
       end
     end
-    
-    def email_receivers(card)
-      [card.user, card.assignee].compact
-    end
-    
   end
 end

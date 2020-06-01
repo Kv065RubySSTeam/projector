@@ -15,6 +15,16 @@ ActiveRecord::Schema.define(version: 2020_05_30_184025) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -50,7 +60,6 @@ ActiveRecord::Schema.define(version: 2020_05_30_184025) do
 
   create_table "cards", force: :cascade do |t|
     t.string "title"
-    t.text "body"
     t.integer "position", null: false
     t.bigint "column_id", null: false
     t.bigint "user_id", null: false
@@ -83,6 +92,16 @@ ActiveRecord::Schema.define(version: 2020_05_30_184025) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["card_id"], name: "index_comments_on_card_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "likable_type", null: false
+    t.bigint "likable_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["likable_type", "likable_id"], name: "index_likes_on_likable_type_and_likable_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -152,6 +171,7 @@ ActiveRecord::Schema.define(version: 2020_05_30_184025) do
   add_foreign_key "columns", "users"
   add_foreign_key "comments", "cards"
   add_foreign_key "comments", "users"
+  add_foreign_key "likes", "users"
   add_foreign_key "memberships", "boards"
   add_foreign_key "memberships", "users"
   add_foreign_key "taggings", "tags"

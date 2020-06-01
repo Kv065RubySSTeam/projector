@@ -8,6 +8,7 @@ $(this).closest(".kanban-sidebar").hide();
 else {
 let row = $("#cards_table #cards").find(".kanban-item[data-card-id=#{@card.id}]").slideUp( 1000 );
 $(this).closest(".kanban-sidebar").hide();
+$("body").find(".kanban-sidebar").removeClass('show');
 }
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")

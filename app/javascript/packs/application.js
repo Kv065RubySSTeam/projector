@@ -8,6 +8,8 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require('jquery')
+require("trix")
+require("@rails/actiontext")
 
 // Toastr - extension for cute alerts
 require('frest/app-assets/vendors/js/extensions/toastr.min.js');
@@ -33,20 +35,13 @@ require('jquery-ujs');
 
 // BEGIN Vendor JS
 require('frest/app-assets/vendors/js/vendors.min.js')
-// require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.tools.js')
-// require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.defaults.js')
-// require('frest/app-assets/fonts/LivIconsEvo/js/LivIconsEvo.min.js')
-
-// BEGIN: Theme JS
 
 require('frest/app-assets/js/scripts/configs/horizontal-menu.js')
 require('frest/app-assets/js/core/app-menu.min.js');
-// require('frest/app-assets/js/core/app.js')
-// require('frest/app-assets/js/scripts/components.js')
 require('frest/app-assets/js/scripts/footer.js')
-
-require('javascript/packs/tags/create_tag.js');
-require('javascript/packs/tags/remove_tag.js');
 
 // Generate ID for ActionCabel csv exporter
 import './exporter/data'
+// Toastr - extension for cute alerts
+require('frest/app-assets/js/scripts/extensions/toastr.min.js');
+require('frest/app-assets/vendors/js/extensions/toastr.min.js');

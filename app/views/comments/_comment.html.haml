@@ -5,9 +5,15 @@
         %small= comment.user.email
       %p
         = comment.body
-    .col-sm-2
-      - if current_user && current_user == comment.user
+  .row
+    .col-sm-6
+      .likable-link-wrapper
+        = render 'application/likable_link', likable: comment, 
+                likable_path: board_column_card_comment_comments_likes_path(@column.board, @column, @card, comment)    
+    .col-sm-2 
+      - if can? :manage, comment
         .btn-group.mt-0.pt-0.mx-auto
+          
           = link_to "Edit", edit_board_column_card_comment_path(@column.board, @column, @card, comment), |
             class: "btn btn-outline-primary btn-sm d-inline", remote: true                                        
           = link_to "Delete", board_column_card_comment_path(@column.board, @column, @card, comment), |

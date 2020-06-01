@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource :comment, except: [:create]
   before_action :find_column!
   before_action :find_comment!, only: [:edit, :update, :destroy]
   before_action :find_card!, except: [:new]
@@ -13,7 +14,7 @@ class CommentsController < ApplicationController
     @comment = @card.comments.build(comment_params)
     @comment.user = current_user
     if @comment.save
-      email_receivers(@card).each do |user|
+      @card.notification_receivers.each do |user|
         CardMailer.with(card: @card, user: user).added_comment.deliver_later if user.receive_emails
       end
       flash[:success] = "Comment was successfully created." 
@@ -60,10 +61,6 @@ class CommentsController < ApplicationController
 
   def flash_clear
     flash.clear()
-  end
-
-  def email_receivers(card)
-    [card.user, card.assignee].compact
   end
 
 end

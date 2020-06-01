@@ -1,0 +1,11 @@
+- if @like.errors.empty?
+  - if @like.likable_type == "Card"
+    Item = '.kanban-item[data-card-id=#{@likable.id}]';
+    $(Item).find('.likable-link-wrapper')
+    \.html(`#{j render "likable_link", likable: @likable, likable_path: "/boards/#{@likable.column.board.id}" + "/columns/#{@likable.column.id}" + "/cards/#{@likable.id}/cards" + "/likes"}`);
+  - elsif @like.likable_type == "Comment"
+    Item = '#comment-#{@likable.id}.card-content';
+    $(Item).find('.likable-link-wrapper')
+    \.html(`#{j render "likable_link", likable: @likable, likable_path: "/boards/#{@likable.card.column.board.id}" + "/columns/#{@likable.card.column.id}" + "/cards/#{@likable.card.id}" + "/comments/#{@likable.id}/comments" + "/likes"}`);
+- else
+  = render partial: 'shared/toaster'

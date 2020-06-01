@@ -1,15 +1,24 @@
 Rails.application.routes.draw do
   root "boards#index"
+  concern :likable do
+    namespace :cards do
+      resource :likes, only: [:create, :destroy]
+    end
+    namespace :comments do
+      resource :likes, only: [:create, :destroy]
+    end
+  end
+
   resources :boards do
     resources :columns, except: [:index, :show, :edit] do
-      resources :cards, except: [:index, :show] do
+      resources :cards, except: [:index, :show], concerns: :likable do
         member do
           put :update_position
           post :add_assignee
           delete :remove_assignee
         end
         resources :tags, only: [:create, :destroy]
-        resources :comments, except: [:show]
+        resources :comments, except: [:show], concerns: :likable
       end
     end
 
@@ -38,4 +47,5 @@ Rails.application.routes.draw do
   authenticate :user do
     mount Sidekiq::Web => '/sidekiq'
   end
+
 end
