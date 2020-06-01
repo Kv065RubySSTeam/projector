@@ -6,7 +6,7 @@
   %td.card-title
     = short_text(card.title)
   %td.card-body
-    = short_text(card.body)
+    = short_text(card.body.to_plain_text)
   %td
     %small.text-muted
       = time_ago_in_words(card.created_at)
@@ -33,4 +33,4 @@
           %span.bullet.bullet-primary.bullet-sm
           %small.text-muted
           = short_text(tag.name)
-          %br  
+          %br
