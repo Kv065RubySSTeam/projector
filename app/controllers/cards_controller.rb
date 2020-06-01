@@ -1,4 +1,7 @@
 class CardsController < ApplicationController
+  load_and_authorize_resource :column
+  load_and_authorize_resource :card, through: :column,
+                                  except: [:index, :update_position]
   before_action :find_column!, except: :index
   before_action :find_card!, except: %i[index new create]
   before_action :flash_clear, except: :new

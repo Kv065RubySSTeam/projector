@@ -13,7 +13,7 @@ $(document).ready(function () {
   // Sends information to cards#update controller on drop
   drake.on('drop', function (el, target, source) {
     let cardId = $(el).find(".kanban-item").data("card-id");
-    let columnId = $(el).closest(".kanban-board").data("id");
+    let columnId = $(el).closest(".kanban-board").data("column-id");
     let boardId = $(el).closest(".card").data("board-id");
     let targetCardsArray = new Array();
     let targetCards = $(target).find(".kanban-item");

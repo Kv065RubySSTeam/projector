@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  load_and_authorize_resource :comment, except: [:create]
   before_action :find_column!
   before_action :find_comment!, only: [:edit, :update, :destroy]
   before_action :find_card!, except: [:new]
