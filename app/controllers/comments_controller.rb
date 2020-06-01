@@ -10,14 +10,13 @@ class CommentsController < ApplicationController
     @comments = @card.comments.order(created_at: :desc).paginate(page: params[:page])
   end
 
-  def new
-    @card = Card.find(params[:id])  # Only here card id in params
-  end
-
   def create
     @comment = @card.comments.build(comment_params)
     @comment.user = current_user
     if @comment.save
+      @card.notification_receivers.each do |user|
+        CardMailer.with(card: @card, user: user).added_comment.deliver_later if user.receive_emails
+      end
       flash[:success] = "Comment was successfully created." 
     else
       flash[:error] = @comment.errors.full_messages.join("\n") 
@@ -63,4 +62,5 @@ class CommentsController < ApplicationController
   def flash_clear
     flash.clear()
   end
+
 end

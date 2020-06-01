@@ -73,8 +73,10 @@ class CardsController < ApplicationController
       render json: { error: 'User is not a member of this board' }, status: 404
       return
     end
-
     if @card.assign!(@user)
+      @card.notification_receivers.each do |user|
+        CardMailer.with(card: @card, user: user).new_assignee.deliver_later if user.receive_emails
+      end
       render json: {}, status: 200
     else
       render json: { error: @card.errors.full_messages }, status: 422
@@ -141,5 +143,5 @@ class CardsController < ApplicationController
       @total_pages = @cards.total_pages
     end
   end
-
+  
 end

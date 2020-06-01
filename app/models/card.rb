@@ -65,4 +65,9 @@ class Card < ApplicationRecord
   def remove_assign!
     update(assignee: nil)
   end
+
+  def notification_receivers
+    [self.user, self.assignee].compact
+  end
+
 end

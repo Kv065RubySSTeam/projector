@@ -15,9 +15,18 @@ module Cards
       Card.transaction do
         update_cards_position(target_cards_ids)
         update_cards_position(source_cards_ids) if source_cards_ids.present?
+        send_email
         return true, []
       rescue ActiveRecord::RecordInvalid => e
         return false, e.record.errors.full_messages
+      end
+    end
+    
+    def send_email
+      return if card.column == column
+      
+      card.notification_receivers.each do |user|
+        CardMailer.with(card: card, user: user).update_card_position.deliver_later if user.receive_emails
       end
     end
 

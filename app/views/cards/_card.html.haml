@@ -41,3 +41,6 @@
           - elsif can? :manage, card
             = link_to '', class: "btn btn-icon rounded-circle btn-info members-request", remote: true do
               %i.bx.bx-plus
+      .kanban-comment.d-flex.align-items-center.mr-50
+        = card_date(card.created_at)
+        = card_comment(card)

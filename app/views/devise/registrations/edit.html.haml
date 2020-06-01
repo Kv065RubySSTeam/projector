@@ -42,11 +42,14 @@
                     - if resource.avatar.attached?
                       .checkbox.mb-1
                         = f.check_box :remove_avatar, class: "checkbox-input"
-                        = f.label :remove_avatar
+                        = f.label :remove_avatar, class: "text-bold-600"
                     .field.form-group.mb-50
                       .custom-file
                         = f.file_field :avatar, class: "custom-file-input", id: "inputAvatar"
                         %label.custom-file-label{:for => "inputAvatar"} Choose file
+                      .checkbox.mt-1
+                        = f.check_box :receive_emails, class: "checkbox-input"
+                        = f.label :receive_emails, class: "text-bold-600"
                     .actions.mt-1
                       = f.submit "Update", class: "btn btn-primary glow position-relative w-100"
                   %hr/
