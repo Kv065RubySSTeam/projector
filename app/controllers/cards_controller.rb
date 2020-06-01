@@ -43,12 +43,8 @@ class CardsController < ApplicationController
   end
 
   def update_position
-    is_column_changed = @card.column.id != @column.id
     result, errors = Cards::UpdatePositionService.call(
       @card, @column, params[:target_cards_id], params[:source_cards_id])
-    if is_column_changed && result
-      CardMailer.with(card: @card).update_card_position.deliver_later
-    end
     respond_to do |f|
       if result
         f.js { flash[:success] = "Cards positions was successfully updated." }
@@ -74,7 +70,9 @@ class CardsController < ApplicationController
       return
     end
     if @card.assign!(@user)
-      CardMailer.with(card: @card).new_assignee.deliver_later
+      email_receivers(@card).each do |user|
+        CardMailer.with(card: @card, user: user).new_assignee.deliver_later if user.receive_emails
+      end
       render json: {}, status: 200
     else
       render json: { error: @card.errors.full_messages }, status: 422
@@ -137,4 +135,9 @@ class CardsController < ApplicationController
       @total_pages = @cards.total_pages
     end
   end
+  
+  def email_receivers(card)
+    [card.user, card.assignee].compact
+  end
+
 end
