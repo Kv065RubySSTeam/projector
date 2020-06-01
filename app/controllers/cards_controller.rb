@@ -6,7 +6,7 @@ class CardsController < ApplicationController
   before_action :find_card!, except: %i[index new create]
   before_action :flash_clear, except: :new
   before_action :find_board!, only: [:update]
-  helper_method :sort_column, :sort_direction
+  helper_method :sort_column, :sort_direction, :sort_filter
   before_action :find_user_by_email!, only: %i[add_assignee]
   respond_to :js
 
@@ -121,6 +121,10 @@ class CardsController < ApplicationController
 
   def sort_direction
     params[:direction] || "desc"
+  end
+
+  def sort_filter
+    params[:filter] || "saved"
   end
 
   protected
