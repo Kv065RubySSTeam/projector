@@ -8,6 +8,8 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require('jquery')
+require("trix")
+require("@rails/actiontext")
 
 // Toastr - extension for cute alerts
 require('frest/app-assets/vendors/js/extensions/toastr.min.js');

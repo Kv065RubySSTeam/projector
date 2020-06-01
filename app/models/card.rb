@@ -12,6 +12,9 @@ class Card < ApplicationRecord
   validates :title, length: { within: 2..50 }
   validates :position, uniqueness: { scope: :column }
 
+  # ActionText
+  has_rich_text :body
+
   acts_as_taggable_on :tags
 
   scope :available_for, -> (user) { joins(column: { board: :memberships })
@@ -21,7 +24,7 @@ class Card < ApplicationRecord
   scope :assigned, ->(user) { where(assignee: user) }
   scope :created, ->(user) { where(user: user) }
   scope :search, ->(input) { input ? search_everywhere(input) : all }
-  scope :filter, ->(filter, user) do 
+  scope :filter, ->(filter, user) do
     case filter
     when "all"
       with_discarded
@@ -47,7 +50,7 @@ class Card < ApplicationRecord
       dictionary: "english"
     }
   }
-  
+
   before_validation(on: :create) do
     self.position = self.column.last_card_position.to_i + 1
   end
