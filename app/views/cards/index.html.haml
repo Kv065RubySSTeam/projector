@@ -1,4 +1,5 @@
 = stylesheet_link_tag 'columns'
+= stylesheet_link_tag 'actiontext'
 %section.invoice-list-wrapper
   .action-dropdown-btn.d-none
   .table-responsive
@@ -64,7 +65,7 @@
               = sortable "updated_at"
             %th.sorting{:colspan => "1","data-name" => "user_id", :rowspan => "1", :tabindex => "0"}
               = sortable "user_id"
-            %th.sorting{:colspan => "1","data-name" => "assignee_id"} 
+            %th.sorting{:colspan => "1","data-name" => "assignee_id"}
               = sortable "assignee_id"
             %th.sorting{:colspan => "1",:tabindex => "0"} Tags
         %tbody#cards

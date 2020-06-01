@@ -39,10 +39,11 @@ class Card < ApplicationRecord
     end
   end
   pg_search_scope :search_everywhere,
-  against: [:title, :body],
+  against: [:title],
   associated_against: {
     assignee: [:first_name, :last_name],
-    user: [:first_name, :last_name]
+    user: [:first_name, :last_name],
+    rich_text_body: [:body]
   },
   using: {
     tsearch: {
