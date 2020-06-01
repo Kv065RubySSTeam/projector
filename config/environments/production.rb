@@ -4,6 +4,7 @@ Rails.application.configure do
   # Code is not reloaded between requests.
   config.cache_classes = true
 
+  config.read_encrypted_secrets = true
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
   # and those relying on copy on write to perform better.
@@ -16,7 +17,7 @@ Rails.application.configure do
 
   # Ensures that a master key has been made available in either ENV["RAILS_MASTER_KEY"]
   # or in config/master.key. This key is used to decrypt credentials (and other encrypted files).
-  # config.require_master_key = true
+  config.require_master_key = true
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
@@ -26,14 +27,14 @@ Rails.application.configure do
   # config.assets.css_compressor = :sass
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
 
   # Specifies the header that your server uses for sending files.
   # config.action_dispatch.x_sendfile_header = 'X-Sendfile' # for Apache
-  # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
+  config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :amazon
@@ -65,6 +66,9 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
+  config.active_job.queue_adapter = :sidekiq
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -89,6 +93,28 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
+
+  # MailGun
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: 'ec2-3-16-14-1.us-east-2.compute.amazonaws.com' }
+  config.action_mailer.smtp_settings = {
+    authenrication: :plain,
+    address: 'smtp.mailgun.org',
+    port: 587,
+    domain: ENV['MAILGUN_SMTP_DOMAIN'],
+    user_name: ENV['MAILGUN_SMTP_USERNAME'],
+    password: ENV['MAILGUN_SMTP_PASSWORD'],
+    enable_starttls_auto: true
+  }
+  # SMTP settings for gmail
+  # config.action_mailer.smtp_settings = {
+  #   address: 'smtp.gmail.com',
+  #   port: 587,
+  #   user_name: ENV['GMAIL_USERNAME'],
+  #   password: ENV['GMAIL_PASSWORD'],
+  #   authentication: 'plain',
+  #   enable_starttls_auto: true
+  # }
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
   # middleware. The `delay` is used to determine how long to wait after a write
@@ -109,4 +135,15 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+  if Rails.root.join('tmp', 'caching-dev.txt').exist?
+      config.action_controller.perform_caching = true
+      config.action_controller.enable_fragment_cache_logging = true
+      config.cache_store = :memory_store
+      config.public_file_server.headers = {
+        'Cache-Control' => "public, max-age=#{2.days.to_i}"
+      }
+  else
+    config.action_controller.perform_caching = false
+    config.cache_store = :null_store
+  end
 end
