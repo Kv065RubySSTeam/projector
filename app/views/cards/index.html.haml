@@ -2,7 +2,7 @@
 %section.invoice-list-wrapper
   .action-dropdown-btn.d-none
   .table-responsive
-    #DataTables_Table_0_wrapper.dataTables_wrapper.dt-bootstrap4.no-footer
+    #DataTables_Table_0_wrapper.dataTables_wrapper.dt-bootstrap4.no-footer.min-vh-100
       .top.d-flex.flex-wrap
         .action-filters.flex-grow-1
           #DataTables_Table_0_filter.dataTables_filter
@@ -14,11 +14,11 @@
               = hidden_field_tag(:filter, params[:filter])
               .form-control-position
                 %i.bx.bx-search
-        /Filter
+        /Filter by type
         .todo-sort.dropdown.m-2
           %button#sortDropdown.btn.dropdown-toggle.sorting{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
             %i.bx.bx-filter
-            %span Filter
+            %span Filter by type
           .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "sortDropdown"}
             = link_to cards_path(filter: 'all'), |
               class: "dropdown-item" do  |
@@ -28,10 +28,28 @@
               class: "dropdown-item" do    |
               %i.bx.bx-save.mr-50
               Saved Cards
+            = link_to cards_path(filter: 'created'), |
+              class: "dropdown-item" do      |
+              %i.bx.bx-user.mr-50
+              Created Cards
+            = link_to cards_path(filter: 'assigned'), |
+              class: "dropdown-item" do      |
+              %i.bx.bx-note.mr-50
+              Assigned Cards
             = link_to cards_path(filter: 'deleted'), |
               class: "dropdown-item" do      |
               %i.bx.bx-trash.mr-50
               Deleted Cards
+        /Filter by board
+        .todo-sort.dropdown.m-2
+          %button#sortDropdown.btn.dropdown-toggle.sorting{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :type => "button"}
+            %i.bx.bx-filter
+            %span Filter by board
+          .dropdown-menu.dropdown-menu-right{"aria-labelledby" => "sortDropdown"}
+            - current_user.boards.each do |board|
+              = link_to cards_path(board_title: board.title), |
+                class: "dropdown-item" do       |
+                #{board.title}
       .clear
       %table#cards_table.table.invoice-data-table.dt-responsive.nowrap.dataTable.no-footer.dtr-column.collapsed{:role => "grid"}
         %thead
@@ -40,13 +58,15 @@
               = sortable "title"
             %th.sorting{"data-name" => "body"}
               = sortable "body"
-            %th.sorting{:colspan => "1", "data-name" => "created_at", :rowspan => "1", :tabindex => "0"}
+            %th.sorting{:colspan => "1","data-name" => "created_at", :rowspan => "1", :tabindex => "0"}
               = sortable "created_at"
             %th.sorting_desc{"data-name" => "updated_at"}
               = sortable "updated_at"
-            %th.sorting{:colspan => "1", "data-name" => "user_id", :rowspan => "1", :tabindex => "0"}
+            %th.sorting{:colspan => "1","data-name" => "user_id", :rowspan => "1", :tabindex => "0"}
               = sortable "user_id"
-            %th{:colspan => "1", :rowspan => "1", :tabindex => "0"} Avatar
+            %th.sorting{:colspan => "1","data-name" => "assignee_id"} 
+              = sortable "assignee_id"
+            %th.sorting{:colspan => "1",:tabindex => "0"} Tags
         %tbody#cards
           - @cards.each do |card|
             = render partial: "card_for_index", locals: {card: card}
