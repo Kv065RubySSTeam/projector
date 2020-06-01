@@ -73,6 +73,8 @@ yarn-debug.log*
 /.vscode/launch.json
 
 /config/master.key
+/config/secrets.yml
 
 #Redis
 dump.rdb 
+/config/secrets.yml

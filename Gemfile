@@ -18,8 +18,6 @@ gem 'webpacker', '~> 4.0'
 gem 'turbolinks', '~> 5'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -42,6 +40,9 @@ gem 'sidekiq'
 gem 'redis'
 gem 'devise-async'
 
+# This gem automatically creates both digest and non-digest assets which are useful for many reasons.
+gem 'non-stupid-digest-assets', '~> 1.0', '>= 1.0.9'
+
 # ActiveRecord mixin to add conventions for flagging records as discarded
 gem 'discard'
 
@@ -54,9 +55,22 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails'
+  # only for local testing send email
 end
 
 group :development do
+  gem "capistrano", "~> 3.14", require: false
+  gem "capistrano-rails", "~> 1.4", require: false
+  gem 'capistrano-passenger', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-sidekiq', '~> 1.0.3', require: false
+  gem 'capistrano-local-precompile', '~> 1.2.0', require: false
+
+  # A Ruby binding to the Ed25519 elliptic curve public-key signature system described in RFC 8032.
+  gem 'ed25519'
+  # This gem implements bcrypt_pdkfd (a variant of PBKDF2 with bcrypt-based PRF)
+  gem 'bcrypt_pbkdf'
+
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'web-console', '>= 3.3.0'
   gem 'listen', '>= 3.0.5', '< 3.2'

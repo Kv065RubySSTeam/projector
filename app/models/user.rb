@@ -22,7 +22,7 @@ class User < ApplicationRecord
 
   attribute :remove_avatar, :boolean,  default: false
   after_save :purge_avatar, if: :remove_avatar
-  
+
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later
   end
@@ -60,4 +60,10 @@ class User < ApplicationRecord
   def purge_avatar
     avatar.purge_later
   end
+  
+  protected
+  def confirmation_required?
+    false
+  end
+
 end
