@@ -14,6 +14,7 @@ class Board < ApplicationRecord
   scope :user_boards, ->(user) { where(user_id: user.id) }
   scope :public_boards, -> { where(public: true) }
   scope :private_boards, -> { where(public: false) }
+  scope :public_and_user_boards, ->(user) { where(public: true).or(where(user: user)) }
   scope :filter, ->(filter, user) do
     case filter
     when "my"
@@ -23,7 +24,7 @@ class Board < ApplicationRecord
     when "public"
       public_boards
     else
-      all
+      public_and_user_boards(user)
     end
   end
   scope :sorting, -> (sort_order) do

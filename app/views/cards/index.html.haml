@@ -59,15 +59,15 @@
               = sortable "title"
             %th.sorting{"data-name" => "body"}
               = sortable "body"
-            %th.sorting{:colspan => "1","data-name" => "created_at", :rowspan => "1", :tabindex => "0"}
+            %th.sorting{:colspan => "1","data-name" => "created_at", :rowspan => "1"}
               = sortable "created_at"
             %th.sorting_desc{"data-name" => "updated_at"}
               = sortable "updated_at"
-            %th.sorting{:colspan => "1","data-name" => "user_id", :rowspan => "1", :tabindex => "0"}
+            %th.sorting{:colspan => "1","data-name" => "user_id", :rowspan => "1"}
               = sortable "user_id"
             %th.sorting{:colspan => "1","data-name" => "assignee_id"}
               = sortable "assignee_id"
-            %th.sorting{:colspan => "1",:tabindex => "0"} Tags
+            %th.sorting{:colspan => "1"} Tags
         %tbody#cards
           - @cards.each do |card|
             = render partial: "card_for_index", locals: {card: card}

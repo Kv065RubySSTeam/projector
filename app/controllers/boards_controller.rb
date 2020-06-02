@@ -1,6 +1,7 @@
 class BoardsController < ApplicationController
   load_and_authorize_resource :board, except: [:create, :export, :members]
   before_action :find_board!, except: [:index, :new, :create]
+  before_action :flash_clear, except: [:index, :show]
 
   def index
     @boards = Board.filter(params[:filter], current_user)
@@ -23,27 +24,30 @@ class BoardsController < ApplicationController
   def create
     @board = Boards::CreateService.call(current_user, board_params)
     if @board.errors.empty?
-      redirect_to @board 
+      redirect_to @board
+      flash[:success] = "Board successfully created!"
     else
-      render 'new'
+      render 'new', status: 422
     end
   end
 
   def update
     if @board.update(board_params)
-      flash[:success] = 'Successfully updated!'
       redirect_to @board
+      flash[:success] = "Board successfully updated!"
     else
-      render 'edit'
+      render 'edit', status: 422
     end
   end
 
   def destroy
     if @board.destroy
-      flash[:success] = 'Successfully deleted!'
-      redirect_to @board
+      redirect_to root_path
+      flash[:success] = "Board successfully deleted!"
     else
-      flash[:error] = "Something went wrong, the acticle wasn't deleted"
+      respond_to :js
+      flash[:error] = "Board has not been deleted! Something went wrong"
+      render status: 422
     end
   end
 
@@ -70,4 +74,9 @@ class BoardsController < ApplicationController
   def board_params
     params.require(:board).permit(:title, :description, :public)
   end
+
+  def flash_clear
+    flash.clear()
+  end
+
 end

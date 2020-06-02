@@ -15,21 +15,24 @@
               /sidebar list start
               .sidebar-menu-list
                 .list-group
-                  = link_to 'All boards', boards_path, class: "fonticon-wrap.mr-50"
+                  = link_to 'All boards', root_path, class: "fonticon-wrap mr-50"
                 %label.filter-label.mt-2.mb-1.pt-25 Filters
                 .list-group
-                  = link_to filter: 'my', class: "list-group-item.border-0" do
-                    %span
-                      My boards
-                    %span.bullet.bullet-sm.bullet-warning
-                  = link_to filter: 'private', class: "list-group-item.border-0" do
-                    %span
-                      Private boards
-                    %span.bullet.bullet-sm.bullet-success
-                  = link_to filter: 'public', class: "list-group-item.border-0" do
-                    %span
-                      Public boards
-                    %span.bullet.bullet-sm.bullet-primary
+                  .row
+                    .col-sm-8
+                      = link_to 'My boards', filter: 'my'
+                    .col-sm-2
+                      %span.bullet.bullet-sm.bullet-warning
+                  .row
+                    .col-sm-8
+                      = link_to 'Private boards', filter: 'private'
+                    .col-sm-2
+                      %span.bullet.bullet-sm.bullet-success
+                  .row
+                    .col-sm-8
+                      = link_to 'Public boards', filter: 'public'
+                    .col-sm-2
+                      %span.bullet.bullet-sm.bullet-primary
               /sidebar list end
       /righht part
       .content-right
@@ -67,3 +70,4 @@
                     = will_paginate(@boards)
                     %ul#todo-task-list-drag.todo-task-list-wrapper.list-unstyled
                       = render 'board', boards: @boards, class: "todo-item"
+                      
