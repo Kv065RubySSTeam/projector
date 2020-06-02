@@ -22,7 +22,7 @@
                   = link_to 'Back', boards_path, class: "btn btn-outline-primary mb-1 back-board-btn"
                   - if can? :manage, @board
                     = link_to 'Edit', edit_board_path(@board), class: "btn btn-outline-primary mb-1 edit-board-btn"
-                    = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1 destroy-board-btn", data: { confirm: "You sure?" }
+                    = link_to 'Destroy', @board, method: :delete, class: "btn btn-outline-primary mb-1 destroy-board-btn", remote: true, data: { confirm: "You sure?" }
               - if can? :manage, @board
                 .col-md-6#addMember
                   .input-group-prepend

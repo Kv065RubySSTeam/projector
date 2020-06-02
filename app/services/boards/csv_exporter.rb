@@ -23,7 +23,8 @@ module Boards
 
         columns.each do |column|
           column.cards.each do |card|
-            csv << [card.title, card.body, card.user.full_name, column.name]
+            body = card.body.to_plain_text
+            csv << [card.title, body, card.user.full_name, column.name]
           end
         end
       end

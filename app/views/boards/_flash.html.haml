@@ -1,0 +1,7 @@
+- flash.each do |key, value|
+  - if value.include? "Board"
+    .board-flash
+      %pre{class: "#{flash_class(key)}"}= value
+
+:javascript
+  $(".board-flash").delay(1500).slideUp(1000);
