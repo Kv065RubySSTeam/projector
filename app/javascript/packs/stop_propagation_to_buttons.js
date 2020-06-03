@@ -16,6 +16,15 @@ window.stopPropagationToButtons = function(event) {
     method: method,
     headers: {
       'X-CSRF-Token': document.getElementsByName('csrf-token')[0].content
+    },
+    error: function(jqXHR, textStatus, errorThrown) {
+      if(jqXHR.status === 422) {
+        eval(jqXHR.responseText);
+      } else if (jqXHR.status === 404){
+        eval('Resource not found');
+      } else {
+        eval('Something went wrong');
+      }
     }
   });  
 };
