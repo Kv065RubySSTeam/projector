@@ -1,0 +1,6 @@
+#user-section.pt-2
+  %h3.pl-2 Members
+  %input{type: "hidden", value: User.find(@board.user_id).email, id: "creator"}
+  %ul.pt-1
+    - @board.memberships.each do |member|
+      = render partial: "memberships/membership", locals: { member: member }

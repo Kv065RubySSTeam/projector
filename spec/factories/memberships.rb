@@ -1,6 +1,12 @@
 FactoryBot.define do
   factory :membership do
-    board
-    user
+    user 
+    board 
+    admin { false }
+
+    factory :admin_membership do
+      admin { true }
+    end
+    
   end
 end

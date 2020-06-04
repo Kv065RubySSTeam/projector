@@ -31,8 +31,8 @@
                     %input{type: "hidden", value: board_memberships_path(@board), id: "addMembershipURL"}
                   %ul.list-group.search-list.show#show-users
               .col-md-2
-                = link_to '', export_board_path, class: 'bx bx-download btn btn-icon btn-dark glow mr-1 mb-1 export-btn'
-                = link_to '', export_board_path, class: 'bx bx-mail-send btn btn-icon btn-dark glow mr-1 mb-1 export-and-email-btn'
+                = link_to '', export_board_path(@board), class: 'bx bx-download btn btn-icon btn-dark glow mr-1 mb-1 export-btn'
+                = link_to '', export_board_path(@board), class: 'bx bx-mail-send btn btn-icon btn-dark glow mr-1 mb-1 export-and-email-btn'
           .col-md
             .board-title-desc.mb-2{:style => "cursor: default"}
               %h2
@@ -52,30 +52,6 @@
                 class: "btn btn-primary mb-1" do
                 %i.bx.bx-add-to-queue.mr-50>
                 Add New Column
-            .kanban-container#kanban-container
-              = render  @columns
-          #user-section.pt-2
-            %h3.pl-2{:style => "cursor: default"} Members
-            %input{type: "hidden", value: User.find(@board.user_id).email, id: "creator"}
-            %ul.pt-1
-              - @board.memberships.each do |member|
-                %div.mb-2
-                  .checkbox.checkbox-danger.checkbox-glow
-                    - if member.user.administrated_boards.exists?(@board.id)
-                      %i.bx.bx-star.bxs-star.warning
-                      %span{:style => "cursor: default"}= member.user.email
-                      - if can? :manage, @board
-                        = link_to 'Remove Admin', admin_board_membership_path(board_id: @board.id, id: member.id, user_id: member.user.id),
-                                              class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1 rmv-admin", id: "#{member.user.email}",
-                                              remote: true,
-                                              method: :put,
-                                              :onclick => 'changeRights(event)'
-                    - else
-                      %i.bx.bx-star.bxs-star
-                      %span= member.user.email
-                      - if can? :manage, @board
-                        = link_to 'Add Admin', admin_board_membership_path(board_id: @board.id, id: member.id, user_id: member.user.id),
-                                                class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1 add-admin", id: "#{member.user.email}",
-                                        remote: true,
-                                        method: :put,
-                                        :onclick => 'changeRights(event)'
+              .kanban-container#kanban-container
+                = render  @columns
+          = render "memberships/index"

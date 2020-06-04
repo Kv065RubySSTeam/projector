@@ -14,7 +14,9 @@ class Board < ApplicationRecord
   scope :user_boards, ->(user) { where(user_id: user.id) }
   scope :public_boards, -> { where(public: true) }
   scope :private_boards, -> { where(public: false) }
-  scope :public_and_user_boards, ->(user) { where(public: true).or(where(user: user)) }
+  scope :membership_and_public_boards, ->(user) do
+    left_outer_joins(:memberships).where("boards.public = ? OR memberships.user_id = ?", true, user.id)
+  end
   scope :filter, ->(filter, user) do
     case filter
     when "my"
@@ -24,7 +26,7 @@ class Board < ApplicationRecord
     when "public"
       public_boards
     else
-      public_and_user_boards(user)
+      membership_and_public_boards(user)
     end
   end
   scope :sorting, -> (sort_order) do
