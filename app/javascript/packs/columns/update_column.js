@@ -27,6 +27,11 @@ $(document).ready(function() {
         },
         data: {
           'column[name]': columnTitle
+        },
+        error: function(jqXHR) {
+          if(jqXHR.status === 422) {
+            eval(jqXHR.responseText);
+          }
         }
       });
     }

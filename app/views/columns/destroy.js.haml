@@ -1,9 +1,8 @@
-$(".kanban-delete").on("ajax:success", function() {
+$(".kanban-delete").off("ajax:success").on("ajax:success", function() {
 $(this).closest(".kanban-board").remove();
 });
 
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")
-\.children()
 \.delay( 5000 )
 \.slideUp( 1000 );
