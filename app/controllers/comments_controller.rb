@@ -27,13 +27,8 @@ class CommentsController < ApplicationController
   def edit; end
 
   def update
-    if current_user == @comment.user
-      if @comment.update(comment_params)
-        flash[:success]  = "Comment was successfully updated." 
-      else
-        flash[:error] = @comment.errors.full_messages.join("\n")
-        render :nothing => true, :status => :unprocessable_entity
-      end
+    if @comment.update(comment_params)
+      flash[:success]  = "Comment was successfully updated." 
     else
       flash[:error] = @comment.errors.full_messages.join("\n")
       render status: 422
@@ -41,13 +36,8 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    if current_user == @comment.user
-      if @comment.destroy
-        flash[:success]  = "Comment was successfully deleted." 
-      else
-        flash[:error] = @comment.errors.full_messages.join("\n")
-        render :nothing => true, :status => :unprocessable_entity
-      end
+    if @comment.destroy
+      flash[:success]  = "Comment was successfully deleted." 
     else
       flash[:error] = @comment.errors.full_messages.join("\n")
       render status: 422
@@ -75,5 +65,4 @@ class CommentsController < ApplicationController
   def flash_clear
     flash.clear()
   end
-
 end

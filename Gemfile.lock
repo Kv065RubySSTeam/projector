@@ -25,7 +25,6 @@ GEM
       rack-test (>= 0.6.3)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.0, >= 1.2.0)
-<<<<<<< HEAD
     actiontext (6.0.3.1)
       actionpack (= 6.0.3.1)
       activerecord (= 6.0.3.1)
@@ -34,23 +33,12 @@ GEM
       nokogiri (>= 1.8.5)
     actionview (6.0.3.1)
       activesupport (= 6.0.3.1)
-=======
-    actiontext (6.0.3)
-      actionpack (= 6.0.3)
-      activerecord (= 6.0.3)
-      activestorage (= 6.0.3)
-      activesupport (= 6.0.3)
-      nokogiri (>= 1.8.5)
-    actionview (6.0.3)
-      activesupport (= 6.0.3)
->>>>>>> 5fabe04603e5a266d6ed3535991881d1b821eaec
       builder (~> 3.1)
       erubi (~> 1.4)
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
     active_storage_validations (0.8.9)
       rails (>= 5.2.0)
-<<<<<<< HEAD
     activejob (6.0.3.1)
       activesupport (= 6.0.3.1)
       globalid (>= 0.3.6)
@@ -65,22 +53,6 @@ GEM
       activerecord (= 6.0.3.1)
       marcel (~> 0.3.1)
     activesupport (6.0.3.1)
-=======
-    activejob (6.0.3)
-      activesupport (= 6.0.3)
-      globalid (>= 0.3.6)
-    activemodel (6.0.3)
-      activesupport (= 6.0.3)
-    activerecord (6.0.3)
-      activemodel (= 6.0.3)
-      activesupport (= 6.0.3)
-    activestorage (6.0.3)
-      actionpack (= 6.0.3)
-      activejob (= 6.0.3)
-      activerecord (= 6.0.3)
-      marcel (~> 0.3.1)
-    activesupport (6.0.3)
->>>>>>> 5fabe04603e5a266d6ed3535991881d1b821eaec
       concurrent-ruby (~> 1.0, >= 1.0.2)
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
@@ -94,7 +66,7 @@ GEM
       sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.0)
     aws-eventstream (1.1.0)
-    aws-partitions (1.323.0)
+    aws-partitions (1.324.0)
     aws-sdk-core (3.97.1)
       aws-eventstream (~> 1, >= 1.0.2)
       aws-partitions (~> 1, >= 1.239.0)
@@ -151,10 +123,6 @@ GEM
       activejob (>= 5.0)
       devise (>= 4.0)
     diff-lcs (1.3)
-<<<<<<< HEAD
-=======
-    docile (1.3.2)
->>>>>>> 5fabe04603e5a266d6ed3535991881d1b821eaec
     discard (1.2.0)
       activerecord (>= 4.2, < 7)
     docile (1.3.2)
@@ -166,11 +134,7 @@ GEM
     factory_bot_rails (5.2.0)
       factory_bot (~> 5.2.0)
       railties (>= 4.2.0)
-<<<<<<< HEAD
     faker (2.12.0)
-=======
-    faker (2.11.0)
->>>>>>> 5fabe04603e5a266d6ed3535991881d1b821eaec
       i18n (>= 1.6, < 2)
     faraday (1.0.1)
       multipart-post (>= 1.2, < 3)
@@ -271,7 +235,6 @@ GEM
       rack
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-<<<<<<< HEAD
     rails (6.0.3.1)
       actioncable (= 6.0.3.1)
       actionmailbox (= 6.0.3.1)
@@ -286,22 +249,6 @@ GEM
       activesupport (= 6.0.3.1)
       bundler (>= 1.3.0)
       railties (= 6.0.3.1)
-=======
-    rails (6.0.3)
-      actioncable (= 6.0.3)
-      actionmailbox (= 6.0.3)
-      actionmailer (= 6.0.3)
-      actionpack (= 6.0.3)
-      actiontext (= 6.0.3)
-      actionview (= 6.0.3)
-      activejob (= 6.0.3)
-      activemodel (= 6.0.3)
-      activerecord (= 6.0.3)
-      activestorage (= 6.0.3)
-      activesupport (= 6.0.3)
-      bundler (>= 1.3.0)
-      railties (= 6.0.3)
->>>>>>> 5fabe04603e5a266d6ed3535991881d1b821eaec
       sprockets-rails (>= 2.0.0)
     rails-controller-testing (1.0.4)
       actionpack (>= 5.0.1.x)
@@ -312,15 +259,9 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.3.0)
       loofah (~> 2.3)
-<<<<<<< HEAD
     railties (6.0.3.1)
       actionpack (= 6.0.3.1)
       activesupport (= 6.0.3.1)
-=======
-    railties (6.0.3)
-      actionpack (= 6.0.3)
-      activesupport (= 6.0.3)
->>>>>>> 5fabe04603e5a266d6ed3535991881d1b821eaec
       method_source
       rake (>= 0.8.7)
       thor (>= 0.20.3, < 2.0)
@@ -359,12 +300,7 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.9.3)
-<<<<<<< HEAD
     rubocop (0.85.0)
-=======
-    rubocop (0.82.0)
-      jaro_winkler (~> 1.5.1)
->>>>>>> 5fabe04603e5a266d6ed3535991881d1b821eaec
       parallel (~> 1.10)
       parser (>= 2.7.0.1)
       rainbow (>= 2.2.2, < 4.0)
@@ -394,19 +330,11 @@ GEM
     sexp_processor (4.14.1)
     shoulda-matchers (4.3.0)
       activesupport (>= 4.2.0)
-<<<<<<< HEAD
     sidekiq (5.2.8)
       connection_pool (~> 2.2, >= 2.2.2)
       rack (< 2.1.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
-=======
-    sidekiq (6.0.7)
-      connection_pool (>= 2.2.2)
-      rack (~> 2.0)
-      rack-protection (>= 2.0.0)
-      redis (>= 4.1.0)
->>>>>>> 5fabe04603e5a266d6ed3535991881d1b821eaec
     simplecov (0.18.5)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -473,8 +401,6 @@ DEPENDENCIES
   capistrano-sidekiq (~> 1.0.3)
   devise
   devise-async
-  factory_bot_rails
-  faker
   discard
   ed25519
   factory_bot_rails
