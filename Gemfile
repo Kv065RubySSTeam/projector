@@ -56,7 +56,12 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry-rails'
-  # only for local testing send email
+  gem "factory_bot_rails", '~> 5.2'
+  gem 'rspec-rails', '~> 4.0.0'
+  gem 'shoulda-matchers', '~> 4.3'
+  gem 'faker', '~> 2.11'
+  gem 'rspec-html-matchers', '~> 0.9.2'
+  gem 'simplecov', '~> 0.18.5', require: false
 end
 
 group :development do

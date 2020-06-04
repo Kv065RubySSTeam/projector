@@ -78,3 +78,6 @@ yarn-debug.log*
 #Redis
 dump.rdb 
 /config/secrets.yml
+
+# SimpleCov public folder
+public/coverage
