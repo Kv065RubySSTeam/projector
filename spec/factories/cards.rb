@@ -2,10 +2,9 @@ require 'faker'
 
 FactoryBot.define do
   factory :card do
-    title { "title" }
-    body { "blah" }
-    user { create(:user) }
-    column { create(:column) }
+    title { Faker::Name.name }
+    user 
+    column 
     sequence(:position)
   end
 end

@@ -1,7 +1,9 @@
+require 'faker'
+
 FactoryBot.define do
   factory :comment do
-    body { "blah" }
-    user { create(:user)}
-    card { create(:card)}
+    body { Faker::Name.name }
+    user
+    card
   end
 end
