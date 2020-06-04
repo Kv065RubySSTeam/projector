@@ -10,7 +10,16 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     password { secure_password }
     password_confirmation { secure_password }
-
     confirmed_at { Time.now } 
+
+    factory :user_with_boards do
+      transient do
+        boards_count { 3 }
+      end
+      after(:create) do |user, evaluator|
+        create_list(:column_with_cards, evaluator.boards_count, user: user)
+      end
+    end
+  
   end
 end

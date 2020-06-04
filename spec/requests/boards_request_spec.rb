@@ -1,32 +1,62 @@
 require 'rails_helper'
-require 'pp'
 
 RSpec.describe BoardsController, type: :controller do
+  let(:current_user) { create(:user) }
 
-  login_user
+  before do
+    sign_in current_user
+  end
+  
+  shared_examples "a redirect response" do
+    it { expect(response.status).to eq(302) }
+  end
 
-  # Index
-  describe "GET #index" do
-    subject { get :index }
+  shared_examples "a success response" do
+    it { expect(response.status).to eq(200) }
+  end
 
-    context "redirected request - not authorized user" do
-      it "is redirects user to login page" do
-        sign_out controller.current_user
-        subject
-        expect(response.status).to eq(302)
-        expect(response.status).to redirect_to new_user_session_path
-      end
+  shared_examples "an unprocessable entity response" do
+    it { expect(response.status).to eq(422) }
+  end
+
+  shared_examples "а not authorized error" do
+    before(:each) do
+      request.headers["HTTP_REFERER"] = "http://exapmpe.com/test"
+      subject
+    end
+    it "shows not authorized flashes" do 
+      expect(flash[:error]).to include("You are not authorized")
     end
 
-    context "successful request" do
-      it "returns successful response and renders index page" do
+    it { expect(response.location).to eq("http://exapmpe.com/test") }
+
+    it { expect(response.status).to eq(302) }
+
+  end
+  
+  describe "GET #index" do
+    subject { get :index }
+    let!(:random_boards) { create_list(:board, 3) }
+
+    context "user doesn't exist" do
+      before(:each) do 
+        sign_out current_user
         subject
-        expect(response.status).to eq(200)
+      end
+      it "redirects to login page" do
+        expect(response.status).to redirect_to new_user_session_path
+      end
+      it_behaves_like "a redirect response"
+    end
+
+    context "user exists" do
+      before(:each) { subject }
+      it "returns successful response and renders index page" do
         expect(response.status).to render_template(:index)
       end
     end
- 
-    context "without boards" do
+
+    context "only private not current user boards" do
       it "returns no boards" do
         subject
         expect(assigns(:boards)).to be_empty
@@ -34,58 +64,61 @@ RSpec.describe BoardsController, type: :controller do
     end
 
     context "with 3 user boards" do
-      let(:user_boards) { create_list(:board, 3, user: controller.current_user) }
-      let(:random_boards) { create_list(:board, 3) }
+      let(:user) { create(:user_with_boards) }
       it "returns only 3 user boards" do
         subject
-        expect(assigns(:boards)).to match_array(user_boards)
+        expect(assigns(:boards)).to match_array(user.boards)
+        expect(assigns(:boards)).to_not match_array(random_boards)
       end
     end
 
     context "with 3 public boards" do
-      let(:boards) { create_list(:board, 3, public: true) }
+      let!(:public_boards) { create_list(:board, 3, public: true) }
       it "returns 3 public boards" do
         subject
-        expect(assigns(:boards)).to match_array(boards)
+        expect(assigns(:boards)).to match_array(public_boards)
+        expect(assigns(:boards)).to_not match_array(random_boards)
       end
     end
 
-    context "with only private boards" do
-      let(:boards) { create_list(:board, 3) }
-      it "returns no boards" do
+  end
+
+  describe "GET #index pagination test" do
+    let!(:boards) { create_list(:board, 15, public: true) }
+
+    context "first page with 10 boards" do
+      subject { get :index, params: { page: 1 } }
+      it "returns only 10 boards" do
         subject
-        expect(assigns(:boards)).to_not match_array(boards)
+        expect(assigns(:boards).length).to eq(10)
       end
     end
-  
-  end # Close index tests
-  
-  # Show
+
+    context "second page with 5 boards" do
+      subject { get :index, params: { page: 2 } }
+      it "returns only 5 boards" do
+        subject
+        expect(assigns(:boards).length).to eq(5)
+      end
+    end
+  end
+
   describe "GET #show" do
     subject { get :show, params: { id: board.id } }
+    before(:each) { subject }
 
     context "successful request - public board" do
-      let(:board) { create(:board, public: true) }
-      it "returns successful response  and renders show page" do     
-        subject
-        expect(response.status).to eq(200)
+      let!(:board) { create(:board, public: true) }
+      it "returns successful response  and renders show page" do
         expect(response.status).to render_template(:show)
       end
-    end
 
-    # context "redirected request - private board" do
-    #   let(:board) { create(:board) }
-    #   it "redirects to index" do
-    #     subject
-    #     expect(response.status).to eq(302)
-    #     expect(response.status).to redirect_to action: :index
-    #   end
-    # end
+      it_behaves_like "a success response"
+    end
 
     context "pass board with 10 columns" do
       let(:board) { create(:board_with_columns, public: true) }
       it "returs board with 10 columns" do
-        subject
         expect(assigns(:columns).length).to eq(10)
       end
     end
@@ -93,155 +126,169 @@ RSpec.describe BoardsController, type: :controller do
     context "pass board" do
       let(:board) { create(:board, public: true) }
       it "returs valid board" do
-        subject
         expect(assigns(:board)).to be_a(Board)
         expect(assigns(:board)).to eq(board)
       end
     end
 
-  end # Close show tests
+  end
 
-  # New
   describe "GET #new" do
     subject { get :new }
+    before(:each) { subject }
 
     context "successful request" do
       it "returns successful response and renders new form" do
-        subject
-        expect(response.status).to eq(200)
         expect(response).to render_template(:new)
       end
 
+      it_behaves_like "a success response"
+
       it "sends a new boad" do
-        subject
         expect(assigns(:board)).to be_a(Board)
         expect(assigns(:board)).to be_a_new(Board)
       end
     end
   end
 
-  # Create
   describe "POST #create" do
     subject { post :create, params: { board: params } }
-  
+
     context "pass valid params" do
       let(:params) do
         { title: "new board", description: "new board", public: true }
       end
+      before(:each) { subject }
+
       it "redirects to show page" do
-        subject
-        expect(response.status).to eq(302)
         expect(response.status).to redirect_to action: :show, id: assigns(:board).id
       end
 
+      it_behaves_like "a redirect response"
+
       it "returns success flashes" do
-        subject
         expect(flash[:success]).to include("Board successfully created!")
       end
     end
 
     context "pass invalid params" do
       let(:params) { { title: "", description: "", public: true } }
+      before(:each) { subject }
+      let(:errors) do
+        ["Title is too short (minimum is 5 characters)",
+          "Description is too short (minimum is 5 characters)"]
+      end
+
       it "renders new template" do
-        subject
         expect(response.status).to render_template(:new)
       end
-    end
 
-  end # Close create tests
+      it_behaves_like "an unprocessable entity response"
+
+      it "returns errors" do
+        expect(assigns(:board).errors.to_a).to match_array(errors)
+      end
+    end
   
-  # Edit
+  end
+  
   describe "GET #edit" do
     subject { get :edit, params: { id: board.id } }
-    let(:user) { controller.current_user }
-    let(:membership) { create(:membership, user: user, board: board) }
+    let(:user) { current_user }
+    let(:admin_membership) { create(:admin_membership, user: user, board: board) }
     let(:board) { create(:board, user: user) }
-
+  
     context "admin request" do
-      it "returns successful response and renders edit form" do
-        membership
+      before(:each) do
+        admin_membership
         subject
-        expect(response.status).to eq(200)
+      end
+      it "returns successful response and renders edit form" do
         expect(response).to render_template(:edit)
       end
+
+      it_behaves_like "a success response"
     end
 
     context "not admin request" do
-      it "redirects to show page" do
-        subject
-        expect(response.status).to eq(302)
-        expect(response).to redirect_to action: :show, id: assigns(:board).id
-      end
+      let!(:membership) { create(:membership, user: user, board: board) }
+      it_behaves_like "а not authorized error"
     end
 
     context "edit valid board" do
       it "returns valid board" do
-        membership
+        admin_membership
         subject
         expect(assigns(:board)).to be_a(Board)
         expect(assigns(:board)).to eq(board)
       end
     end
-  end # Close edit validations
+  end
 
-  # Update
   describe "PUT #update" do
     subject { put :update, params: { id: board.id, board: params } }
-    let(:user) { controller.current_user }
+    let(:user) { current_user }
     let(:board) { create(:board, user: user) }
-    let!(:membership) { create(:membership, user: user, board: board) }
+    let!(:membership) { create(:admin_membership, user: user, board: board) }
 
     context "valid update params" do
       let(:params) do
         { title: "updated board", description: "updated board", public: true }
       end
+      before(:each) { subject }
      
       it "updates board with valid params" do
-        subject
         board.reload
         expect(board.title).to eq(params[:title])
         expect(board.description).to eq(params[:description])
       end
 
       it "redirects to show page" do
-        subject
-        expect(response.status).to eq(302)
         expect(response.status).to redirect_to action: :show, id: assigns(:board).id
       end
 
+      it_behaves_like "a redirect response"
+
       it "returns success flashes" do
-        subject
         expect(flash[:success]).to include("Board successfully updated!")
       end
     end
 
     context "invalid update params" do
       let(:params) {  { title: "", description: "", public: true } }
+      before(:each) { subject }
+      let(:errors) do
+        ["Title is too short (minimum is 5 characters)",
+          "Description is too short (minimum is 5 characters)"]
+      end
 
       it "doesn't update board" do
-        subject
         board.reload
         expect(board.title).to_not eq(params[:title])
         expect(board.description).to_not eq(params[:description])
       end
 
       it "renders edit" do
-        subject
         expect(response.status).to render_template(:edit)
+      end
+
+      it_behaves_like "an unprocessable entity response"
+
+      it "returns errors" do
+        expect(assigns(:board).errors.to_a).to match_array(errors)
       end
     end
 
-  end # Close update tests
+  end
 
-  # Destroy
   describe "DELETE #destroy" do
-    subject { delete :destroy, params: { id: board.id } }
-    let(:user) { controller.current_user }
+    subject { delete :destroy, format: :js, params: { id: board.id } }
+    let(:user) { current_user }
     let!(:board) { create(:board, user: user) }
     let!(:random_board) { create(:board, user: user) }
-
+    
     context "user admin deletes board" do
-      let!(:membership) { create(:membership, user: user, board: board) }
+      let!(:membership) { create(:admin_membership, user: user, board: board) }
       it "deletes only particular board" do
         expect(Board.all).to include(board)
         subject
@@ -259,34 +306,45 @@ RSpec.describe BoardsController, type: :controller do
       end
     end
 
-    context "user not admin" do
-      it "redirects to show action" do
+    context "invalid params" do
+      let!(:membership) { create(:membership, user: current_user, board: board, admin: true) }
+
+      before(:each) do
+        allow_any_instance_of(Board).to receive(:destroy).and_return(false)
         subject
-        expect(response.status).to eq(302)
-        expect(response.status).to redirect_to action: :show, id: assigns(:board).id
+      end
+
+      it_behaves_like "an unprocessable entity response"
+
+      it "returns error flashes" do
+        expect(flash[:error]).to include("Board has not been deleted! Something went wrong")
+      end
+
+      it "deletes no objects" do
+        expect { subject }.to_not change { Board.count }  
       end
     end
-  end # Close destroy tests
 
-  # Members
+    context "user not admin" do
+      it_behaves_like "а not authorized error"
+    end
+  end
+
   describe "GET #members" do
     subject { get :members, format: :json, params: { id: board.id } }
-    let!(:user) { controller.current_user }
+    let!(:user) { current_user }
     let!(:board) { create(:board, user: user) }
     let!(:membership) { create(:membership, user: user, board: board) }
     let!(:memberhips) { create_list(:membership, 3, board: board) }
+    before(:each) { subject }
 
     context "valid requerst" do
-      it "returns success" do
-        subject 
-        expect(response.status).to eq(200)
-      end
+      it_behaves_like "a success response"
     end
 
     context "create 3 users (4 with creater) in board membership" do
       
       it "returns 4 board members (users)" do
-        subject
         parsed_response = JSON.parse(response.body)
         expect(parsed_response.length).to eq(4)
       end
@@ -294,13 +352,11 @@ RSpec.describe BoardsController, type: :controller do
 
     context "check particolar users in json" do
       it "returns 4 board members (users)" do
-        subject
         parsed_response = JSON.parse(response.body)
-        expect(parsed_response[0]['email']).to eq(user.email)
-        expect(parsed_response[3]['email']).to eq(board.users.last.email)
+        expect(parsed_response.first['email']).to eq(user.email)
+        expect(parsed_response.last['email']).to eq(board.users.last.email)
       end
     end
     
-  end # Close members
-
+  end
 end

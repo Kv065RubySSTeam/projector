@@ -12,7 +12,6 @@ require 'support/shoulda_matchers'
 require 'support/shoulda_matchers_controller'
 require 'support/devise'
 require 'support/rspec_html_matchers'
-require 'support/controller_macros'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -44,6 +43,8 @@ RSpec.configure do |config|
   # examples within a transaction, remove the following line or assign false
   # instead of true.
   config.use_transactional_fixtures = true
+  # config.include Devise::Test::ControllerHelpers, type: :controller
+  # HTML matchers
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
