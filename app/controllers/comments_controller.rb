@@ -2,8 +2,8 @@ class CommentsController < ApplicationController
   load_and_authorize_resource :comment, except: [:create]
   before_action :find_column!
   before_action :find_comment!, only: [:edit, :update, :destroy]
-  before_action :find_card!, except: [:new]
-  before_action :flash_clear, except: [:new, :edit]
+  before_action :find_card!
+  before_action :flash_clear, except: [:edit]
   respond_to :js
 
   def index
@@ -19,7 +19,8 @@ class CommentsController < ApplicationController
       end
       flash[:success] = "Comment was successfully created." 
     else
-      flash[:error] = @comment.errors.full_messages.join("\n") 
+      flash[:error] = @comment.errors.full_messages.join("\n")
+      render status: 422 
     end
   end
 
@@ -29,7 +30,8 @@ class CommentsController < ApplicationController
     if @comment.update(comment_params)
       flash[:success]  = "Comment was successfully updated." 
     else
-      flash[:error] = @comment.errors.full_messages.join("\n") 
+      flash[:error] = @comment.errors.full_messages.join("\n")
+      render status: 422
     end
   end
 
@@ -37,7 +39,8 @@ class CommentsController < ApplicationController
     if @comment.destroy
       flash[:success]  = "Comment was successfully deleted." 
     else
-      flash[:error] = @comment.errors.full_messages.join("\n") 
+      flash[:error] = @comment.errors.full_messages.join("\n")
+      render status: 422
     end
   end
 
@@ -62,5 +65,4 @@ class CommentsController < ApplicationController
   def flash_clear
     flash.clear()
   end
-
 end

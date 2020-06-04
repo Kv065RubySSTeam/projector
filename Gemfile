@@ -60,6 +60,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.0'
   gem 'shoulda-matchers', '~> 4.3'
   gem 'faker', '~> 2.11'
+  gem 'rails-controller-testing'
   gem 'rspec-html-matchers', '~> 0.9.2'
   gem 'simplecov', '~> 0.18.5', require: false
 end
