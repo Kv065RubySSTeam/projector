@@ -1,8 +1,12 @@
 module Likable
   extend ActiveSupport::Concern
 
+  included do
+    before_action :find_likable!
+  end
+
   def create
-    @like = @likable.likes.create(user: current_user) 
+    @like = @likable.likes.create(user: current_user)
     respond_to do |f|
       if @like.errors.empty?
         f.js { render action: 'change_button', status: 200 }
