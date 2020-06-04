@@ -1,10 +1,8 @@
-var className = ".kanban-board[data-column-id=\'" + "#{@column.id}" + "\']";
-var columnElement = $(`${className}`)[0].getElementsByClassName("kanban-title-board")[0];
-var columnLength = columnElement.innerText.trim().length;
-
-if (columnLength <= 1){
-columnElement.innerHTML = "#{@previousName}";
-}
+- if @column.errors.any?
+  className = ".kanban-board[data-column-id=\'" + "#{@column.id}" + "\']";
+  columnElement = $(`${className}`)[0].getElementsByClassName("kanban-title-board")[0];
+  columnLength = columnElement.innerText.trim().length;
+  columnElement.innerHTML = "#{@previousName}";
 
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")

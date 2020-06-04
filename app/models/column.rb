@@ -8,6 +8,6 @@ class Column < ApplicationRecord
   validates :position, uniqueness: { scope: :board }
   
   def last_card_position
-    self.cards.maximum(:position)
+    cards.maximum(:position)
   end
 end

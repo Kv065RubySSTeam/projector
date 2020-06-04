@@ -34,6 +34,6 @@ class Board < ApplicationRecord
   self.per_page = 10
 
   def last_column_position
-    self.columns.maximum(:position)
+    columns.maximum(:position)
   end
 end

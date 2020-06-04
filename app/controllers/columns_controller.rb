@@ -3,10 +3,8 @@ class ColumnsController < ApplicationController
   load_and_authorize_resource :column, through: :board
   before_action :find_board!
   before_action :find_column!, only: [:update, :destroy]
-  before_action :flash_clear, except: :new
+  before_action :flash_clear
   respond_to :js
-
-  def new; end
 
   def create
     @column = Columns::CreateService.call(@board, current_user)
@@ -14,6 +12,7 @@ class ColumnsController < ApplicationController
       flash[:success] = "Column was successfully created."
     else
       flash[:error] = @column.errors.full_messages.join("\n")
+      render status: 422
     end
   end
 
@@ -23,6 +22,7 @@ class ColumnsController < ApplicationController
       flash[:success] = "Column was successfully updated."
     else
       flash[:error] = @column.errors.full_messages.join("\n")
+      render status: 422
     end
   end
 
@@ -31,6 +31,7 @@ class ColumnsController < ApplicationController
       flash[:success] = "Column was successfully deleted!"
     else
       flash[:error] = @column.errors.full_messages.join("\n")
+      render status: 422
     end
   end
 

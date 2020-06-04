@@ -1,3 +1,4 @@
+$("#add-kanban").off("ajax:success").on("ajax:success", function() {
 $('.kanban-container').append("#{j render @column}");
 
 $('.kanban-title-board:last')[0].addEventListener('blur', function(event) {
@@ -15,6 +16,11 @@ headers: {
 },
 data: {
 'column[name]': columnTitle
+},
+error: function(jqXHR) {
+if(jqXHR.status === 422) {
+eval(jqXHR.responseText);
+}
 }
 });
 };
@@ -22,9 +28,9 @@ data: {
 $("#kanban-wrapper").find('.dropdown:last').click(function() {
 $(this).toggleClass('show');
 });
+});
 
 $(".flashes").empty()
 \.append("#{j render 'shared/flash'}")
-\.children()
 \.delay( 5000 )
 \.slideUp( 1000 );
