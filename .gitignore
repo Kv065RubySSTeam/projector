@@ -77,4 +77,5 @@ yarn-debug.log*
 
 #Redis
 dump.rdb 
+dump.rdb coverage
 /config/secrets.yml

@@ -1,7 +1,7 @@
 - unless @comment.errors.any?
   -# Add comment
   $('#comments').prepend("#{j render @comment}");
-  -# Crear input
+  -# Clear input
   $('#comment_body').val('');
   -# Clear errors
   $('.errors').empty();
