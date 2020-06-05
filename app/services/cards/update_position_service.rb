@@ -26,7 +26,8 @@ module Cards
       return if card.column == column
       
       card.notification_receivers.each do |user|
-        CardMailer.with(card: card, user: user).update_card_position.deliver_later if user.receive_emails
+        next if user.receive_emails == false
+        CardMailer.with(card: card, user: user).update_card_position.deliver_later
       end
     end
 

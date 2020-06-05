@@ -11,7 +11,7 @@ module CardsHelper
   end
 
   def style_for_deleted(card)
-    card.discarded_at? ? "background-color: #a9a9a959" : ""
+    card.discarded_at? ? "background-color: #a9a9a959" : "cursor: pointer"
   end
 
   def card_comment(card)
