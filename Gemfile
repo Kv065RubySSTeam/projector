@@ -63,6 +63,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'rspec-html-matchers', '~> 0.9.2'
   gem 'simplecov', '~> 0.18.5', require: false
+  gem 'database_cleaner'
 end
 
 group :development do
@@ -92,3 +93,4 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+

@@ -17,7 +17,8 @@ class MembershipsController < ApplicationController
   def admin
     @membership.admin? ? @membership.remove_admin! : @membership.admin!
     if @membership.errors.empty?
-      respond_to :js
+      render json: {}, status: 200
+      #respond_to :js
     else
       render json: {}, status: 422
     end
@@ -34,7 +35,7 @@ class MembershipsController < ApplicationController
   end
 
   def find_user!
-    @user = User.find(params[:user_id])
+    @user = User.find(params[:id])
   end
 
   def membership_authorize!

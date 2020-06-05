@@ -10,7 +10,7 @@
       Your card
       %b= @card.title
       was successfully moved to the column
-      %b>= @column.name
+      %b= @column.name
       \.
     %p
       To see detail go to the site, just follow this link: #{link_to @board.title, board_url( @board )}.

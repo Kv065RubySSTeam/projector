@@ -2,6 +2,12 @@ const token = $('meta[name="csrf-token"]').attr('content');
 window.changeRights = function (event) {
     const user = event.target.id;
     let url = event.target;
+    const allButton = $('#user-section section div').find('.btn-sm.btn-dark');
+    const creator = document.getElementById('creator').value;
+    const edit_btn = $('.edit-board-btn');
+    const remove_btn = $('#kanban-wrapper .destroy-board-btn');
+    console.log(event, user);
+
     event.preventDefault();
     fetch(url, {
         method: 'PUT',
@@ -16,7 +22,12 @@ window.changeRights = function (event) {
                     document.getElementById(user).parentNode.firstElementChild.classList.remove("warning");
                     document.getElementById(user).innerHTML = 'Add Admin';
                     toastr.success(`Success! <br\>`+`${user}`+` is not admin anymore!`);
-                    if (document.getElementById("creator").value == user ) {
+                    if (creator == user ) {
+                        for (let link of allButton) {
+                            link.remove();
+                        }
+                        edit_btn.remove();
+                        remove_btn.remove();
                         document.getElementById("addMember").remove();
                     }
                 } 

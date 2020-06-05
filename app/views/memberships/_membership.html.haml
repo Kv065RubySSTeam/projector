@@ -3,16 +3,18 @@
     - if member.user.administrated_boards.exists?(@board.id)
       %i.bx.bx-star.bxs-star.warning
       %span= member.user.email
-      = link_to 'Remove Admin', admin_board_membership_path(board_id: @board.id, id: member.user.id),
-                            class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{member.user.email}",
-                            remote: true,
-                            method: :put,
-                            :onclick => 'changeRights(event)'
+      - if can? :manage, @board
+        = link_to 'Remove Admin', admin_board_membership_path(board_id: @board.id, id: member.user.id),
+                              class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{member.user.email}",
+                              remote: true,
+                              method: :put,
+                              :onclick => 'changeRights(event)'
     - else
       %i.bx.bx-star.bxs-star
       %span= member.user.email
-      = link_to 'Add Admin', admin_board_membership_path(board_id: @board.id, id: member.user.id),
-                              class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{member.user.email}",
-                      remote: true,
-                      method: :put,
-                      :onclick => 'changeRights(event)'
+      - if can? :manage, @board
+        = link_to 'Add Admin', admin_board_membership_path(board_id: @board.id, id: member.user.id),
+                                class: "btn-sm btn-dark shadow mr-1 mb-1 ml-1", id: "#{member.user.email}",
+                        remote: true,
+                        method: :put,
+                        :onclick => 'changeRights(event)'
