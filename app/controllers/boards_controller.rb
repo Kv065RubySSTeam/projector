@@ -4,7 +4,8 @@ class BoardsController < ApplicationController
   before_action :flash_clear, except: [:index, :show]
 
   def index
-    @boards = Board.filter(params[:filter], current_user)
+    @boards = Board.includes(:user)
+      .filter(params[:filter], current_user)
       .search(params[:search])
       .sorting(params[:sort])
       .paginate(page: params[:page])

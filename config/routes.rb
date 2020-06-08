@@ -22,6 +22,10 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :memberships, only: [:create] do
+      patch :admin, on: :member
+    end
+
     member do
       get 'export'
       get 'members'
@@ -34,14 +38,24 @@ Rails.application.routes.draw do
               controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'registrations' },
               path_names: { sign_in: 'login', sign_out: 'logout', sign_up: 'signup' }
 
-  resources :boards do
-    resources :memberships, only: [:create] do
-      put :admin, on: :member
-    end
-  end
-
   resource :user, only: [:show]
   resources :users, only: %i[index]
+
+  namespace :api, defaults: { format: 'json' } do
+    namespace :v1 do
+      resources :boards, except: [:new, :edit] do
+        resources :columns, only: [:create, :update, :destroy]
+
+        resources :memberships, only: [:create] do
+          patch :admin, on: :member
+        end
+
+        member do
+          get 'members'
+        end
+      end
+    end
+  end
 
   require 'sidekiq/web'
   authenticate :user do

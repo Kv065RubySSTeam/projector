@@ -57,11 +57,15 @@ class User < ApplicationRecord
     where("concat_ws('OR', LOWER(email), LOWER(first_name), LOWER(last_name)) LIKE LOWER(?)", "%#{user}%")
   }
 
+  def is_admin?(board)
+    memberships.where(board: board)[0].admin
+  end
+
   private
   def purge_avatar
     avatar.purge_later
   end
-  
+
   protected
   def confirmation_required?
     false
