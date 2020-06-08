@@ -48,4 +48,13 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  namespace :api do
+    namespace :v1 do
+      resource :users, only: [:create]
+      post '/login', to: 'authentication#login'
+      get '/auto_login', to: 'authentication#auto_login'
+      get '/user_is_authed', to: 'authentication#user_is_authed'
+    end
+  end
+
 end

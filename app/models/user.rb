@@ -61,7 +61,7 @@ class User < ApplicationRecord
   def purge_avatar
     avatar.purge_later
   end
-  
+
   protected
   def confirmation_required?
     false
