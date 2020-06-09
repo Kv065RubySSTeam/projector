@@ -1,4 +1,5 @@
 module Cards
+   # Service that accepts +card, column and two arrays+ and updates position of the card on column
   class UpdatePositionService < ApplicationService
     attr_reader :card,
                 :column,
