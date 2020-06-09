@@ -381,6 +381,7 @@ GEM
     will_paginate (3.3.0)
     will_paginate-bootstrap4 (0.2.2)
       will_paginate (~> 3.0, >= 3.0.0)
+    yard (0.9.25)
     zeitwerk (2.3.0)
 
 PLATFORMS
@@ -437,6 +438,7 @@ DEPENDENCIES
   webpacker (~> 4.0)
   will_paginate
   will_paginate-bootstrap4 (~> 0.2.2)
+  yard (~> 0.9.25)
 
 RUBY VERSION
    ruby 2.5.5p157

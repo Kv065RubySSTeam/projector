@@ -52,6 +52,8 @@ gem 'omniauth-facebook', '~> 6.0'
 # Access for users
 gem 'cancancan'
 
+gem 'yard', '~> 0.9.25'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
