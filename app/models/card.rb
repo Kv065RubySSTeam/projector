@@ -38,6 +38,9 @@ class Card < ApplicationRecord
       all
     end
   end
+
+  # @!method pg_search_scope
+  #   Searches cards by card title, card body, creator first_name, creator last_name
   pg_search_scope :search_everywhere,
   against: [:title],
   associated_against: {
@@ -58,10 +61,14 @@ class Card < ApplicationRecord
 
   self.per_page = 10
 
+  # @!method assign(user)
+  #   Updates assignee of current card with user
   def assign!(user)
     update(assignee: user)
   end
 
+  # @!method remove_assign
+  #   Updates assignee of current card to nil
   def remove_assign!
     update(assignee: nil)
   end
