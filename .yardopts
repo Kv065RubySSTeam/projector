@@ -1,0 +1,10 @@
+--type-name-tag url:"URL"
+--type-name-tag action:"Action"
+--type-name-tag required:"Required"
+
+--private
+-o docs
+
+app/controllers/columns_controller.rb
+app/services/columns/create_service.rb
+app/models/column.rb
