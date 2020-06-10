@@ -1,0 +1,9 @@
+--type-name-tag url:"URL"
+--type-name-tag action:"Action"
+--type-name-tag required:"Required"
+--type-name-tag response:"Response"
+--type-name-tag optional:"Optional"
+--default-return ''
+
+app/controllers/comments_controller.rb
+app/models/comment.rb
