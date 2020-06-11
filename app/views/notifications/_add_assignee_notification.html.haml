@@ -1,0 +1,8 @@
+.list-icon.mr-1
+  .avatar.bg-rgba-danger.m-0.p-25
+    .avatar-content
+      %i.bx.bx-user-check.text-danger.font-medium-5
+.list-content
+  %span.list-title User <b>#{notification.card.assignee.first_name}</b> has been assigned to the card <b>#{notification.card.title}</b>
+  %small.text-muted.d-block
+    = notification.updated_at

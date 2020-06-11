@@ -116,9 +116,7 @@ class CardsController < ApplicationController
       return
     end
     if @card.assign!(@user)
-      @card.notification_receivers.each do |user|
-        CardMailer.with(card: @card, user: user).new_assignee.deliver_later if user.receive_emails
-      end
+      Notifications::CreateService.call("new_assignee", @card)
       render json: {}, status: 200
     else
       render json: { error: @card.errors.full_messages }, status: 422

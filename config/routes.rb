@@ -29,6 +29,7 @@ Rails.application.routes.draw do
   end
 
   resources :cards, only: [:index]
+  resources :notifications, only: [:index]
 
   devise_for :users,
               controllers: { omniauth_callbacks: 'users/omniauth_callbacks', registrations: 'registrations' },

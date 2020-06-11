@@ -9,6 +9,8 @@ class Card < ApplicationRecord
   has_many :taggings
   has_many :tags, through: :taggings
   has_many :likes, as: :likable, dependent: :destroy
+  has_many :notifications
+  
   validates :title, length: { within: 2..50 }
   validates :position, uniqueness: { scope: :column }
 
@@ -140,7 +142,7 @@ class Card < ApplicationRecord
   #   card.notification_receivers
   # @return [Set<User>] cards, created by the concrete user
   def notification_receivers
-    [self.user, self.assignee].compact
+    [self.user, self.assignee].compact.uniq
   end
 
 end
