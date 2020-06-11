@@ -1,0 +1,2 @@
+class MoveCardNotification < Notification
+end

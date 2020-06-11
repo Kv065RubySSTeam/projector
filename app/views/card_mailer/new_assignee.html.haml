@@ -11,7 +11,8 @@
       User
       = succeed "," do
         %b
-          @#{@assignee.full_name}
+          #{@assignee.full_name}
+      has been assigned to the card 
       = succeed "." do
         %b= @card.title
       %br/

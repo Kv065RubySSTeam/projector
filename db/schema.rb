@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_05_29_152731) do
+ActiveRecord::Schema.define(version: 2020_06_10_110823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,14 @@ ActiveRecord::Schema.define(version: 2020_05_29_152731) do
     t.index ["board_id", "user_id"], name: "index_memberships_on_board_id_and_user_id", unique: true
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "type"
+    t.bigint "card_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["card_id"], name: "index_notifications_on_card_id"
+  end
+
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
@@ -174,5 +182,6 @@ ActiveRecord::Schema.define(version: 2020_05_29_152731) do
   add_foreign_key "likes", "users"
   add_foreign_key "memberships", "boards"
   add_foreign_key "memberships", "users"
+  add_foreign_key "notifications", "cards"
   add_foreign_key "taggings", "tags"
 end

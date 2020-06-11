@@ -20,6 +20,10 @@
         = link_to cards_path, filter: "all", class: "menu-title" do
           %i.bx.bx-task{"data-icon" => "check-alt"}
           Cards
+      %li.nav-item
+        = link_to notifications_path, filter: "all", class: "menu-title" do
+          %i.bx.bx-bell{"data-icon" => "check-alt"}
+          Notifications
     .ps__rail-x
       .ps__thumb-x{:tabindex => "0"}
     .ps__rail-y

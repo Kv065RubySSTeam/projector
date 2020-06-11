@@ -1,0 +1,2 @@
+class AddAssigneeNotification < Notification
+end
