@@ -1,3 +1,5 @@
+= javascript_pack_tag 'cards/tabs'
+
 .kanban-sidebar
   .card.shadow-none.quill-wrapper
     .card-header.d-flex.justify-content-between.align-items-center.border-bottom.px-2.py-1
@@ -60,10 +62,7 @@
             %small.mt-0.pt-0 (write tag name and press enter)
             %input#tagName.form-control.mt-1{:type => "text"}
             %input{type: "hidden", id: "lastAddedTag"}
-        = render 'comments/form'
-        %br
-          - if @comments
-            #comments
-              = render 'comments/index'
+
+        = render 'tabs'
 = javascript_pack_tag "cards/scrollbar"
 = javascript_pack_tag "tags/create_tag"
