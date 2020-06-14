@@ -31,4 +31,20 @@ module CardsHelper
     </div>".html_safe
   end
 
+  def check_key_value(attribute, value)
+    if attribute.include?('user_id') || attribute.include?('column_id')
+      attribute_value(attribute, value)
+    else
+      value
+    end
+  end
+
+  def attribute_value(attribute, value)
+    case attribute
+    when 'column_id'
+      Column.find(value).name
+    when 'user_id'
+      User.find(value).full_name
+    end
+  end
 end
