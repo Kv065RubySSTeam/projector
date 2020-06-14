@@ -1,0 +1,1 @@
+ActiveRecord::Type.register(:card_duration, CardDuration::Type)

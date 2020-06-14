@@ -1,7 +1,11 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+# For create user after running migration, type $ rake db:seed
+FactoryBot.create(:user, email: 'admin@gmail.com', password: 'admins', password_confirmation: 'admins'  )
+user = User.find_by_email('admin@gmail.com');
+
+FactoryBot.create_list(:board_with_columns_cards, 5, user: user )
+
+boards = Board.all
+
+boards.each do |board| 
+  FactoryBot.create(:membership, user: user, board: board, admin: true)
+end

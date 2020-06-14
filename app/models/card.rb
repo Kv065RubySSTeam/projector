@@ -11,7 +11,7 @@ class Card < ApplicationRecord
   has_many :likes, as: :likable, dependent: :destroy
   validates :title, length: { within: 2..50 }
   validates :position, uniqueness: { scope: :column }
-
+  attribute :duration, CardDuration::Type.new
   # ActionText
   has_rich_text :body
 

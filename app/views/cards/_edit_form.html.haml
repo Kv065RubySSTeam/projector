@@ -23,6 +23,12 @@
               %i.bx.bx-x
 
         = form_with(model: [@column.board, @column, @card], method: :patch, class: "form-group edit-form mb-0 pb-0") do |f|
+          .input-group.position-relative.mb-1
+            = f.label :start_date, class: "input-group-text", placeholder: "22/06/2020"
+            = f.date_field :start_date, class: "form-control pr-2"
+          .input-group.position-relative.mb-1
+            = f.label :duration, class: "input-group-text"
+            = f.text_field :duration, class: "form-control pr-1", placeholder: "1d 2h 30m", style: "text-align: center;", value:"#{card_duration(@card)}"
           .form-group
             = f.label :title, class: "text-bold-600"
             = f.text_field :title, class: "form-control edit-kanban-item-title"

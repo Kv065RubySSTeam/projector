@@ -111,7 +111,7 @@ class CardsController < ApplicationController
   end
 
   def card_params
-    params.require(:card).permit(:title, :body)
+    params.require(:card).permit(:title, :body, :start_date, :duration)
   end
 
   def flash_clear
