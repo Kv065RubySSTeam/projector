@@ -48,4 +48,17 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  namespace :api do
+    namespace :v1 do
+      resource :user, only: [:show]
+      resources :users, only: %i[create index]
+      post 'users/auth/facebook', to: 'facebook_authentications#create'
+      post 'users/password/new', to: 'password#new'
+      put '/users/password/edit', to: 'password#edit'
+      post '/login', to: 'authentication#login'
+      delete '/logout', to: 'authentication#logout'
+      get '/user_is_authed', to: 'authentication#user_is_authed'
+    end
+  end
+
 end

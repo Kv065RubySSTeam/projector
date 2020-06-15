@@ -33,5 +33,7 @@ module Projector
     config.generators.system_tests = nil
     #Sidekiq
     config.active_job.queue_adapter = :sidekiq
+    # For login throw API using facebook access token 
+    Koala.config.api_version = 'v2.0'
   end
 end
