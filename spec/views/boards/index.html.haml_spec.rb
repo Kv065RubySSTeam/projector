@@ -27,17 +27,9 @@ RSpec.describe 'boards/index.html.haml', type: :view do
     end
 
     describe "boards list" do
-      it "boards links with appropriate board titles" do
-        boards[0..9].each do |board|
-          expect(rendered).to match("/boards/#{board.id}")
-          expect(rendered).to match("#{board.title}")
-        end
-      end
-      
       it "shows 10 boards links" do
         expect(rendered).to have_tag("a", count: 10, with: { id: "new_board_link" })
       end
-
     end
 
     describe "filters" do

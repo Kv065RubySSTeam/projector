@@ -12,6 +12,7 @@ class Ability
       can :manage, Column, board: { memberships: { user_id: user.id } }
       can :manage, Card, column: { board: { memberships: { user_id: user.id } } }
       can :manage, Comment, user: { id: user.id }
+      can :read, Comment, user: { id: user.id }
       can :manage, Comment, card: { column: { board: { memberships: { user_id: user.id, admin: true } } } }
     end
   end

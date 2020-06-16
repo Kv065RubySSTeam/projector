@@ -51,6 +51,7 @@ gem 'discard'
 gem 'omniauth-facebook', '~> 6.0'
 # Access for users
 gem 'cancancan'
+# For json tests
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -72,6 +73,7 @@ group :development, :test do
   # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
   gem 'simplecov', '~> 0.18.5', require: false
   gem 'database_cleaner'
+  gem 'rspec-json_expectations', '~> 1.2'
 end
 
 group :development do
