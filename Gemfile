@@ -58,6 +58,7 @@ gem 'omniauth-facebook', '~> 6.0'
 gem "koala", '~> 3.0.0'
 # Access for users
 gem 'cancancan'
+# For json tests
 
 # Log all changes to your models
 gem 'audited', '~> 4.9'
@@ -92,6 +93,7 @@ group :development, :test do
   gem 'codecov', '~> 0.1.17', require: false
   # Strategies for cleaning databases in Ruby. Can be used to ensure a clean state for testing.
   gem 'database_cleaner', '~> 1.8.5'
+  gem 'rspec-json_expectations', '~> 1.2'
 end
 
 group :development do

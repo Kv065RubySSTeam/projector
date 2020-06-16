@@ -23,7 +23,6 @@ FactoryBot.define do
         columns_count { 3 }
       end
     end
-
     factory :board_with_columns_cards do
       transient do
         columns_count { 5 }
