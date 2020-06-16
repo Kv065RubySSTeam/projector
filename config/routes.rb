@@ -48,4 +48,33 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  # API routes
+  namespace :api do
+      namespace :v1 do
+        resources :boards do
+          resources :columns, except: [:index, :show, :edit] do
+            resources :cards, except: [:index, :new, :edit], concerns: :likable do
+              member do
+                put :update_position
+                post :add_assignee
+                delete :remove_assignee
+              end
+              resources :tags, except: [:new, :edit, :update]
+              resources :comments, except: [:edit, :new], concerns: :likable
+            end
+          end
+
+        member do
+          get 'export'
+          get 'members'
+        end
+      end
+    end
+  end
+
+  namespace :api do
+    namespace :v1 do
+      resources :cards, only: [:index]
+    end
+  end
 end

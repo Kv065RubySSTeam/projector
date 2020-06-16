@@ -15,7 +15,7 @@ class Board < ApplicationRecord
   scope :public_boards, -> { where(public: true) }
   scope :private_boards, -> { where(public: false) }
   scope :membership_and_public_boards, ->(user) do
-    left_outer_joins(:memberships).where("boards.public = ? OR memberships.user_id = ?", true, user.id)
+    left_outer_joins(:memberships).where("boards.public = ? OR memberships.user_id = ?", true, user.id).distinct
   end
   scope :filter, ->(filter, user) do
     case filter
