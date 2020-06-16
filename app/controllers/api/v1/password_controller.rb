@@ -23,7 +23,7 @@ module Api
           render partial: 'api/v1/users/user', locals: { user: @user }, status: 201
           response.set_header('Authorization: Bearer', token)
         else
-          render json: { errors: "Password confirmation doesn't match Password" }, status: 422
+          render json: { error: 'Password confirmation doesn\'t match Password.' }, status: 422
         end
       end
       

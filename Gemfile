@@ -72,7 +72,9 @@ group :development, :test do
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.4'
   # Nokogiri based 'have_tag' and 'with_tag' matchers for rspec 3
   gem 'rspec-html-matchers', '~> 0.9.2'
-  # Faker is used to easily generate fake data: names, addresses, phone numbers, etc.
+  # Set of matchers and helpers to allow you test your APIs responses like a pro.
+  gem 'rspec-json_expectations', '~> 1.2'
+  # Faker is used to easily generate fake data: names, addresses, phone numbers, etc. 
   gem 'faker', '~> 2.11'
   # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
   gem 'simplecov', '~> 0.18.5', require: false
@@ -107,4 +109,3 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-

@@ -8,10 +8,10 @@ module Api
 
         if user && user.valid_password?(params[:password])
           token = Users::CreateTokenService.call(user)
-          render partial: 'api/v1/users/user', locals: { user: user }, status: 201
+          render partial: 'api/v1/users/user', locals: { user: user }, status: 200
           response.set_header('Authorization: Bearer', token)
         else
-          render json: { failure: 'Log in failed! Username or password invalid!' }, status: 401
+          render json: { error: 'Log in failed! Username or password invalid.' }, status: 401
         end
       end
 
@@ -19,18 +19,18 @@ module Api
         if session_user
           render partial: 'api/v1/users/user', locals: { user: user }, status: 200
         else
-          render json: { errors: 'User Is Not Logged In' }, status: 401
+          render json: { error: 'User is not Logged In.' }, status: 401
         end
       end
 
       def user_is_authed
-        render json: { message: 'You are authorized' }, status: 200
+        render json: { message: 'You are authorized.' }, status: 200
       end
       
       def logout
         if logged_in?
           session_user.update_attribute(:jti, SecureRandom.uuid)
-          render json: { message: 'Successfuly logout'}, status: 200
+          render json: { message: 'Successfuly logout.'}, status: 200
         else 
           render json: { error: 'Unauthorize' }, status: 401
         end

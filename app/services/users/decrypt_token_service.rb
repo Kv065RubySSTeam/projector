@@ -8,7 +8,7 @@ module Users
 
     def call
       decoded_hash = decoded_token
-      return if decoded_hash.empty?
+      return if decoded_hash.nil?
       
       user_id = decoded_hash[0]['user_id']
       exp = decoded_hash[0]['exp']
@@ -29,7 +29,7 @@ module Users
         begin
           JWT.decode(token, Rails.application.secrets.secret_key_base, true, algorithm: 'HS256')
         rescue JWT::DecodeError
-          []
+         return nil
         end
       end
     end
