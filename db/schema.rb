@@ -198,6 +198,5 @@ ActiveRecord::Schema.define(version: 2020_06_10_110823) do
   add_foreign_key "likes", "users"
   add_foreign_key "memberships", "boards"
   add_foreign_key "memberships", "users"
-  add_foreign_key "notifications", "cards"
   add_foreign_key "taggings", "tags"
 end

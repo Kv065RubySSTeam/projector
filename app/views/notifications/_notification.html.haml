@@ -1,4 +1,4 @@
-= link_to board_path(notification.card.column.board) do
+= link_to board_path(notification.notificationable.column.board) do
   %li.list-group-item.list-group-item-action.border-0.d-flex.align-items-center.justify-content-between
     .list-left.d-flex
       - if notification.is_a? AddAssigneeNotification
@@ -7,5 +7,7 @@
         = render partial: "move_card_notification", locals: {notification: notification}
       - elsif notification.is_a? AddCommentNotification
         = render partial: "add_comment_notification", locals: {notification: notification}
+      - elsif notification.is_a? DestroyCardNotification
+        = render partial: "destroy_card_notification", locals: {notification: notification}
     .readable-mark-icon{"data-original-title" => "Mark as read", "data-placement" => "left", "data-toggle" => "tooltip", :title => ""}
       %i.bx.bxs-circle.text-light-primary.font-medium-1

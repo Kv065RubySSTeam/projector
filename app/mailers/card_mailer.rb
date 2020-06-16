@@ -5,12 +5,16 @@ class CardMailer < ApplicationMailer
     send_mail("User #{@card.assignee.first_name} were tagged as a assignee at the card \"#{@card.title}\"")
   end
 
-  def added_comment
+  def add_comment_notification
     send_mail("New comment added to the \"#{@card.title}\"")
   end
 
-  def update_card_position
+  def move_card_notification
     send_mail("Card \"#{@card.title}\" was moved to another column")
+  end
+
+  def destroy_card_notification
+    send_mail("Card \"#{@card.title}\" has been deleted from \"#{@board}\"")
   end
 
   private
