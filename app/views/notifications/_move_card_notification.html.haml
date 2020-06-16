@@ -3,6 +3,6 @@
     .avatar-content
       %i.bx.bx-edit-alt.text-primary.font-medium-5
 .list-content
-  %span.list-title Card <b>#{notification.card.title}</b> was successfully moved to <b>#{notification.card.column.name}</b> column
+  %span.list-title Card <b>#{notification.notificationable.title}</b> was successfully moved to <b>#{notification.notificationable.column.name}</b> column
   %small.text-muted.d-block
     = notification.updated_at

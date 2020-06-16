@@ -5,7 +5,7 @@ class CardsController < ApplicationController
   before_action :find_column!, except: :index
   before_action :find_card!, except: %i[index new create]
   before_action :flash_clear, except: :new
-  before_action :find_board!, only: [:update]
+  before_action :find_board!, only: [:update, :destroy]
   helper_method :sort_column, :sort_direction, :sort_filter
   before_action :find_user_by_email!, only: %i[add_assignee]
   respond_to :js
@@ -60,6 +60,8 @@ class CardsController < ApplicationController
 
   def destroy
     if @card.discard
+      Notifications::ForMembersCreateService.call("destroy_card_notification",
+                                                                @card, @board)                         
       flash[:success] = "Card was successfully deleted!"
     else
       flash[:error] = @card.errors.full_messages.join("\n")
@@ -68,13 +70,12 @@ class CardsController < ApplicationController
 
   def add_assignee
     membership = @column.board.memberships.find_by(user: @user)
-
     unless membership
       render json: { error: 'User is not a member of this board' }, status: 404
       return
     end
     if @card.assign!(@user)
-      Notifications::CreateService.call("new_assignee", @card)
+      Notifications::CreateService.call("add_assignee_notification", @card)
       render json: {}, status: 200
     else
       render json: { error: @card.errors.full_messages }, status: 422
@@ -141,5 +142,5 @@ class CardsController < ApplicationController
       @total_pages = @cards.total_pages
     end
   end
-  
+
 end

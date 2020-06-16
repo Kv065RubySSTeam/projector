@@ -1,0 +1,8 @@
+.list-icon.mr-1
+  .avatar.bg-rgba-danger.m-0.p-25
+    .avatar-content
+      %i.bx.bx-trash-alt.text-info.font-medium-5 
+.list-content
+  %span.list-title Card <b>#{notification.notificationable.title}</b> has been deleted from board <b>#{notification.notificationable.column.board.title}</b>
+  %small.text-muted.d-block
+    = notification.updated_at
