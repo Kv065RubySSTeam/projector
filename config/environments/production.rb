@@ -93,28 +93,10 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 
-
-  # MailGun
-  config.action_mailer.delivery_method = :smtp
+  # Amazon SES
+  config.action_mailer.delivery_method = :ses
   config.action_mailer.default_url_options = { host: 'ec2-3-16-14-1.us-east-2.compute.amazonaws.com' }
-  config.action_mailer.smtp_settings = {
-    authenrication: :plain,
-    address: 'smtp.mailgun.org',
-    port: 587,
-    domain: ENV['MAILGUN_SMTP_DOMAIN'],
-    user_name: ENV['MAILGUN_SMTP_USERNAME'],
-    password: ENV['MAILGUN_SMTP_PASSWORD'],
-    enable_starttls_auto: true
-  }
-  # SMTP settings for gmail
-  # config.action_mailer.smtp_settings = {
-  #   address: 'smtp.gmail.com',
-  #   port: 587,
-  #   user_name: ENV['GMAIL_USERNAME'],
-  #   password: ENV['GMAIL_PASSWORD'],
-  #   authentication: 'plain',
-  #   enable_starttls_auto: true
-  # }
+
   # Inserts middleware to perform automatic connection switching.
   # The `database_selector` hash is used to pass options to the DatabaseSelector
   # middleware. The `delay` is used to determine how long to wait after a write
@@ -135,13 +117,14 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
   if Rails.root.join('tmp', 'caching-dev.txt').exist?
-      config.action_controller.perform_caching = true
-      config.action_controller.enable_fragment_cache_logging = true
-      config.cache_store = :memory_store
-      config.public_file_server.headers = {
-        'Cache-Control' => "public, max-age=#{2.days.to_i}"
-      }
+    config.action_controller.perform_caching = true
+    config.action_controller.enable_fragment_cache_logging = true
+    config.cache_store = :memory_store
+    config.public_file_server.headers = {
+      'Cache-Control' => "public, max-age=#{2.days.to_i}"
+    }
   else
     config.action_controller.perform_caching = false
     config.cache_store = :null_store
