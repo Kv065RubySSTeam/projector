@@ -1,0 +1,21 @@
+%ul#myTab2.tabs.nav.nav-tabs.nav-justified{ role: "tablist" }
+  %li.nav-item.current
+    %a#history-tab.nav-link.active{"aria-controls" => "history-just",
+      "aria-selected" => "true",
+      "data-toggle" => "tab", :role => "tab", remote: true}
+      History
+  %li.nav-item
+    %a#comments-tab.nav-link{"aria-controls" => "comments-just",
+      "aria-selected" => "false",
+      "data-toggle" => "tab", :role => "tab", remote: true}
+      Comments
+
+.tab-content.pt-1
+  .tab-pane.h-tab.active{ id: "history-just", role: "tabpanel", "aria-labelledby": "history-tab" }
+    = render partial: 'history'
+  .tab-pane.c-tab{ id: "comments-just", role: "tabpanel", "aria-labelledby": "comments-tab" }
+    = render 'comments/form'
+    %br
+      - if @comments
+        #comments
+          = render 'comments/index'
