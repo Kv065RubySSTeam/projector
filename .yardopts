@@ -1,13 +1,17 @@
 --type-name-tag url:"URL"
 --type-name-tag action:"Action"
 --type-name-tag required:"Required"
---type-name-tag response:"Response"
 --type-name-tag optional:"Optional"
 
 --default-return ''
 
+
 --private
 -o docs
+
+# Membership 
+app/controllers/memberships_controller.rb
+app/models/memberships.rb
 
 # Column
 app/controllers/columns_controller.rb
@@ -17,3 +21,4 @@ app/models/column.rb
 app/controllers/boards-controller.rb
 app/controllers/comments_controller.rb
 app/models/comment.rb
+
