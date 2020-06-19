@@ -51,11 +51,18 @@ gem 'discard'
 
 # Facebook OAuth2 Strategy for OmniAuth
 gem 'omniauth-facebook', '~> 6.0'
+#A lightweight Facebook library supporting the Graph, Marketing, and Atlas APIs, realtime updates, test users, and OAuth.
+gem "koala", '~> 3.0.0'
 # Access for users
 gem 'cancancan'
 
+<<<<<<< HEAD
 # Log all changes to your models
 gem 'audited', '~> 4.9'
+=======
+# A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
+gem 'jwt', '~> 2.2', '>= 2.2.1'
+>>>>>>> d4ff2b8e5e54ff101b485fe35596196705c940ac
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -72,11 +79,14 @@ group :development, :test do
   gem 'rails-controller-testing', '~> 1.0', '>= 1.0.4'
   # Nokogiri based 'have_tag' and 'with_tag' matchers for rspec 3
   gem 'rspec-html-matchers', '~> 0.9.2'
-  # Faker is used to easily generate fake data: names, addresses, phone numbers, etc.
+  # Set of matchers and helpers to allow you test your APIs responses like a pro.
+  gem 'rspec-json_expectations', '~> 1.2'
+  # Faker is used to easily generate fake data: names, addresses, phone numbers, etc. 
   gem 'faker', '~> 2.11'
   # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
   gem 'simplecov', '~> 0.18.5', require: false
-  gem 'database_cleaner'
+  # Strategies for cleaning databases in Ruby. Can be used to ensure a clean state for testing. 
+  gem 'database_cleaner', '~> 1.8.5'
 end
 
 group :development do
@@ -106,4 +116,3 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-

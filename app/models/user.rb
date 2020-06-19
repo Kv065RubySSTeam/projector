@@ -56,12 +56,16 @@ class User < ApplicationRecord
   scope :search, lambda { |user|
     where("concat_ws('OR', LOWER(email), LOWER(first_name), LOWER(last_name)) LIKE LOWER(?)", "%#{user}%")
   }
-
+  
+  scope :with_active_reset_password, ->(token) { where("reset_password_sent_at > ?", Time.now - 4 * 3600)
+                                                 .find_by!(reset_password_token: token) }
+  
   private
+
   def purge_avatar
     avatar.purge_later
   end
-  
+
   protected
   def confirmation_required?
     false

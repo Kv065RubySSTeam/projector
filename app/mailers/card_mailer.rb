@@ -2,8 +2,6 @@ class CardMailer < ApplicationMailer
   before_action do
     @card, @user, @board = params[:card], params[:user], params[:board]
   end 
-  # TODO: default в config
-  default from: "not-replay@projector.com"
   
   def add_assignee_notification
     send_mail("User #{@card.assignee.first_name} were tagged as a assignee at the card \"#{@card.title}\"")
