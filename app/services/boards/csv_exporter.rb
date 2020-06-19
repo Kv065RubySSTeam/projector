@@ -1,14 +1,21 @@
 module Boards
-  # CSV library
   require 'csv'
 
+  # Service that accepts +board+ returns CSV file with +board+ columns and cards
   class CsvExporter < ApplicationService
+
+    # @return [Board] board for which CSV will be generated
     attr_reader :board
 
+    # Sets initial values of new CsvExporter object
+    # @param [Board] board board for which CSV will be generated
+    # @return [CsvExporter] new instance of the service
     def initialize(board)
       @board = board
     end
 
+    # Calls method +to_csv+ which generates CSV with +board+ columns and cards
+    # @return [CSV] generated CSV file
     def call
       to_csv(board)
     end
