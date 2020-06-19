@@ -334,7 +334,7 @@ $(document).ready(function () {
   $(document).on("click", ".kanban-delete", function (e) {
     var $id = $(this)
       .closest(".kanban-board")
-      .attr("data-id");
+      .attr("data-column-id");
     addEventListener("click", function () {
       KanbanExample.removeBoard($id);
     });

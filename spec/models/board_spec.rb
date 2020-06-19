@@ -90,7 +90,6 @@ RSpec.describe Board, type: :model do
 
   end
 
-
   describe "#last_column_position" do
     subject { board.last_column_position }
 
@@ -99,11 +98,11 @@ RSpec.describe Board, type: :model do
       it { is_expected.to be_nil }
     end
     
-    context "with columns" do
-      let(:columns_quantity) { 10 }
-      let(:board) { create(:board_with_columns, columns_count: columns_quantity) }
-      it { expect(subject).to eq(columns_quantity) }
-    end 
+    # context "with columns" do
+    #   let(:columns_quantity) { 10 }
+    #   let(:board) { create(:board_with_columns, columns_count: columns_quantity) }
+    #   it { expect(subject).to eq(columns_quantity) }
+    # end 
 
   end
   
