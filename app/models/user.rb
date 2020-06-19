@@ -60,6 +60,10 @@ class User < ApplicationRecord
   scope :with_active_reset_password, ->(token) { where("reset_password_sent_at > ?", Time.now - 4 * 3600)
                                                  .find_by!(reset_password_token: token) }
   
+  def is_admin?(board)
+    memberships.where(board: board)[0].admin
+  end
+
   private
 
   def purge_avatar

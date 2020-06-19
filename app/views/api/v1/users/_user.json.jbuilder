@@ -1,4 +1,2 @@
-json.id user.id
-json.email user.email
-json.full_name user.full_name
-json.receive_emails user.receive_emails
+json.(user, :email, :full_name,
+  :created_at, :updated_at, :receive_emails)

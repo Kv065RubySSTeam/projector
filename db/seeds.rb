@@ -2,7 +2,9 @@
 FactoryBot.create(:user, email: 'admin@gmail.com', password: 'admins', password_confirmation: 'admins', receive_emails: true )
 user = User.find_by_email('admin@gmail.com');
 
-FactoryBot.create_list(:user, 5)
+10.times do
+  FactoryBot.create :user
+
 FactoryBot.create_list(:board_with_columns_cards, 5, user: user )
 
 boards = Board.all
