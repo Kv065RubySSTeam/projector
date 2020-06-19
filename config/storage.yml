@@ -13,6 +13,7 @@ amazon:
   secret_access_key: <%= Rails.application.credentials.aws[:secret_access_key]  %>
   region: 'us-east-2'
   bucket: 'projector-bucket'
+  
 # Remember not to checkin your GCS keyfile to a repository
 # google:
 #   service: GCS

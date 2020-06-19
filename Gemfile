@@ -55,14 +55,12 @@ gem 'omniauth-facebook', '~> 6.0'
 gem "koala", '~> 3.0.0'
 # Access for users
 gem 'cancancan'
+# For json tests
 
-<<<<<<< HEAD
 # Log all changes to your models
 gem 'audited', '~> 4.9'
-=======
 # A pure ruby implementation of the RFC 7519 OAuth JSON Web Token (JWT) standard.
 gem 'jwt', '~> 2.2', '>= 2.2.1'
->>>>>>> d4ff2b8e5e54ff101b485fe35596196705c940ac
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -87,6 +85,7 @@ group :development, :test do
   gem 'simplecov', '~> 0.18.5', require: false
   # Strategies for cleaning databases in Ruby. Can be used to ensure a clean state for testing. 
   gem 'database_cleaner', '~> 1.8.5'
+  gem 'rspec-json_expectations', '~> 1.2'
 end
 
 group :development do

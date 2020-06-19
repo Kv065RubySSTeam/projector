@@ -35,6 +35,7 @@ class CardsController < ApplicationController
       flash[:success] = "Card was successfully created."
     else
       flash[:error] = @card.errors.full_messages.join("\n")
+      render status: 422
     end
   end
 
@@ -43,6 +44,7 @@ class CardsController < ApplicationController
       flash[:success] = "Card was successfully updated."
     else
       flash[:error] = @card.errors.full_messages.join("\n")
+      render status: 422
     end
   end
 
@@ -65,6 +67,7 @@ class CardsController < ApplicationController
       flash[:success] = "Card was successfully deleted!"
     else
       flash[:error] = @card.errors.full_messages.join("\n")
+      render status: 422
     end
   end
 

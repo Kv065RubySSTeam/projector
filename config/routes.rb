@@ -63,17 +63,42 @@ Rails.application.routes.draw do
     mount Sidekiq::Web => '/sidekiq'
   end
 
+  # API routes
   namespace :api do
-    namespace :v1 do
-      resource :user, only: [:show]
-      resources :users, only: %i[create index]
-      post 'users/auth/facebook', to: 'facebook_authentications#create'
-      post 'users/password/new', to: 'password#new'
-      put '/users/password/edit', to: 'password#edit'
-      post '/login', to: 'authentication#login'
-      delete '/logout', to: 'authentication#logout'
-      get '/user_is_authed', to: 'authentication#user_is_authed'
+      namespace :v1 do
+        resources :boards do
+          resources :columns, except: [:index, :show, :edit] do
+            resources :cards, except: [:index, :new, :edit], concerns: :likable do
+              member do
+                put :update_position
+                post :add_assignee
+                delete :remove_assignee
+              end
+              resources :tags, except: [:new, :edit, :update]
+              resources :comments, except: [:edit, :new], concerns: :likable
+            end
+          end
+
+        member do
+          get 'export'
+          get 'members'
+        end
+        
+        resource :user, only: [:show]
+        resources :users, only: %i[create index]
+        post 'users/auth/facebook', to: 'facebook_authentications#create'
+        post 'users/password/new', to: 'password#new'
+        put '/users/password/edit', to: 'password#edit'
+        post '/login', to: 'authentication#login'
+        delete '/logout', to: 'authentication#logout'
+        get '/user_is_authed', to: 'authentication#user_is_authed'
+      end
     end
   end
 
+  namespace :api do
+    namespace :v1 do
+      resources :cards, only: [:index]
+    end
+  end
 end

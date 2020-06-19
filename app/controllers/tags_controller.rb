@@ -17,7 +17,7 @@ class TagsController < ApplicationController
     @tag = @card.tags.find(params[:id])
     @card.save if @card.tag_list.remove(@tag.name)
     if @card.errors.empty?
-      flash[:success] = "Tag was successfully deleted."
+      flash[:success] = "Tag: #{@tag.name} was successfully deleted."
     else
       flash[:error] = @card.errors.full_messages.join("\n")
     end
