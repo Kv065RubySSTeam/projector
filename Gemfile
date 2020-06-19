@@ -40,6 +40,8 @@ gem 'pg_search'
 gem 'sidekiq'
 gem 'redis'
 gem 'devise-async'
+# Clean ruby syntax for writing and deploying cron jobs.
+gem 'whenever', '~> 0.9.4', require: false
 
 # This gem automatically creates both digest and non-digest assets which are useful for many reasons.
 gem 'non-stupid-digest-assets', '~> 1.0', '>= 1.0.9'

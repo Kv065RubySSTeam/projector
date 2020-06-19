@@ -67,7 +67,7 @@ class Card < ApplicationRecord
   end
 
   def notification_receivers
-    [self.user, self.assignee].compact
+    [self.user, self.assignee].compact.uniq
   end
 
 end

@@ -75,7 +75,7 @@ $(function () {
                         'Content-Type': 'application/json',
                         'X-CSRF-Token': token 
                     },
-                    body: `{"user_id": ${selectedUserId}}`
+                    body: `{"id": ${selectedUserId}}`
                   } 
                   ).then((response) => {
                       if(response.ok) {

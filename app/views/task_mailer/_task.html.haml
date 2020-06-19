@@ -1,0 +1,25 @@
+%hr/
+%p
+  %b
+    Card: #{index+1}
+%p
+  Title:
+  %b
+    = cards_array.title
+- unless cards_array.body.empty?
+  %p
+    Body: #{cards_array.body}
+- unless cards_array.duration == 0
+  %p
+    Duration:
+    %b
+      - @duration = cards_array.duration
+      = "%2dd %2dh %2dm" % [ @duration/ (8 * 60 * 60), |
+        ( @duration/ 3600) % 8,                        |
+        @duration/ 60 % 60]                            |
+- unless cards_array.assignee.nil?
+  %p
+    Assignee:
+    = cards_array.assignee.full_name
+    = cards_array.assignee.email
+%br/

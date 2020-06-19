@@ -41,6 +41,7 @@ module CardsHelper
       <i class=\"bx bx-calendar-event mr-25\"></i>
       <span class=\"font-size-small\">#{full_date}</span>
     </div>
+    
     <div class=\"kanban-due-date d-flex mr-50\">
       <i class=\"bx bxs-time-five mr-25\"></i>
       <span class=\"font-size-small\">#{card_duration(card)}</span>

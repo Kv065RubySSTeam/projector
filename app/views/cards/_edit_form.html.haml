@@ -8,11 +8,12 @@
       .card-body
         - if @card.assignee
           .kanban-users.d-flex.assignee-in-sidebar
-            .text-bold-600.d-flex.align-items-center.mr-1
+            .text-bold-600.d-flex.align-items-center.mr-1.mb-2
               Assignee:
             -if @card.assignee.avatar.attached?
               = image_tag @card.assignee.avatar, class: "rounded d-flex align-items-center",      |
               height: "30", width: "30"
+              = @card.assignee.user.full_name
             -else
               = image_tag '/images/placeholder.jpg', class: "rounded",      |
               height: "30", width: "30"
@@ -21,6 +22,7 @@
               method: :delete,                                                              |
               class: "close delete-assignee close-icon" do |
               %i.bx.bx-x
+            = @card.assignee.full_name
 
         = form_with(model: [@column.board, @column, @card], method: :patch, class: "form-group edit-form mb-0 pb-0") do |f|
           .input-group.position-relative.mb-1
