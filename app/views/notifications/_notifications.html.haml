@@ -1,0 +1,5 @@
+- @notifications.each do |notification|
+  = render partial: "notification", locals: {notification: notification}
+- if @current_page < @total_pages
+  = link_to "Load more", notifications_path(page: @current_page + 1), |
+    class: "btn btn-sm btn-light-primary load_more m-1 float-right", remote: true

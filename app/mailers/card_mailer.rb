@@ -1,17 +1,24 @@
 class CardMailer < ApplicationMailer
-  before_action { @card, @user = params[:card], params[:user] }
+  before_action do
+    @card, @user, @board = params[:card], params[:user], params[:board]
+  end 
+  # TODO: default в config
   default from: "not-replay@projector.com"
   
-  def new_assignee
+  def add_assignee_notification
     send_mail("User #{@card.assignee.first_name} were tagged as a assignee at the card \"#{@card.title}\"")
   end
 
-  def added_comment
+  def add_comment_notification
     send_mail("New comment added to the \"#{@card.title}\"")
   end
 
-  def update_card_position
+  def move_card_notification
     send_mail("Card \"#{@card.title}\" was moved to another column")
+  end
+
+  def destroy_card_notification
+    send_mail("Card \"#{@card.title}\" has been deleted from \"#{@board}\"")
   end
 
   private

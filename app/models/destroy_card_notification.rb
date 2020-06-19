@@ -1,0 +1,2 @@
+class DestroyCardNotification < Notification
+end

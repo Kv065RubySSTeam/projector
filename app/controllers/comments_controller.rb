@@ -14,9 +14,7 @@ class CommentsController < ApplicationController
     @comment = @card.comments.build(comment_params)
     @comment.user = current_user
     if @comment.save
-      @card.notification_receivers.each do |user|
-        CardMailer.with(card: @card, user: user).added_comment.deliver_later if user.receive_emails
-      end
+      Notifications::CreateService.call("add_comment_notification", @card)
       flash[:success] = "Comment was successfully created." 
     else
       flash[:error] = @comment.errors.full_messages.join("\n")
@@ -28,7 +26,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      flash[:success]  = "Comment was successfully updated." 
+      flash[:success] = "Comment was successfully updated." 
     else
       flash[:error] = @comment.errors.full_messages.join("\n")
       render status: 422
