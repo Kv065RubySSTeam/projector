@@ -65,6 +65,8 @@ GEM
     airbrussh (1.4.0)
       sshkit (>= 1.6.1, != 1.7.0)
     ast (2.4.0)
+    audited (4.9.0)
+      activerecord (>= 4.2, < 6.1)
     aws-eventstream (1.1.0)
     aws-partitions (1.324.0)
     aws-sdk-core (3.97.1)
@@ -389,6 +391,7 @@ PLATFORMS
 DEPENDENCIES
   active_storage_validations
   acts-as-taggable-on (~> 6.5)
+  audited (~> 4.9)
   aws-sdk-s3
   bcrypt_pbkdf
   bootsnap (>= 1.4.2)

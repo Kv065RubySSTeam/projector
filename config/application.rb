@@ -31,7 +31,9 @@ module Projector
 
     # Don't generate system test files.
     config.generators.system_tests = nil
-    #Sidekiq
+    # Sidekiq
     config.active_job.queue_adapter = :sidekiq
+    # Set time zone
+    config.time_zone = 'Europe/Kiev'
   end
 end
