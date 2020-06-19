@@ -10,3 +10,5 @@
 
 app/models/board.rb
 app/controllers/boards-controller.rb
+app/controllers/comments_controller.rb
+app/models/comment.rb
