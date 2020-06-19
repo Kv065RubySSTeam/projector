@@ -15,6 +15,10 @@ class Card < ApplicationRecord
   # ActionText
   has_rich_text :body
 
+  # Audited gem for logs
+  audited except: :position
+  audited associated_with: :rich_text_body
+
   acts_as_taggable_on :tags
 
   # @!method available_for
