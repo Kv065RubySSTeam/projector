@@ -105,7 +105,7 @@ RSpec.describe "Api::V1::Comments", type: :request do
         subject
         expect(JSON.parse(response.body)).to include_json(
           body: comment.body,
-          author: user.full_name
+          id: comment.id
         )
       end
 
@@ -189,7 +189,7 @@ RSpec.describe "Api::V1::Comments", type: :request do
         subject
         expect(JSON.parse(response.body)).to include_json(
           body: "Test",
-          author: user.full_name
+          id: comment.id
         )
       end
     end

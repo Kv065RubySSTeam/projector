@@ -35,7 +35,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
     subject { get api_v1_cards_path(page: page, format: :json), xhr: true }
     let(:page) { 1 }
 
-    context "available cards comments" do
+    context "available cards" do
       it "returns available cards" do
         subject
         expect(JSON.parse(response.body).count).to match(
@@ -111,8 +111,9 @@ RSpec.describe "Api::V1::Cards", type: :request do
 
   describe "#update" do
     subject { put api_v1_board_column_card_path(board, column, card, card: card_params, format: :json), xhr: true }
+    let(:title) { "696" }
     let(:card_params) do
-      { "title": "696" }
+      { "title": title }
     end
     context "correct params are passed" do
       it "has success status" do
@@ -127,7 +128,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
       it "returns json with correct title" do
         subject
         expect(JSON.parse(response.body)).to include_json(
-          title: "696"
+          title: title
         )
       end
     end
@@ -201,7 +202,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
       it "returns success json" do
         subject
         expect(JSON.parse(response.body)).to include_json(
-          message: "Card was successfully discarded!"
+          message: "Card was successfully destroyed!"
         )
       end
     end

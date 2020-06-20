@@ -8,12 +8,9 @@ module Api
 
       def index
         @comments = @card.comments.order(created_at: :desc).paginate(page: params[:page])
-        render :index, status: 200
       end
 
-      def show
-        render :show, status: 200
-      end
+      def show; end
 
       def create
         @comment = @card.comments.build(comment_params)

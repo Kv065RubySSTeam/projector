@@ -38,7 +38,6 @@ module Api
       def handle_access_denied_error(e)
         render json: { error: e.to_s }, status: 401
       end
-
     end
   end
 end

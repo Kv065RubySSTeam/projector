@@ -7,12 +7,9 @@ module Api
 
       def index
         @tags = @card.tags
-        render :index, status: 200
       end
 
-      def show
-        render :show, status: 200
-      end
+      def show; end
 
       def create
         @card.save if @card.tag_list.add(tag_params[:name])

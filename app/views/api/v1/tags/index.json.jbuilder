@@ -1,4 +1,3 @@
 json.array!(@tags) do |tag|
-  json.name tag.name
-  json.id tag.id
+  json.partial! 'tag', tag: tag
 end

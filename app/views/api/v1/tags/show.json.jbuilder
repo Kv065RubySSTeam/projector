@@ -1,1 +1,1 @@
-json.name @tag.name
+json.partial! 'tag', tag: @tag
