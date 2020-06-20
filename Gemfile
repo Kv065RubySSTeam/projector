@@ -71,6 +71,8 @@ group :development, :test do
   gem 'faker', '~> 2.11'
   # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
   gem 'simplecov', '~> 0.18.5', require: false
+  # Hosted code coverage
+  gem 'codecov', '~> 0.1.17', require: false
   gem 'database_cleaner'
 end
 

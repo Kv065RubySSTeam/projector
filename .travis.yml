@@ -13,6 +13,7 @@ before_install:
   - nvm install --lts
 
 before_script:
+  - cp config/database.travis.yml config/database.yml
   - bundle install --jobs=3 --retry=3
   - yarn
   - bundle exec rake db:create
@@ -20,6 +21,9 @@ before_script:
 
 script:
   - bundle exec rake spec
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
 
 after_failure:
   - "cat ./config/database.yml"
