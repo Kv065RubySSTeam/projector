@@ -8,7 +8,7 @@ RSpec.describe User, type: :model do
       it { should have_many(:columns).dependent(:destroy) }
       it { should have_many(:cards).dependent(:destroy) }
       it { should have_many(:comments).dependent(:destroy) }
-      it { should have_many(:assigned_card).class_name('Card') }
+      it { should have_many(:assigned_cards).class_name('Card') }
       it { should have_many(:memberships).dependent(:destroy) }
       it { should have_many(:boards).through(:memberships) }
     end

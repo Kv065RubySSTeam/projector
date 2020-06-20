@@ -10,12 +10,12 @@
     %p
       New comment at the card
       = succeed "." do
-        %b= @card.title
+        %b= @notificationable.card.title
       %br/
     %p
       Comment:
       = succeed "." do
-        %b= @card.comments.last.body
+        %b= @notificationable.body
       %br/
     %p
       To see detail go to the site, just follow this link: #{link_to @board.title, board_url( @board )}.

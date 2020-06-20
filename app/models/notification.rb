@@ -1,10 +1,13 @@
 class Notification < ApplicationRecord
-  belongs_to :notificationable, polymorphic: true
+  ALLOWED_TYPES = %w[AddAssigneeNotification AddCommentNotification
+    DestroyCardNotification MoveCardNotification].freeze
 
-  sql = "INNER JOIN cards ON cards.id = notifications.notificationable_id"
-  scope :available_for, -> (user) { joins(sql)
-    .where(cards: { user_id: user.id } || { assignee_id: user.id }) }
+  belongs_to :notificationable, polymorphic: true
+  belongs_to :user
+  
+  validates :user, presence: true
+  validates :notificationable, presence: true
+  validates_inclusion_of :type, in: ALLOWED_TYPES
 
   self.per_page = 5
-
 end

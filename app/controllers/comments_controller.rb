@@ -36,7 +36,8 @@ class CommentsController < ApplicationController
     @comment = @card.comments.build(comment_params)
     @comment.user = current_user
     if @comment.save
-      Notifications::CreateService.call("add_comment_notification", @card)
+      NotificationJobs::CreateNotification.perform_later(
+        "AddCommentNotificationService", @comment)
       flash[:success] = "Comment was successfully created." 
     else
       flash[:error] = @comment.errors.full_messages.join("\n")

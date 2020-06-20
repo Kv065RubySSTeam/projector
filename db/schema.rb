@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_06_10_110823) do
+ActiveRecord::Schema.define(version: 2020_06_10_194858) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -135,6 +135,18 @@ ActiveRecord::Schema.define(version: 2020_06_10_110823) do
     t.index ["board_id", "user_id"], name: "index_memberships_on_board_id_and_user_id", unique: true
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "type"
+    t.string "notificationable_type", null: false
+    t.bigint "notificationable_id", null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["notificationable_type", "notificationable_id"], name: "index_on_notificationable_type_and_notificationable_id"
+    t.index ["type"], name: "index_notifications_on_type"
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
@@ -198,5 +210,6 @@ ActiveRecord::Schema.define(version: 2020_06_10_110823) do
   add_foreign_key "likes", "users"
   add_foreign_key "memberships", "boards"
   add_foreign_key "memberships", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "taggings", "tags"
 end

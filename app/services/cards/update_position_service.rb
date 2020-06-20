@@ -27,7 +27,8 @@ module Cards
 
     def create_notification
       return if card.column == column
-      Notifications::CreateService.call("move_card_notification", card) 
+      NotificationJobs::CreateNotification.perform_later(
+        "MoveCardNotificationService", card)
     end
 
     def update_cards_position(card_ids)

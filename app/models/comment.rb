@@ -7,7 +7,7 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :card
   has_many :likes, as: :likable, dependent: :destroy
-  # @!endgroup
+  has_many :notifications, as: :notificationable, dependent: :destroy
 
   #@!group Validations
   validates :body, presence: true, length: { maximum: 1000 }

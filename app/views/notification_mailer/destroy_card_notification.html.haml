@@ -8,13 +8,13 @@
       %b
         = @user.full_name
     %p
-      User
+      Card 
       = succeed "," do
         %b
-          #{@assignee.full_name}
-      has been assigned to the card 
+          #{@notificationable.title}
+      has been deleted from the board 
       = succeed "." do
-        %b= @card.title
+        %b= @board.title
       %br/
     %p
       To see detail go to the site, just follow this link: #{link_to @board.title, board_url( @board )}.
