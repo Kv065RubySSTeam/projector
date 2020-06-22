@@ -1,7 +1,7 @@
 class CardMailer < ApplicationMailer
   before_action { @card, @user = params[:card], params[:user] }
-  default from: "not-replay@projector.com"
-  
+  default from: 'kv.065.ruby@gmail.com'
+
   def new_assignee
     send_mail("User #{@card.assignee.first_name} were tagged as a assignee at the card \"#{@card.title}\"")
   end
