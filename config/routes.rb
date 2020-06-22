@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   root "boards#index"
+  get 'about/index'
   concern :likable do
     namespace :cards do
       resource :likes, only: [:create, :destroy]
