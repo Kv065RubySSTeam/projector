@@ -135,15 +135,6 @@ ActiveRecord::Schema.define(version: 2020_06_10_194858) do
     t.index ["board_id", "user_id"], name: "index_memberships_on_board_id_and_user_id", unique: true
   end
 
-  create_table "notifications", force: :cascade do |t|
-    t.string "type"
-    t.string "notificationable_type", null: false
-    t.bigint "notificationable_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["notificationable_type", "notificationable_id"], name: "index_on_notificationable_type_and_notificationable_id"
-  end
-
   create_table "taggings", id: :serial, force: :cascade do |t|
     t.integer "tag_id"
     t.string "taggable_type"
@@ -188,8 +179,10 @@ ActiveRecord::Schema.define(version: 2020_06_10_194858) do
     t.string "provider"
     t.string "uid"
     t.boolean "receive_emails", default: false
+    t.string "jti"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["jti"], name: "index_users_on_jti", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
