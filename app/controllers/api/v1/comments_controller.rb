@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class CommentsController < Api::V1::BaseController
       load_and_authorize_resource :comment, except: :create
       before_action :find_column!
-      before_action :find_comment!, only: [:show, :update, :destroy]
+      before_action :find_comment!, only: %i[show update destroy]
       before_action :find_card!
 
       def index
@@ -55,7 +57,6 @@ module Api
       def comment_params
         params.require(:comment).permit(:body)
       end
-
     end
   end
 end

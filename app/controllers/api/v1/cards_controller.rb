@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class CardsController < Api::V1::BaseController
       load_and_authorize_resource :column
       load_and_authorize_resource :card, through: :column,
-                                 except: [:index, :update_position]
+                                         except: %i[index update_position]
       before_action :find_column!, except: :index
       before_action :find_card!, except: %i[index new create]
       before_action :find_board!, only: [:update]
@@ -14,11 +16,11 @@ module Api
       def index
         @load_new = params[:load_new] || false
         @cards = Card.kept
-                .available_for(current_user)
-                .search(params[:search])
-                .order(sort_column + " " + sort_direction)
-                .filter(params[:filter], current_user)
-                .filter_by_board(params[:board_title])
+                     .available_for(current_user)
+                     .search(params[:search])
+                     .order(sort_column + ' ' + sort_direction)
+                     .filter(params[:filter], current_user)
+                     .filter_by_board(params[:board_title])
         paginate_cards
       end
 
@@ -120,22 +122,22 @@ module Api
       end
 
       def sort_column
-        params[:sort] || "updated_at"
+        params[:sort] || 'updated_at'
       end
 
       def sort_direction
-        params[:direction] || "desc"
+        params[:direction] || 'desc'
       end
 
       def sort_filter
-        params[:filter] || "saved"
+        params[:filter] || 'saved'
       end
 
       def paginate_cards
         if @load_new
           @cards = @cards.limit(Card.per_page * params[:page].to_i)
           @current_page = params[:page].to_i
-          @total_pages = (Card.available_for(current_user).count() / Card.per_page.to_f).ceil
+          @total_pages = (Card.available_for(current_user).count / Card.per_page.to_f).ceil
         else
           @cards = @cards.paginate(page: params[:page])
           @current_page = @cards.current_page

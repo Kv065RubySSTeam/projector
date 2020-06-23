@@ -1,9 +1,10 @@
+# frozen_string_literal: true
+
 module Boards
   require 'csv'
 
   # Service that accepts +board+ returns CSV file with +board+ columns and cards
   class CsvExporter < ApplicationService
-
     # @return [Board] board for which CSV will be generated
     attr_reader :board
 

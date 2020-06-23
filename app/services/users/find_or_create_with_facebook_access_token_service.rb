@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Users
   class FindOrCreateWithFacebookAccessTokenService < ApplicationService
     attr_accessor :oauth_access_token
@@ -24,12 +26,11 @@ module Users
 
     def profile_info
       graph = Koala::Facebook::API.new(oauth_access_token)
-      graph.get_object('me', fields: ['first_name', 'last_name', 'email'])
-
-      rescue Koala::Facebook::APIError => exception
-        user = User.new
-        user.errors[:base] << exception.fb_error_message
-        user
+      graph.get_object('me', fields: %w[first_name last_name email])
+    rescue Koala::Facebook::APIError => e
+      user = User.new
+      user.errors[:base] << e.fb_error_message
+      user
     end
 
     def get_user_data(profile)
@@ -45,8 +46,7 @@ module Users
 
     def koala_graph
       graph = Koala::Facebook::API.new(oauth_access_token)
-      profile = graph.get_object('me', fields: ['first_name', 'last_name', 'email'])
+      profile = graph.get_object('me', fields: %w[first_name last_name email])
     end
-
   end
 end

@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 # Membership can be created/admined
 # Membership can be viewed on Board page
-# @note Response to JSON only 
+# @note Response to JSON only
 class MembershipsController < ApplicationController
   # @!group Callbacks
   before_action :find_board!
@@ -39,13 +41,14 @@ class MembershipsController < ApplicationController
     @membership.admin? ? @membership.remove_admin! : @membership.admin!
     if @membership.errors.empty?
       render json: {}, status: 200
-      #respond_to :js
+      # respond_to :js
     else
       render json: {}, status: 422
     end
   end
 
   private
+
   # @!group Callbacks
   # @note Used for create and admin
   # Find board through query params
@@ -70,8 +73,6 @@ class MembershipsController < ApplicationController
   # If user not found,
   # @return [JSON] with error's message with status Unauthorized
   def membership_authorize!
-    unless current_user.administrated_boards.exists?(@board.id)
-      render json: { error: 'Unauthorize' }, status: 401
-    end
+    render json: { error: 'Unauthorize' }, status: 401 unless current_user.administrated_boards.exists?(@board.id)
   end
 end

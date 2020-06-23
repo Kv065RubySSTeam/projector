@@ -15,7 +15,6 @@
             -if @card.assignee.avatar.attached?
               = image_tag @card.assignee.avatar, class: "rounded d-flex align-items-center",      |
               height: "30", width: "30"
-              = @card.assignee.user.full_name
             -else
               = image_tag '/images/placeholder.jpg', class: "rounded",      |
               height: "30", width: "30"

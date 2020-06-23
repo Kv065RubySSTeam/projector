@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # The membership belongs to the board,
 # the board is present and can have any amount of users.
 # The membership has uniqueness of user on board scope, and need to be present.
@@ -16,7 +18,7 @@ class Membership < ApplicationRecord
     update(admin: true)
   end
 
-  # @return [Boolean] with FALSE value 
+  # @return [Boolean] with FALSE value
   def remove_admin!
     update(admin: false)
   end

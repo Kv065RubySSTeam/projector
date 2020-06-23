@@ -10,7 +10,7 @@ window.changeRights = function (event) {
 
     event.preventDefault();
     fetch(url, {
-        method: 'PUT',
+        method: 'PATCH',
         headers: { 'X-CSRF-Token': token },
         }).then((response) => {
             if(response.ok) {

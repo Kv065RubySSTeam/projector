@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.partial! 'card', card: @card
 
 json.creator do

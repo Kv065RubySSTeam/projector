@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Column can be created/updated/deleted
 # @note Response to JS only
 class ColumnsController < ApplicationController
@@ -8,7 +10,7 @@ class ColumnsController < ApplicationController
 
   # @!group Callbacks
   before_action :find_board!
-  before_action :find_column!, only: [:update, :destroy]
+  before_action :find_column!, only: %i[update destroy]
   before_action :flash_clear
   # @!endgroup
 
@@ -25,7 +27,7 @@ class ColumnsController < ApplicationController
   def create
     @column = Columns::CreateService.call(@board, current_user)
     if @column.errors.empty?
-      flash[:success] = "Column was successfully created."
+      flash[:success] = 'Column was successfully created.'
     else
       flash[:error] = @column.errors.full_messages.join("\n")
       render status: 422
@@ -42,7 +44,7 @@ class ColumnsController < ApplicationController
   def update
     @previousName = @column.name
     if @column.update(update_param)
-      flash[:success] = "Column was successfully updated."
+      flash[:success] = 'Column was successfully updated.'
     else
       flash[:error] = @column.errors.full_messages.join("\n")
       render status: 422
@@ -57,7 +59,7 @@ class ColumnsController < ApplicationController
   #   and column object
   def destroy
     if @column.destroy
-      flash[:success] = "Column was successfully deleted!"
+      flash[:success] = 'Column was successfully deleted!'
     else
       flash[:error] = @column.errors.full_messages.join("\n")
       render status: 422
@@ -65,6 +67,7 @@ class ColumnsController < ApplicationController
   end
 
   private
+
   # @!group Callbacks
   # @note Used for update and destroy column
   # Find column through query params
@@ -83,7 +86,7 @@ class ColumnsController < ApplicationController
   # Clear Flash cache so the past flashes won't appear during ajax responses
   # @return [void]
   def flash_clear
-    flash.clear()
+    flash.clear
   end
   # @!endgroup
 

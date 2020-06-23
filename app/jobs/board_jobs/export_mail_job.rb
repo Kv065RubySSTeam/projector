@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module BoardJobs
   class ExportMailJob < ApplicationJob
     queue_as :mailers

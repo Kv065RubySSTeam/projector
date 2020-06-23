@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Comment can be created/edited/updated/deleted
 # Comments can be viewed with pagination
 # @note Response to JS only
@@ -8,7 +10,7 @@ class CommentsController < ApplicationController
 
   # @!group Callbacks
   before_action :find_column!
-  before_action :find_comment!, only: [:edit, :update, :destroy]
+  before_action :find_comment!, only: %i[edit update destroy]
   before_action :find_card!
   before_action :flash_clear, except: [:edit]
   # @!endgroup
@@ -37,8 +39,9 @@ class CommentsController < ApplicationController
     @comment.user = current_user
     if @comment.save
       NotificationJobs::CreateNotification.perform_later(
-        "AddCommentNotificationService", @comment)
-      flash[:success] = "Comment was successfully created." 
+        'AddCommentNotificationService', @comment
+      )
+      flash[:success] = 'Comment was successfully created.'
     else
       flash[:error] = @comment.errors.full_messages.join("\n")
       render status: 422
@@ -62,7 +65,7 @@ class CommentsController < ApplicationController
   #   previous body string and comment object
   def update
     if @comment.update(comment_params)
-      flash[:success]  = "Comment was successfully updated."
+      flash[:success] = 'Comment was successfully updated.'
     else
       flash[:error] = @comment.errors.full_messages.join("\n")
       render status: 422
@@ -78,7 +81,7 @@ class CommentsController < ApplicationController
   # and comment object
   def destroy
     if @comment.destroy
-      flash[:success]  = "Comment was successfully deleted."
+      flash[:success] = 'Comment was successfully deleted.'
     else
       flash[:error] = @comment.errors.full_messages.join("\n")
       render status: 422
@@ -86,6 +89,7 @@ class CommentsController < ApplicationController
   end
 
   private
+
   # @!group Callbacks
   # @note Used for edit, update and destroy comment
   # Find comment through query params
@@ -109,7 +113,7 @@ class CommentsController < ApplicationController
   # Clear Flash cache so the past flashes won't appear during ajax responses
   # @return [void]
   def flash_clear
-    flash.clear()
+    flash.clear
   end
   # @!endgroup
 

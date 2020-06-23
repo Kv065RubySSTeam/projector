@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class MembershipsController < Api::V1::BaseController
@@ -10,7 +12,7 @@ module Api
         @membership = @board.memberships.create(user: @new_member)
 
         if @membership.errors.empty?
-          render json: { message: "Successfully created membership!" }, status: 201
+          render json: { message: 'Successfully created membership!' }, status: 201
         else
           render json: { errors: @membership.errors.full_messages }, status: 422
         end
@@ -20,7 +22,7 @@ module Api
         @membership.admin? ? @membership.remove_admin! : @membership.admin!
 
         if @membership.errors.empty?
-          render json: {message: 'Successfully changed admin rights!' }, status: 200
+          render json: { message: 'Successfully changed admin rights!' }, status: 200
         else
           render json: { errors: @membership.errors.full_messages }, status: 422
         end
@@ -41,9 +43,7 @@ module Api
       end
 
       def membership_authorize!
-        unless current_user.administrated_boards.exists?(@board.id)
-          render json: { error: 'Unauthorize' }, status: 401
-        end
+        render json: { error: 'Unauthorize' }, status: 401 unless current_user.administrated_boards.exists?(@board.id)
       end
     end
   end

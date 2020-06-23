@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # The column belongs to the board,
 # has a creator and can have any amount of cards.
 # The column has default title with the length within 2 to 50
 # and uniqueness on board scope.
 class Column < ApplicationRecord
   # @note Default title for any new column
-  DEFAULT_TITLE = 'Default Title'.freeze
+  DEFAULT_TITLE = 'Default Title'
 
   # @!group Associations
   belongs_to :board
