@@ -74,9 +74,13 @@ class User < ApplicationRecord
     where("concat_ws('OR', LOWER(email), LOWER(first_name), LOWER(last_name)) LIKE LOWER(?)", "%#{user}%")
   }
 
+  scope :with_active_reset_password, ->(token) { where("reset_password_sent_at > ?", Time.now - 4 * 3600)
+                                                 .find_by!(reset_password_token: token) }
+
   private
   # Directly purges the attachment (i.e. destroys the blob and attachment and deletes the file on the service).
   # @return [Avatar]
+
   def purge_avatar
     # Purges the attachment through the queuing system.
     avatar.purge_later

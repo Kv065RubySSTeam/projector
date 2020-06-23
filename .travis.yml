@@ -1,0 +1,28 @@
+language: ruby
+rvm:
+- 2.5.5
+notifications:
+  email: false
+env:
+  secure: lSGpjjgsNO37AiTE4zotbQ7+oGNv42I8odVuaqAnxoubqlHG0/MB7ox1d1tOBjir2xQbbKj4A8yS8z2naEZpACtukxr3TccpmtuTBejxzBe5Hr3DtmKByNYcS3Yn9MppZfTxulmgXBjBoX1X5mDom+nxWALMWmT6XQjrkHDHqCxjehY5Il0fks4jW2Spp/4wfKk1l+GHFI4xN1wZtRdNyGozyEidmC49tRmuVcF4Y3Vv1o+xef6J5+M85dYm/W6ceHj3ptZtRsiiZk7XlKRRIid2wj6EPYxwTQkmVAwkHmCKj4nIKVMDqCUKq8s+YDk3xvxktT98VJy4OhiHxU9LLeGC/Z0X9+TaTBep1m9EXKCz5TJaNl359Z7OW3JMbH7VITwRHZuj1dticH1pyVllbqt4UJ44aryo8ax2drfcM7Cjt9xtx201mX7xPpCJnB4/opxgluMXn0GEU/MHPGukMnN+6xA717IivUkKTs7ex/JZ/89Ck5W8G/HQvSrl+Ldoi2nPGpR/8NbZjsQog9WMhU857rrLDYfE1uXew2213kfl5rhpVhmUfojfeCY30uyoygeT/LgppOOhtZO0I1diI6JLhJMlvdTsQ6zJUdG52zh+TSkhWEi6o2YzlSBOoyOOg9GpxU+yL3T/0ujrgkTaRG0QLMoJO5H4JSAv1tApgAo=
+before_install:
+- nvm install --lts
+before_script:
+- cp config/database.travis.yml config/database.yml
+- bundle install --jobs=3 --retry=3
+- yarn
+- bundle exec rake db:create
+- bundle exec rake db:schema:load
+script:
+- bundle exec rspec --format doc
+after_failure:
+- cat ./config/database.yml
+- echo $RAILS_ENV
+- bundle exec rake --version
+cache:
+- bundler
+- yarn
+services:
+- postgresql
+addons:
+  postgresql: '9.4'

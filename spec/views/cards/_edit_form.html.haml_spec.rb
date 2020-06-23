@@ -1,20 +1,21 @@
 require "rails_helper"
 
 RSpec.describe 'cards/_edit_form.html.haml', type: :view do
-  describe "page content" do
+  describe "page content" do   
     let!(:card) { create(:card_with_comments, :with_tags) }
     let!(:column) { card.column }
     let!(:board) { column.board }
-    let!(:user) { card.user }
-    let!(:assignee) { card.assign!(user) }
-    let!(:membership) { create(:membership, user: user, board: board) }
+    let!(:assignee) { card.assign!(current_user) }
+    let!(:current_user) { card.user }
 
-    before do
+    before(:each) do
+      sign_in current_user
       assign(:card, card)
-      assign(:board, board)
       assign(:column, column)
+      assign(:board, board)
       assign(:assignee, assignee)
-      render partial: "cards/edit_form.html.haml", locals: {card: card}
+      card.audits.delete_all
+      render partial: "cards/edit_form.html.haml", locals: { card: card }
     end
 
     it 'contains an assignee' do
@@ -28,6 +29,9 @@ RSpec.describe 'cards/_edit_form.html.haml', type: :view do
 
     it "contains correct title" do
       expect(rendered).to have_tag('form', with: { class: "edit-form", action: "/boards/#{board.id}/columns/#{column.id}/cards/#{card.id}", method: 'post' }) do
+        with_tag "label" do
+          with_text "Title"
+        end
         with_tag "input", with: { name: "card[title]", value: card.title }
       end
     end
@@ -66,11 +70,21 @@ RSpec.describe 'cards/_edit_form.html.haml', type: :view do
       expect(rendered).to have_tag("input", value: "Comment")
     end
 
+    context "card with tabs" do
+      let!(:card) { create(:card_with_comments, :with_tags) }
+      it do "has history tab"
+        expect(rendered).to have_tag("a",  with: { id: 'history-tab'} )
+      end
+      it do "has comments tab"
+        expect(rendered).to have_tag("a", with: { id: 'comments-tab'} )
+      end
+    end
+
     context "card without tags" do
       let!(:card) { create(:card) }
       end
       it do "without tags"
         expect(rendered).not_to have_tag("tag")
       end
-  end
+    end
 end
