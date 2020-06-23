@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 # Boards controller
 class BoardsController < ApplicationController
   # @!group Callbacks
-  load_and_authorize_resource :board, except: [:create, :export, :members]
-  before_action :find_board!, except: [:index, :new, :create]
-  before_action :flash_clear, except: [:index, :show]
+  load_and_authorize_resource :board, except: %i[create export members]
+  before_action :find_board!, except: %i[index new create]
+  before_action :flash_clear, except: %i[index show]
   # @!endgroup
 
   # Returns set of boards
@@ -17,10 +19,10 @@ class BoardsController < ApplicationController
   # @response [Set<Board>] @boards the set of boards
   def index
     @boards = Board.includes(:user)
-      .filter(params[:filter], current_user)
-      .search(params[:search])
-      .sorting(params[:sort])
-      .paginate(page: params[:page])
+                   .filter(params[:filter], current_user)
+                   .search(params[:search])
+                   .sorting(params[:sort])
+                   .paginate(page: params[:page])
   end
 
   # Returns the board
@@ -61,7 +63,7 @@ class BoardsController < ApplicationController
     @board = Boards::CreateService.call(current_user, board_params)
     if @board.errors.empty?
       redirect_to @board
-      flash[:success] = "Board successfully created!"
+      flash[:success] = 'Board successfully created!'
     else
       render 'new', status: 422
     end
@@ -76,7 +78,7 @@ class BoardsController < ApplicationController
   def update
     if @board.update(board_params)
       redirect_to @board
-      flash[:success] = "Board successfully updated!"
+      flash[:success] = 'Board successfully updated!'
     else
       render 'edit', status: 422
     end
@@ -89,10 +91,10 @@ class BoardsController < ApplicationController
   def destroy
     if @board.destroy
       redirect_to root_path
-      flash[:success] = "Board successfully deleted!"
+      flash[:success] = 'Board successfully deleted!'
     else
       respond_to :js
-      flash[:error] = "Board has not been deleted! Something went wrong"
+      flash[:error] = 'Board has not been deleted! Something went wrong'
       render status: 422
     end
   end
@@ -134,7 +136,6 @@ class BoardsController < ApplicationController
   end
 
   def flash_clear
-    flash.clear()
+    flash.clear
   end
-
 end

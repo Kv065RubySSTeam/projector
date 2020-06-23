@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 module Cards
-   # Service that accepts +card, column and two arrays+ and updates position of the card on column
+  # Service that accepts +card, column and two arrays+ and updates position of the card on column
   class UpdatePositionService < ApplicationService
     attr_reader :card,
                 :column,
@@ -7,7 +9,8 @@ module Cards
                 :source_cards_ids
 
     def initialize(card, column, target_cards_ids, source_cards_ids = nil)
-      @card, @column = card, column
+      @card = card
+      @column = column
       @target_cards_ids = eval(target_cards_ids) if source_cards_ids.is_a? String
       @source_cards_ids = eval(source_cards_ids) if source_cards_ids.is_a? String
     end
@@ -27,8 +30,10 @@ module Cards
 
     def create_notification
       return if card.column == column
+
       NotificationJobs::CreateNotification.perform_later(
-        "MoveCardNotificationService", card)
+        'MoveCardNotificationService', card
+      )
     end
 
     def update_cards_position(card_ids)

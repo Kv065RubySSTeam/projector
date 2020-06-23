@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
 class NotificationMailer < ApplicationMailer
   before_action do
-    @notificationable, @user = params[:notificationable], params[:user]
+    @notificationable = params[:notificationable]
+    @user = params[:user]
   end
   before_action :assign_card
   before_action :assign_board
-  
+
   def add_assignee_notification
     send_mail("New user was tagged as a assignee at the card \"#{@notificationable.title}\"")
   end
@@ -18,7 +21,7 @@ class NotificationMailer < ApplicationMailer
   end
 
   def destroy_card_notification
-    send_mail("Card \"#{@notificationable.title}\" has been deleted from \"#{@board}\"")
+    send_mail("Card \"#{@notificationable.title}\" has been deleted from \"#{@board.title}\"")
   end
 
   private
@@ -28,9 +31,11 @@ class NotificationMailer < ApplicationMailer
   end
 
   def assign_card
-    @card = @notificationable.is_a?(Comment) ?
-      @notificationable.card :
-      @notificationable
+    @card = if @notificationable.is_a?(Comment)
+              @notificationable.card
+            else
+              @notificationable
+end
   end
 
   def assign_board

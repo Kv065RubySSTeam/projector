@@ -1,12 +1,13 @@
+# frozen_string_literal: true
+
 module Notifications
   class AddCommentNotificationService < Notifications::CreateService
-
     protected
 
     def notification_type
-      "add_comment_notification"
+      'add_comment_notification'
     end
-    
+
     def recievers
       [card.assignee, card.user].compact.uniq
     end
@@ -14,6 +15,5 @@ module Notifications
     def card
       notificationable.card
     end
-
   end
 end

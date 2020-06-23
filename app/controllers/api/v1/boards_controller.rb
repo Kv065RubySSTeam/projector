@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class BoardsController < Api::V1::BaseController
-      load_and_authorize_resource :board, except: [:create, :export, :members]
+      load_and_authorize_resource :board, except: %i[create export members]
       before_action :find_board!, except: %i[index create]
 
       def index
         @boards = Board.includes(:user)
-          .filter(params[:filter], current_user)
-          .search(params[:search])
-          .sorting(params[:sort])
-          .paginate(page: params[:page])
+                       .filter(params[:filter], current_user)
+                       .search(params[:search])
+                       .sorting(params[:sort])
+                       .paginate(page: params[:page])
       end
 
       def show; end

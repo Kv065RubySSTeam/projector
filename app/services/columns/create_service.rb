@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Columns
   # Service that create column with {Column::DEFAULT_TITLE default title}
   # and automatically calculated position.
@@ -9,7 +11,8 @@ module Columns
     attr_accessor :user
 
     def initialize(board, user)
-      @board, @user = board, user
+      @board = board
+      @user = user
     end
 
     # @note Column can be created only if user has permissions for column's board
@@ -26,6 +29,7 @@ module Columns
     end
 
     private
+
     # Calculate position for new column
     # using last_column_position method on {CreateService#board} instance
     # @return [Integer] new column position

@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 require 'koala'
 module Api
   module V1
     class FacebookAuthenticationsController < BaseController
-
       skip_before_action :authenticate!
 
       def create

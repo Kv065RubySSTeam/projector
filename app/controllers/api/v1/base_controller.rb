@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class BaseController < ActionController::API
@@ -12,7 +14,7 @@ module Api
         request.headers['Authorization']
       end
 
-      def generate_token_and_set_to_header (user)
+      def generate_token_and_set_to_header(user)
         token = Users::CreateTokenService.call(user)
         response.set_header('Authorization: Bearer', token)
       end

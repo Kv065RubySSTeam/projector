@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module NotificationJobs
   class CreateNotification < ApplicationJob
     queue_as :default
