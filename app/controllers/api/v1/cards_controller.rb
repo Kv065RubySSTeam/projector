@@ -1,19 +1,17 @@
 module Api
   module V1
     class CardsController < Api::V1::BaseController
-      # load_and_authorize_resource :column
-      # load_and_authorize_resource :card, through: :column,
-      #                            except: [:index, :update_position]
+      load_and_authorize_resource :column
+      load_and_authorize_resource :card, through: :column,
+                                 except: [:index, :update_position]
       before_action :find_column!, except: :index
       before_action :find_card!, except: %i[index new create]
       before_action :find_board!, only: [:update]
       helper_method :sort_column, :sort_direction, :sort_filter
       before_action :find_user_by_email!, only: %i[add_assignee]
-      # before_action :find_user!, only: %i[index, show]
       before_action :find_membership!, only: [:add_assignee]
 
       def index
-        current_user = User.find(1)
         @load_new = params[:load_new] || false
         @cards = Card.kept
                 .available_for(current_user)
@@ -28,8 +26,9 @@ module Api
 
       def create
         @card = @column.cards.build(card_params)
+        @card.user = current_user
         if @card.save
-          render :show, status: 200
+          render :show, status: 201
         else
           @error_message = @card.errors.full_messages
           render :error_message, status: 422
@@ -112,13 +111,12 @@ module Api
       end
 
       def find_membership!
-        current_user = User.find(1)
         @membership = @column.board.memberships.find_by(user: current_user)
         render json: { error: 'Membership doesn\'t exist' }, status: 404 unless @membership
       end
 
       def card_params
-        params.require(:card).permit(:title, :body, :user_id)
+        params.require(:card).permit(:title, :body)
       end
 
       def sort_column

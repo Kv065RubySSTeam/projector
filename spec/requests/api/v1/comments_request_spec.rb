@@ -7,23 +7,18 @@ RSpec.describe "Api::V1::Comments", type: :request do
   let!(:user) { membership.user }
   let!(:column) { create(:column, board: board, user: user) }
   let!(:card) { create(:card, column: column, user: user) }
-  
-  before do
-    sign_in user
+
+  let(:token_new) { Users::CreateTokenService.call(user) }
+  let(:token) do
+    {  "Authorization" => "Bearer #{token_new}"  }
   end
 
   shared_examples "a not authorized error" do
-    let!(:user2) { create(:user)}
-
-    before do
-      sign_out user
-      sign_in user2
-      subject
-    end
+    let!(:user2) { create(:user) }
 
     it "returns json with with not authorized error" do
       expect(JSON.parse(response.body)).to include_json(
-        error: "You are not authorized to access this page."
+        message: "Please Login"
       )
     end
 
@@ -33,7 +28,7 @@ RSpec.describe "Api::V1::Comments", type: :request do
   end
 
   describe "#index" do
-    subject { get api_v1_board_column_card_comments_path(board, column, card, page: page, format: :json) }
+    subject { get api_v1_board_column_card_comments_path(board, column, card, page: page, format: :json), headers: token }
     let(:page) { 1 }
 
     context "successful request" do
@@ -83,10 +78,12 @@ RSpec.describe "Api::V1::Comments", type: :request do
   end
 
   describe "#show" do
-    subject { get api_v1_board_column_card_comment_path(board, column, card, comment, format: :json), xhr: true  }
+    subject { get api_v1_board_column_card_comment_path(board, column, card, comment, format: :json), xhr: true, headers: token }
     let!(:comment) { create(:comment, card: card, user: user) }
 
     context 'without permission' do
+      subject { get api_v1_board_column_card_comment_path(board, column, card, comment, format: :json), xhr: true }
+      before { subject }
       it_behaves_like "a not authorized error"
     end
 
@@ -113,7 +110,7 @@ RSpec.describe "Api::V1::Comments", type: :request do
   end
 
   describe "#create" do
-    subject { post api_v1_board_column_card_comments_path(board, column, card, comment: comment_params, format: :json) }
+    subject { post api_v1_board_column_card_comments_path(board, column, card, comment: comment_params, format: :json), headers: token }
     let(:comment_params) do
       { 
         "body": "Test",
@@ -124,7 +121,7 @@ RSpec.describe "Api::V1::Comments", type: :request do
     context "correct params are passed" do
       it "has success status" do
         subject
-        expect(response.status).to eq 201
+        expect(response.status).to eq 200
       end
     end
     
@@ -153,8 +150,7 @@ RSpec.describe "Api::V1::Comments", type: :request do
       it "adds returns json with errors" do
         subject
         expect(JSON.parse(response.body)).to include_json(
-            errors: ["User must exist", 
-                    "Body can't be blank"]
+            errors: ["Body can't be blank"]
         )
       end
 
@@ -165,13 +161,15 @@ RSpec.describe "Api::V1::Comments", type: :request do
   end
 
   describe "#update" do
-    subject { put api_v1_board_column_card_comment_path(board, column, card, comment, comment: comment_params, format: :json) }
+    subject { put api_v1_board_column_card_comment_path(board, column, card, comment, comment: comment_params, format: :json), headers: token }
     let!(:comment) { create(:comment, card: card, user: user) }
     
     context 'without permission' do
+      subject { put api_v1_board_column_card_comment_path(board, column, card, comment, comment: comment_params, format: :json) }
       let(:comment_params) do
         { body: "Test" }
       end
+      before { subject }
       it_behaves_like "a not authorized error"
     end
 
@@ -215,10 +213,12 @@ RSpec.describe "Api::V1::Comments", type: :request do
   end
 
   describe "#destroy" do
-    subject { delete api_v1_board_column_card_comment_path(board, column, card, comment, format: :json) }
+    subject { delete api_v1_board_column_card_comment_path(board, column, card, comment, format: :json), headers: token }
     let!(:comment) { create(:comment, card: card, user: user) }
     
     context 'without permission' do
+      subject { delete api_v1_board_column_card_comment_path(board, column, card, comment, format: :json) }
+      before { subject }
       it_behaves_like "a not authorized error"
     end
 

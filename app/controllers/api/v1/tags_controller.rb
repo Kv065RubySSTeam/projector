@@ -15,7 +15,7 @@ module Api
         @card.save if @card.tag_list.add(tag_params[:name])
         @tag = @card.tags.find_by(name: tag_params[:name])
         if @tag
-          render :show, status: 201
+          render :show, status: 200
         else
           render json: { error: "Name is to short" }, status: 422
         end

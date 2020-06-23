@@ -7,22 +7,17 @@ RSpec.describe "Api::V1::Tags", type: :request do
   let!(:column) { create(:column, board: board, user: user) }
   let!(:card) { create(:card, column: column, user: user) }
   
-  before do
-    sign_in user
+  let(:token_new) { Users::CreateTokenService.call(user) }
+  let(:token) do
+    {  "Authorization" => "Bearer #{token_new}"  }
   end
 
   shared_examples "a not authorized error" do
-    let!(:user2) { create(:user)}
-
-    before do
-      sign_out user
-      sign_in user2
-      subject
-    end
+    let!(:user2) { create(:user) }
 
     it "returns json with with not authorized error" do
       expect(JSON.parse(response.body)).to include_json(
-        error: "You are not authorized to access this page."
+        message: "Please Login"
       )
     end
 
@@ -32,7 +27,7 @@ RSpec.describe "Api::V1::Tags", type: :request do
   end
 
   describe "#index" do
-    subject { get api_v1_board_column_card_tags_path(board, column, card, format: :json) }
+    subject { get api_v1_board_column_card_tags_path(board, column, card, format: :json), headers: token }
 
     context "successful request" do
       it "returns successful status" do
@@ -69,7 +64,7 @@ RSpec.describe "Api::V1::Tags", type: :request do
   end
 
   describe "#show" do
-    subject { get api_v1_board_column_card_tag_path(board, column, card, tag, format: :json), xhr: true  }
+    subject { get api_v1_board_column_card_tag_path(board, column, card, tag, format: :json), xhr: true, headers: token  }
 
     before do
       card.tag_list.add("good")
@@ -79,6 +74,8 @@ RSpec.describe "Api::V1::Tags", type: :request do
     let(:tag) { card.tags.find_by(name: 'good') }
 
     context 'without permission' do
+      subject { get api_v1_board_column_card_tag_path(board, column, card, tag, format: :json), xhr: true }
+      before { subject }
       it_behaves_like "a not authorized error"
     end
 
@@ -104,19 +101,21 @@ RSpec.describe "Api::V1::Tags", type: :request do
   end
 
   describe "#create" do
-    subject { post api_v1_board_column_card_tags_path(board, column, card, tag: tag_params, format: :json) }
+    subject { post api_v1_board_column_card_tags_path(board, column, card, tag: tag_params, format: :json), headers: token }
     let!(:tag_params) do
       { name: "hello" }
     end
 
     context 'without permission' do
+      subject { post api_v1_board_column_card_tags_path(board, column, card, tag: tag_params, format: :json) }
+      before { subject }
       it_behaves_like "a not authorized error"
     end
 
     context "correct params are passed" do
       it "has success status" do
         subject
-        expect(response.status).to eq 201
+        expect(response.status).to eq 200
       end
     end
     
@@ -134,7 +133,7 @@ RSpec.describe "Api::V1::Tags", type: :request do
     end
   
     context "invalid params are passed" do
-      subject { post api_v1_board_column_card_tags_path(board, column, card, tag: tag_params, format: :json) }
+      subject { post api_v1_board_column_card_tags_path(board, column, card, tag: tag_params, format: :json), headers: token }
       let!(:tag_params) do
         { name: nil }
       end
@@ -158,7 +157,7 @@ RSpec.describe "Api::V1::Tags", type: :request do
   end
 
   describe "#destroy" do
-    subject { delete api_v1_board_column_card_tag_path(board, column, card, tag, format: :json) }
+    subject { delete api_v1_board_column_card_tag_path(board, column, card, tag, format: :json), headers: token }
 
     before do
       card.tag_list.add("good")
@@ -168,6 +167,8 @@ RSpec.describe "Api::V1::Tags", type: :request do
     let!(:tag) { card.tags.find_by(name: 'good') }
     
     context 'without permission' do
+      subject { delete api_v1_board_column_card_tag_path(board, column, card, tag, format: :json) }
+      before { subject }
       it_behaves_like "a not authorized error"
     end
 

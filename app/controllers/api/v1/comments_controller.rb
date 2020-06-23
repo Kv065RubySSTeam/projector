@@ -14,8 +14,9 @@ module Api
 
       def create
         @comment = @card.comments.build(comment_params)
+        @comment.user = current_user
         if @comment.save
-          render :show, status: 201
+          render :show, status: 200
         else
           render json: { errors: @comment.errors.full_messages }, status: 422
         end
@@ -52,7 +53,7 @@ module Api
       end
 
       def comment_params
-        params.require(:comment).permit(:body, :user_id)
+        params.require(:comment).permit(:body)
       end
 
     end

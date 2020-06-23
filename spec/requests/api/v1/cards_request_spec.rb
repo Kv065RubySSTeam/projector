@@ -2,7 +2,6 @@ require 'rails_helper'
 require 'cancan/matchers'
 
 RSpec.describe "Api::V1::Cards", type: :request do
-  # let!(:user) { controller.current_user }
   let!(:current_user) { create(:user) }
   let!(:card) { create(:card) }
   let!(:column) { card.column }
@@ -10,8 +9,9 @@ RSpec.describe "Api::V1::Cards", type: :request do
   let!(:membership) { create(:membership, user: current_user, board: board) }
   let(:card_params) { { board_id: board, column_id: column, card_id: card } }
 
-  before do
-    sign_in current_user
+  let(:token_new) { Users::CreateTokenService.call(current_user) }
+  let(:token) do
+    {  "Authorization" => "Bearer #{token_new}"  }
   end
 
   shared_examples 'not authorized error' do
@@ -45,7 +45,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
   end
 
   describe "#create" do
-    subject { post api_v1_board_column_cards_path(board, column, card: card_params, format: :json), xhr: true }
+    subject { post api_v1_board_column_cards_path(board, column, card: card_params, format: :json), xhr: true, headers: token }
     let(:card_params) do
       { "title": "Title", "body": "<div>body</div>", "user_id": current_user.id }
     end
@@ -53,7 +53,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
     context "correct params are passed" do
       it "has success status" do
         subject
-        expect(response.status).to eq 200
+        expect(response.status).to eq 201
       end
       it "renders correct template" do
         subject
@@ -65,7 +65,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
       let(:card_params) {  { title: '' } }
       before(:each) { subject }
       let(:errors) do
-        ['Title is too short (minimum is 2 characters)', 'User must exist']
+        ['Title is too short (minimum is 2 characters)']
       end
       it "returns unprocessible entity response" do
         subject
@@ -93,7 +93,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
   end
 
   describe "#show" do
-    subject { get api_v1_board_column_card_path(board, column, card, format: :json), xhr: true }
+    subject { get api_v1_board_column_card_path(board, column, card, format: :json), xhr: true, headers: token }
 
     context "correct params are passed" do
       it "has success status" do
@@ -108,7 +108,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
   end
 
   describe "#update" do
-    subject { put api_v1_board_column_card_path(board, column, card, card: card_params, format: :json), xhr: true }
+    subject { put api_v1_board_column_card_path(board, column, card, card: card_params, format: :json), xhr: true, headers: token }
     let(:title) { "696" }
     let(:card_params) do
       { "title": title }
@@ -154,7 +154,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
   end
 
   describe "#remove_assignee" do
-    subject { delete remove_assignee_api_v1_board_column_card_path(board, column, card, format: :json), xhr: true }
+    subject { delete remove_assignee_api_v1_board_column_card_path(board, column, card, format: :json), xhr: true, headers: token}
     let!(:membership) { create(:membership, user: current_user, board: board) }
     let!(:assignee) { create(:card, assignee: current_user) }
 
@@ -173,7 +173,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
   end
 
   describe "#add_assignee" do
-    subject { post add_assignee_api_v1_board_column_card_path(board, column, card, card: card_params, format: :json), xhr: true }
+    subject { post add_assignee_api_v1_board_column_card_path(board, column, card, card: card_params, format: :json), xhr: true, headers: token }
     let!(:membership) { create(:membership, user: current_user, board: board) }
     let!(:assignee) { create(:card, assignee: nil) }
     let(:card_params) do
@@ -189,7 +189,7 @@ RSpec.describe "Api::V1::Cards", type: :request do
   end
 
   describe "#destroy" do
-    subject { delete api_v1_board_column_card_path(board, column, card, format: :json) }
+    subject { delete api_v1_board_column_card_path(board, column, card, format: :json), xhr: true, headers: token }
 
     context "successful request" do
       it "has success status" do
