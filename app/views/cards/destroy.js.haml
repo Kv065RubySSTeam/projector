@@ -1,7 +1,7 @@
 if ($("#kanban-wrapper").length){
 $(".delete-kanban-item").on("ajax:success", function() {
 $(".kanban-item[data-card-id=\'" + "#{@card.id}" + "\']").parent().remove();
-$(".kanban-board[data-column-id=\'" + "#{@card.column_id}" + "\']").find('.kanban-board-header span.badge').text("#{@column.cards.count -1}");
+$(".kanban-board[data-column-id=\'" + "#{@card.column_id}" + "\']").find('.kanban-board-header span.badge').text("#{@column.cards.kept.count -1}");
 $(this).closest(".kanban-sidebar").hide();
 });
 }
@@ -10,8 +10,4 @@ let row = $("#cards_table #cards").find(".kanban-item[data-card-id=#{@card.id}]"
 $(this).closest(".kanban-sidebar").hide();
 $("body").find(".kanban-sidebar").removeClass('show');
 }
-$(".flashes").empty()
-\.append("#{j render 'shared/flash'}")
-\.children()
-\.delay( 5000 )
-\.slideUp( 1000 );
+= render partial: 'shared/toaster'

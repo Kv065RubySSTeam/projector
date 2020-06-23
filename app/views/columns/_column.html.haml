@@ -1,7 +1,7 @@
 .kanban-board{"data-column-id" => "#{(column.id)}"}
   %header.kanban-board-header
     %span.badge.badge-primary.badge-round.mt-35
-      = column.cards.count
+      = column.cards.kept.count
     - if can? :manage, column
       .kanban-title-board.line-ellipsis{:contenteditable => "true"}
         = column.name

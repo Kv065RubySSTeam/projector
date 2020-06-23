@@ -23,11 +23,29 @@ module CardsHelper
     end
   end
 
-  def card_date(time)
-    full_time = [time.strftime('%B'), time.day].join(" ")
-    "<div class=\"kanban-due-date d-flex align-items-center mr-50\">
-      <i class=\"bx bx-time-five font-size-small mr-25\"></i>
-      <span class=\"font-size-small\">#{full_time}</span>
+  def card_date(card)
+    full_date = nil
+    if card.start_date.present?
+      case card.start_date
+      when Date.today
+        full_date = "Today"
+      when Date.tomorrow
+        full_date = "Tomorrow"
+      when Date.yesterday
+        full_date = "Yesterday"
+      else   
+        full_date = [card.start_date.strftime('%B'), card.start_date.day].join(" ") 
+      end
+    end
+    
+    "<div class=\"kanban-due-date d-flex mr-50\">
+      <i class=\"bx bx-calendar-event mr-25\"></i>
+      <span class=\"font-size-small\">#{full_date}</span>
+    </div>
+    
+    <div class=\"kanban-due-date d-flex mr-50\">
+      <i class=\"bx bxs-time-five mr-25\"></i>
+      <span class=\"font-size-small\">#{card_duration(card)}</span>
     </div>".html_safe
   end
 
@@ -48,5 +66,27 @@ module CardsHelper
     else
       nil
     end
+  end
+  
+  def event_color(card)
+    today_date = Date.today
+    card_date = card.start_date
+    case 
+    when card_date == nil
+      'info'
+    when card_date == Date.tomorrow
+      "warning"
+    when card_date + (card.duration / (8 * 60)).days > today_date || today_date <= card_date
+      "success"
+    when today_date >= card_date
+      "danger"
+    else
+      'info'
+    end
+  end
+
+  def card_duration(card)
+    return if card.duration == 0
+    "%2dd %2dh %2dm" % [card.duration / (8 * 60), (card.duration / 60) % 8, card.duration % 60]
   end
 end

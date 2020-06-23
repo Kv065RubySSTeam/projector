@@ -30,7 +30,4 @@ $(this).toggleClass('show');
 });
 });
 
-$(".flashes").empty()
-\.append("#{j render 'shared/flash'}")
-\.delay( 5000 )
-\.slideUp( 1000 );
+= render partial: 'shared/toaster'

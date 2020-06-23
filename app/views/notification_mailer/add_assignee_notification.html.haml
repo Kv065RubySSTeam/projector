@@ -8,7 +8,11 @@
       %b
         = @user.full_name
     %p
-      New user has been assigned to the card 
+      User
+      = succeed "," do
+        %b
+          @#{@assignee.full_name}
+      added as assignee at the card
       = succeed "." do
         %b= @card.title
       %br/

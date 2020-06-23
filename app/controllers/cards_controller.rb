@@ -23,8 +23,7 @@ class CardsController < ApplicationController
   # @return a set of exisitng(kept or non-discarded) cards according to the current page, available for current user, with 10 cards per page pagination sorted by updated_at field, desc
   def index
     @load_new = params[:load_new] || false
-    @cards = Card.kept
-                 .available_for(current_user)
+    @cards = Card.available_for(current_user)
                  .search(params[:search])
                  .order(sort_column + " " + sort_direction)
                  .filter(params[:filter], current_user)
@@ -67,7 +66,11 @@ class CardsController < ApplicationController
     if @card.update(card_params)
       flash[:success] = "Card was successfully updated."
     else
-      flash[:error] = @card.errors.full_messages.join("\n")
+      if @card.errors.full_messages.to_s.match(/Duration/)
+        flash[:error] = "Duration is invalid (minimum 1 number, maximum 31d)"
+      else
+        flash[:error] = @card.errors.full_messages.join("\n")
+      end
       render status: 422
     end
   end
@@ -159,7 +162,7 @@ class CardsController < ApplicationController
   end
 
   def card_params
-    params.require(:card).permit(:title, :body)
+    params.require(:card).permit(:title, :body, :start_date, :duration)
   end
 
   def flash_clear
