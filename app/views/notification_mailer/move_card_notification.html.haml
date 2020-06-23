@@ -1,0 +1,23 @@
+!!!
+%html
+  %head
+    %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
+  %body
+    %h1
+      Hi,
+      %b= @user.full_name
+    %p
+      Your card
+      %b= @notificationable.title
+      was successfully moved to the column
+      %b= @notificationable.column.name
+      \.
+    %p
+      To see detail go to the site, just follow this link: #{link_to @board.title, board_url( @board )}.
+    %p Thanks for joining and have a great day!
+    %br/
+    %br/
+    %p Best regards,
+    %p Kv065RubySSTeam
+    %p
+      Don't reply to this email directly, you can #{link_to "unsubscribe",  edit_user_registration_url(@user)}.

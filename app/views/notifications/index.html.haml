@@ -1,0 +1,13 @@
+%div.d-flex.justify-content-center.mt-3
+  .col-lg-10
+    .card.widget-notification
+      .card-header.border-bottom
+        %h4.card-title.d-flex.align-items-center
+          %i.bx.bx-bell.font-medium-4.mr-1>
+          Notifications
+        .heading-elements
+      .card-content.notifications.notifs
+        .card-body.p-0
+          %ul.list-group.list-group-flush
+        - if @notifications.exists?
+          = render partial: "notifications", locals: {notification: @notifications}

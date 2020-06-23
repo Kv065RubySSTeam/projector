@@ -5,13 +5,17 @@
   %body
     %h1
       Hi,
-      %b= @user.full_name
+      %b
+        = @user.full_name
     %p
-      Your card
-      %b= @card.title
-      was successfully moved to the column
-      %b= @column.name
-      \.
+      Card 
+      = succeed "," do
+        %b
+          #{@notificationable.title}
+      has been deleted from the board 
+      = succeed "." do
+        %b= @board.title
+      %br/
     %p
       To see detail go to the site, just follow this link: #{link_to @board.title, board_url( @board )}.
     %p Thanks for joining and have a great day!
@@ -20,4 +24,4 @@
     %p Best regards,
     %p Kv065RubySSTeam
     %p
-      Don't reply to this email directly, you can #{link_to "unsubscribe",  edit_user_registration_url(@user)}.
+      Don't reply to this email directly, you can #{link_to "unsubscribe", edit_user_registration_url(@user)}.

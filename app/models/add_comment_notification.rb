@@ -1,0 +1,2 @@
+class AddCommentNotification < Notification
+end

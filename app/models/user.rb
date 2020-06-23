@@ -2,11 +2,12 @@ class User < ApplicationRecord
   # @!group Associations
   has_many :columns, dependent: :destroy
   has_many :cards, dependent: :destroy
-  has_many :assigned_card, class_name: 'Card'
+  has_many :assigned_cards, class_name: 'Card'
   has_many :comments, dependent: :destroy
   has_many :memberships, dependent: :destroy
   has_many :boards, through: :memberships
   has_many :likes, dependent: :destroy
+  has_many :notifications, dependent: :destroy
   has_one_attached :avatar
   # @!endgroup
 

@@ -96,6 +96,8 @@ class CardsController < ApplicationController
   #   @return flash - with success or error message and status 200 or 422
   def destroy
     if @card.discard
+      NotificationJobs::CreateNotification.perform_later(
+        "DestroyCardNotificationService", @card)                       
       flash[:success] = "Card was successfully deleted!"
     else
       flash[:error] = @card.errors.full_messages.join("\n")
@@ -110,15 +112,14 @@ class CardsController < ApplicationController
   #   @return flash - with success or error message and status
   def add_assignee
     membership = @column.board.memberships.find_by(user: @user)
-
+    
     unless membership
       render json: { error: 'User is not a member of this board' }, status: 404
       return
     end
     if @card.assign!(@user)
-      @card.notification_receivers.each do |user|
-        CardMailer.with(card: @card, user: user).new_assignee.deliver_later if user.receive_emails
-      end
+      NotificationJobs::CreateNotification.perform_later(
+        "AddAssigneeNotificationService", @card)
       render json: {}, status: 200
     else
       render json: { error: @card.errors.full_messages }, status: 422

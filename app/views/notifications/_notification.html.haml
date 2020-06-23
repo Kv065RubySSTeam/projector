@@ -1,0 +1,8 @@
+- if notification.is_a? AddAssigneeNotification
+  = render partial: "add_assignee_notification", locals: {notification: notification}
+- elsif notification.is_a? MoveCardNotification
+  = render partial: "move_card_notification", locals: {notification: notification}
+- elsif notification.is_a? AddCommentNotification
+  = render partial: "add_comment_notification", locals: {notification: notification}
+- elsif notification.is_a? DestroyCardNotification
+  = render partial: "destroy_card_notification", locals: {notification: notification}

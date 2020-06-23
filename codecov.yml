@@ -1,0 +1,26 @@
+# Coverage configuration
+# ----------------------
+codecov:
+  require_ci_to_pass: yes
+  branch: master
+
+comment:
+  layout: 'reach, diff'
+  behavior: default
+
+coverage:
+  range: 50..80
+  round: down
+  precision: 0
+
+  status:
+    project:
+      default:
+        target: 70
+    patch:
+      default:
+        target: auto
+        threshold: 5
+
+fixes:
+  - '\d+\.\d+\.\d+\/::coverage/'

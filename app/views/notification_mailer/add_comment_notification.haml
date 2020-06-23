@@ -8,12 +8,14 @@
       %b
         = @user.full_name
     %p
-      User
-      = succeed "," do
-        %b
-          @#{@assignee.full_name}
+      New comment at the card
       = succeed "." do
-        %b= @card.title
+        %b= @notificationable.card.title
+      %br/
+    %p
+      Comment:
+      = succeed "." do
+        %b= @notificationable.body
       %br/
     %p
       To see detail go to the site, just follow this link: #{link_to @board.title, board_url( @board )}.
@@ -23,4 +25,4 @@
     %p Best regards,
     %p Kv065RubySSTeam
     %p
-      Don't reply to this email directly, you can #{link_to "unsubscribe", edit_user_registration_url(@user)}.
+      Don't reply to this email directly, you can #{link_to "unsubscribe",  edit_user_registration_url(@user)}.
