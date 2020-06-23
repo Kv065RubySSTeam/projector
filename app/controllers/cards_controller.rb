@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 class CardsController < ApplicationController
   load_and_authorize_resource :column
   load_and_authorize_resource :card, through: :column,
-                                  except: [:index, :update_position]
+                                     except: %i[index update_position]
   before_action :find_column!, except: :index
   before_action :find_card!, except: %i[index new create]
   before_action :flash_clear, except: :new
@@ -25,7 +27,7 @@ class CardsController < ApplicationController
     @load_new = params[:load_new] || false
     @cards = Card.available_for(current_user)
                  .search(params[:search])
-                 .order(sort_column + " " + sort_direction)
+                 .order(sort_column + ' ' + sort_direction)
                  .filter(params[:filter], current_user)
                  .filter_by_board(params[:board_title])
     paginate_cards
@@ -50,7 +52,7 @@ class CardsController < ApplicationController
     @card.user = current_user
 
     if @card.save
-      flash[:success] = "Card was successfully created."
+      flash[:success] = 'Card was successfully created.'
     else
       flash[:error] = @card.errors.full_messages.join("\n")
       render status: 422
@@ -64,13 +66,13 @@ class CardsController < ApplicationController
   #   @return flash - with success or error message and status 200 or 422
   def update
     if @card.update(card_params)
-      flash[:success] = "Card was successfully updated."
+      flash[:success] = 'Card was successfully updated.'
     else
-      if @card.errors.full_messages.to_s.match(/Duration/)
-        flash[:error] = "Duration is invalid (minimum 1 number, maximum 31d)"
-      else
-        flash[:error] = @card.errors.full_messages.join("\n")
-      end
+      flash[:error] = if @card.errors.full_messages.to_s.match(/Duration/)
+                        'Duration is invalid (minimum 1 number, maximum 31d)'
+                      else
+                        @card.errors.full_messages.join("\n")
+                      end
       render status: 422
     end
   end
@@ -82,10 +84,11 @@ class CardsController < ApplicationController
   #   @return flash - with success or error message
   def update_position
     result, errors = Cards::UpdatePositionService.call(
-      @card, @column, params[:target_cards_id], params[:source_cards_id])
+      @card, @column, params[:target_cards_id], params[:source_cards_id]
+    )
     respond_to do |f|
       if result
-        f.js { flash[:success] = "Cards positions was successfully updated." }
+        f.js { flash[:success] = 'Cards positions was successfully updated.' }
       else
         f.js { flash[:error] = errors.join("\n") }
       end
@@ -100,8 +103,9 @@ class CardsController < ApplicationController
   def destroy
     if @card.discard
       NotificationJobs::CreateNotification.perform_later(
-        "DestroyCardNotificationService", @card)                       
-      flash[:success] = "Card was successfully deleted!"
+        'DestroyCardNotificationService', @card
+      )
+      flash[:success] = 'Card was successfully deleted!'
     else
       flash[:error] = @card.errors.full_messages.join("\n")
       render status: 422
@@ -115,14 +119,15 @@ class CardsController < ApplicationController
   #   @return flash - with success or error message and status
   def add_assignee
     membership = @column.board.memberships.find_by(user: @user)
-    
+
     unless membership
       render json: { error: 'User is not a member of this board' }, status: 404
       return
     end
     if @card.assign!(@user)
       NotificationJobs::CreateNotification.perform_later(
-        "AddAssigneeNotificationService", @card)
+        'AddAssigneeNotificationService', @card
+      )
       render json: {}, status: 200
     else
       render json: { error: @card.errors.full_messages }, status: 422
@@ -166,19 +171,19 @@ class CardsController < ApplicationController
   end
 
   def flash_clear
-    flash.clear()
+    flash.clear
   end
 
   def sort_column
-    params[:sort] || "updated_at"
+    params[:sort] || 'updated_at'
   end
 
   def sort_direction
-    params[:direction] || "desc"
+    params[:direction] || 'desc'
   end
 
   def sort_filter
-    params[:filter] || "saved"
+    params[:filter] || 'saved'
   end
 
   protected
@@ -187,7 +192,7 @@ class CardsController < ApplicationController
     if @load_new
       @cards = @cards.limit(Card.per_page * params[:page].to_i)
       @current_page = params[:page].to_i
-      @total_pages = (Card.available_for(current_user).count() / Card.per_page.to_f).ceil
+      @total_pages = (Card.available_for(current_user).count / Card.per_page.to_f).ceil
     else
       @cards = @cards.paginate(page: params[:page])
       @current_page = @cards.current_page

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Boards
   # Service that accepts +board_params+ and +user+ and instance method call returns new board
   class CreateService < ApplicationService
@@ -12,14 +14,15 @@ module Boards
     # @param [Hash] board_params the params from the form to create new board
     # @return [CreateService] new instance of the service
     def initialize(user, board_params)
-      @board_params, @user = board_params, user
+      @board_params = board_params
+      @user = user
     end
 
     # Adds +user+ params to +board_params+ hash and returns board and admin membership.
     # @return [Board] created board or invalid board object
     def call
       ActiveRecord::Base.transaction do
-        board = Board.create!(board_params.merge user: user)
+        board = Board.create!(board_params.merge(user: user))
         board.memberships.create!(admin: true, user: user)
         board
       rescue ActiveRecord::RecordInvalid => e

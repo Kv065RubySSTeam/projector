@@ -1,13 +1,15 @@
+# frozen_string_literal: true
+
 class TagsController < ApplicationController
   load_and_authorize_resource :card
-  before_action :find_card!, only: [:create, :destroy]
+  before_action :find_card!, only: %i[create destroy]
   respond_to :js
 
   def create
     @card.tag_list.add(tag_params[:name])
     if @card.save
       @tag = @card.tags.find_by(name: tag_params[:name])
-      flash[:success] = "Tag was successfully added!" 
+      flash[:success] = 'Tag was successfully added!'
     else
       flash[:error] = @card.errors.full_messages.join("\n")
     end
@@ -24,6 +26,7 @@ class TagsController < ApplicationController
   end
 
   private
+
   def find_card!
     @card = Card.find(params[:card_id])
   end

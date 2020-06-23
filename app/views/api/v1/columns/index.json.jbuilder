@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 json.array! @columns do |column|
   json.partial! 'column', column: column
 

@@ -1,19 +1,21 @@
+# frozen_string_literal: true
+
 class Card < ApplicationRecord
   include Discard::Model
   include PgSearch::Model
 
   belongs_to :column
   belongs_to :user
-  belongs_to :assignee, class_name: "User", foreign_key: "assignee_id", optional: true
+  belongs_to :assignee, class_name: 'User', foreign_key: 'assignee_id', optional: true
   has_many :comments, dependent: :destroy
   has_many :taggings
   has_many :tags, through: :taggings
   has_many :likes, as: :likable, dependent: :destroy
   has_many :notifications, as: :notificationable, dependent: :destroy
-  
+
   validates :title, length: { within: 2..50 }
   validates :position, uniqueness: { scope: :column }
-  validates :duration,  length: { within: 0..14880 }
+  validates :duration, length: { within: 0..14_880 }
   # The maximum duration of tasks: 31d = 14880m, 1d = 8h
   attribute :duration, CardDuration::Type.new
   # ActionText
@@ -31,8 +33,10 @@ class Card < ApplicationRecord
   #   @example
   #     Card.available_for(current_user)
   #   @return [Set<Card>] cards available for user
-  scope :available_for, -> (user) { joins(column: { board: :memberships })
-                                  .where(memberships: { user_id: user.id }) }
+  scope :available_for, lambda { |user|
+                          joins(column: { board: :memberships })
+                            .where(memberships: { user_id: user.id })
+                        }
 
   # @!method by_board(title)
   #   @param [String] title of the board
@@ -40,7 +44,7 @@ class Card < ApplicationRecord
   #   @example
   #     Card.by_board('title')
   #   @return [Set<Card>] cards from the concrete board
-  scope :by_board, -> (title) { joins(column: :board).where(boards: { title: title }) }
+  scope :by_board, ->(title) { joins(column: :board).where(boards: { title: title }) }
 
   # @!method filter_by_board(title)
   #   @param [String] title of the board
@@ -77,20 +81,20 @@ class Card < ApplicationRecord
   #     Card.filter('assigned', user)
   #     Card.filter('created', user)
   #   @return [Set<Card>] cards, filtered by passed param
-  scope :filter, ->(filter, user) do
+  scope :filter, lambda { |filter, user|
     case filter
-    when "all"
+    when 'all'
       all
-    when "deleted"
+    when 'deleted'
       discarded
-    when "assigned"
+    when 'assigned'
       assigned(user)
-    when "created"
+    when 'created'
       created(user)
     else
       kept
     end
-  end
+  }
 
   scope :for_today, -> { where(start_date: Date.today) }
 
@@ -101,21 +105,21 @@ class Card < ApplicationRecord
   #     Card.search_everywhere('Surname')
   #   @return [Set<Card>] that matches input inserted
   pg_search_scope :search_everywhere,
-  against: [:title],
-  associated_against: {
-    assignee: [:first_name, :last_name],
-    user: [:first_name, :last_name],
-    rich_text_body: [:body]
-  },
-  using: {
-    tsearch: {
-      prefix: true,
-      dictionary: "english"
-    }
-  }
+                  against: [:title],
+                  associated_against: {
+                    assignee: %i[first_name last_name],
+                    user: %i[first_name last_name],
+                    rich_text_body: [:body]
+                  },
+                  using: {
+                    tsearch: {
+                      prefix: true,
+                      dictionary: 'english'
+                    }
+                  }
 
   before_validation(on: :create) do
-    self.position = self.column.last_card_position.to_i + 1
+    self.position = column.last_card_position.to_i + 1
   end
 
   self.per_page = 10
@@ -146,7 +150,6 @@ class Card < ApplicationRecord
   #   card.notification_receivers
   # @return [Set<User>] cards, created by the concrete user
   def notification_receivers
-    [self.user, self.assignee].compact.uniq
+    [user, assignee].compact.uniq
   end
-
 end

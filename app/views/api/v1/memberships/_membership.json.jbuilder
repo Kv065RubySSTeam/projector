@@ -1,4 +1,6 @@
-json.(membership, :admin, :created_at, :updated_at)
+# frozen_string_literal: true
+
+json.call(membership, :admin, :created_at, :updated_at)
 
 json.board do
   json.partial! 'api/v1/boards/board', board: membership.board

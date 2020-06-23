@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Likable
   extend ActiveSupport::Concern
 
@@ -18,7 +20,7 @@ module Likable
   end
 
   def destroy
-    @like = @likable.likes.find_by(user: current_user) 
+    @like = @likable.likes.find_by(user: current_user)
     respond_to do |f|
       if @like.destroy
         f.js { render action: 'change_button', status: 200 }

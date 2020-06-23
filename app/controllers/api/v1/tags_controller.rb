@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class TagsController < Api::V1::BaseController
       load_and_authorize_resource :card
       before_action :find_card!
-      before_action :find_tag!, only: [:destroy, :show]
+      before_action :find_tag!, only: %i[destroy show]
 
       def index
         @tags = @card.tags
@@ -17,7 +19,7 @@ module Api
         if @tag
           render :show, status: 200
         else
-          render json: { error: "Name is to short" }, status: 422
+          render json: { error: 'Name is to short' }, status: 422
         end
       end
 
@@ -31,6 +33,7 @@ module Api
       end
 
       private
+
       def find_card!
         @card = Card.find(params[:card_id])
       end

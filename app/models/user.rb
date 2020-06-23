@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # @!group Associations
   has_many :columns, dependent: :destroy
@@ -18,7 +20,7 @@ class User < ApplicationRecord
   validates :last_name, length: { within: 1..100 }
   validates :avatar, content_type:
     { in: ['image/png', 'image/jpg', 'image/jpeg'],
-      message: "format is wrong, please use JPG, PNG or JPEG" }
+      message: 'format is wrong, please use JPG, PNG or JPEG' }
   # @!endgroup
 
   # Include default devise modules. Others available are:
@@ -28,7 +30,7 @@ class User < ApplicationRecord
          :async, :confirmable,
          :omniauthable, omniauth_providers: %i[facebook]
 
-  attribute :remove_avatar, :boolean,  default: false
+  attribute :remove_avatar, :boolean, default: false
   after_save :purge_avatar, if: :remove_avatar
 
   # @see https://www.rubydoc.info/github/plataformatec/devise/Devise%2FModels%2FAuthenticatable:send_devise_notification
@@ -75,8 +77,10 @@ class User < ApplicationRecord
     where("concat_ws('OR', LOWER(email), LOWER(first_name), LOWER(last_name)) LIKE LOWER(?)", "%#{user}%")
   }
 
-  scope :with_active_reset_password, ->(token) { where("reset_password_sent_at > ?", Time.now - 4 * 3600)
-                                                 .find_by!(reset_password_token: token) }
+  scope :with_active_reset_password, lambda { |token|
+                                       where('reset_password_sent_at > ?', Time.now - 4 * 3600)
+                                         .find_by!(reset_password_token: token)
+                                     }
 
   scope :with_enabled_email_receiving, -> { where(receive_emails: true) }
 
@@ -85,6 +89,7 @@ class User < ApplicationRecord
   end
 
   private
+
   # Directly purges the attachment (i.e. destroys the blob and attachment and deletes the file on the service).
   # @return [Avatar]
 
@@ -92,13 +97,4 @@ class User < ApplicationRecord
     # Purges the attachment through the queuing system.
     avatar.purge_later
   end
-
-  protected
-  # Callback to overwrite if confirmation is required or not.
-  # @see https://www.rubydoc.info/github/plataformatec/devise/Devise%2FModels%2FConfirmable:confirmation_required%3F
-  # @return [Boolean]
-  def confirmation_required?
-    false
-  end
-
 end

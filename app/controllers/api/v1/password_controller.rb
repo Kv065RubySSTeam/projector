@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class PasswordController < BaseController
@@ -5,7 +7,7 @@ module Api
       before_action :find_user_by_email!, only: %i[new]
 
       def new
-        @user.update({ reset_password_token: SecureRandom.uuid, reset_password_sent_at: Time.now})
+        @user.update({ reset_password_token: SecureRandom.uuid, reset_password_sent_at: Time.now })
 
         PasswordMailer.with(user: @user).reset_password.deliver_later
         render json: { success: 'Successfully sended email.' }, status: 200
@@ -32,7 +34,6 @@ module Api
         @user = User.find_by!(email: params[:email])
         render json: { error: 'User doesn\'t exist' }, status: 404 unless @user
       end
-
     end
   end
 end
