@@ -36,11 +36,9 @@ after 'deploy:published', 'bundler:clean'
 after "deploy", "deploy:cleanup"
 
 # Configuration for whenever
-set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
-set :whenever_roles, "#{fetch(:rails_env)}_cron"
+# set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+# set :whenever_roles, "#{fetch(:rails_env)}_cron"
 
-set :rails_env, 'production'
- ​
 namespace :db do
   task :reset do
     on primary fetch(:migration_role) do

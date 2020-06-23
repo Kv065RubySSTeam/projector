@@ -41,7 +41,7 @@ class CardDuration
     end
 
     def string_invalid?(value)
-      return true if value.scan(/(\d+)d|\s+|(\d+)h|\s+|(\d+)m|(\d)+$/).empty?
+      return true if value.scan(/(\d+)d|\s+|(\d+)h|\s+|(\d+)m|(\d)+$/).empty? && !value.empty?
     end
   end
 end
