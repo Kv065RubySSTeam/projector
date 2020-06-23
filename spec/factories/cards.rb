@@ -9,7 +9,11 @@ FactoryBot.define do
     after(:create) do |card, evaluator|
       card.body.body= "<b>body</b>"
     end
-    
+
+    after(:create) do |card|
+      card.audits.first.update(user: card.user)
+    end
+
     trait :with_tags do
       tag_list { ["jogging", "diving", "swimming"] }
     end

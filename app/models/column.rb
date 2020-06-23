@@ -18,6 +18,9 @@ class Column < ApplicationRecord
   # @!endgroup
 
   # @return [Integer] maximum card position on the current column
+
+  self.per_page = 10
+
   def last_card_position
     cards.maximum(:position)
   end

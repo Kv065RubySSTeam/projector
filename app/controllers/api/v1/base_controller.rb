@@ -17,12 +17,12 @@ module Api
         response.set_header('Authorization: Bearer', token)
       end
 
-      def session_user
+      def current_user
         @user = Users::DecryptTokenService.call(auth_header)
       end
 
       def logged_in?
-        session_user.present?
+        current_user.present?
       end
 
       def authenticate!
