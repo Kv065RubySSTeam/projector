@@ -2,7 +2,4 @@ $(".kanban-delete").off("ajax:success").on("ajax:success", function() {
 $(this).closest(".kanban-board").remove();
 });
 
-$(".flashes").empty()
-\.append("#{j render 'shared/flash'}")
-\.delay( 5000 )
-\.slideUp( 1000 );
+= render partial: 'shared/toaster'

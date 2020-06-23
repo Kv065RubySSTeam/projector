@@ -14,6 +14,7 @@
   });
   });
   $(cardClass).find('.members-request').on('click', assignClickHandler);
+  $("body").find(".kanban-sidebar").removeClass('show');
   } else {
   var row = $("#cards_table #cards").find(".kanban-item[data-card-id=#{@card.id}]")
   row.find(".card-title").text("#{short_text(@card.title)}")
@@ -21,8 +22,4 @@
   $("body").find(".kanban-sidebar").removeClass('show');
   }
 
-
-$(".flashes").empty()
-\.append("#{j render 'shared/flash'}")
-\.delay( 5000 )
-\.slideUp( 1000 );
+= render partial: 'shared/toaster'

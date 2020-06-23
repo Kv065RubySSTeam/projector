@@ -13,7 +13,9 @@ class Card < ApplicationRecord
   
   validates :title, length: { within: 2..50 }
   validates :position, uniqueness: { scope: :column }
-
+  validates :duration,  length: { within: 0..14880 }
+  # The maximum duration of tasks: 31d = 14880m, 1d = 8h
+  attribute :duration, CardDuration::Type.new
   # ActionText
   has_rich_text :body
 
@@ -78,17 +80,19 @@ class Card < ApplicationRecord
   scope :filter, ->(filter, user) do
     case filter
     when "all"
-      with_discarded
+      all
     when "deleted"
-      with_discarded.discarded
+      discarded
     when "assigned"
       assigned(user)
     when "created"
       created(user)
     else
-      all
+      kept
     end
   end
+
+  scope :for_today, -> { where(start_date: Date.today) }
 
   # @!method pg_search_scope(input)
   #   @param [String] input string

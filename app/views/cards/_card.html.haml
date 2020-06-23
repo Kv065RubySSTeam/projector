@@ -1,5 +1,5 @@
 .card-wrapper
-  .kanban-item{"data-border" => "info", "data-card-id" => "#{card.id}", |
+  .kanban-item{"data-border" => "#{event_color(card)}", "data-card-id" => "#{card.id}", |
               "data-position" => "#{card.position}"}
     .font-medium-1.text-bold-600
       = card.title
@@ -27,8 +27,8 @@
                                               :onclick => 'sendTagDeleteRequest(event)' do
                   %i.bx.bx-x-circle
       .kanban-footer-right.d-flex.justify-content-between.mt-1{id: "card-#{card.id}"}
-        .likable-link-wrapper 
-          = render 'application/likable_link', likable: card, 
+        .likable-link-wrapper
+          = render 'application/likable_link', likable: card,
                       likable_path: board_column_card_cards_likes_path(card.column.board, card.column, card)
         .kanban-users
           - if card.assignee
@@ -41,6 +41,7 @@
           - elsif can? :manage, card
             = link_to '', class: "btn btn-icon rounded-circle btn-info members-request", remote: true do
               %i.bx.bx-plus
-      .kanban-comment.d-flex.align-items-center.mr-50
-        = card_date(card.created_at)
+      .kanban-comment.d-flex.justify-content-between.mr-50.mt-1{class: "#{event_color(card)}"}
+        - if card.start_date || card.duration > 0
+          = card_date(card)
         = card_comment(card)

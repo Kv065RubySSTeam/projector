@@ -35,41 +35,12 @@ after 'deploy:published', 'bundler:clean'
 # leave only 2 releases
 after "deploy", "deploy:cleanup"
 
+# Configuration for whenever
+set :whenever_identifier, ->{ "#{fetch(:application)}_#{fetch(:stage)}" }
+set :whenever_roles, "#{fetch(:rails_env)}_cron"
 
 set :rails_env, 'production'
-
-# for sideqik
-# set :sidekiq_role, :app
-# set :sidekiq_config, "#{current_path}/config/sidekiq.yml"
-# set :sidekiq_env, 'production'
-
-
-# after 'deploy:publishing', 'deploy:restart'
-# ​
-# namespace :deploy do
-#   task :restart do
-#     invoke 'nginx:setup'
-#     invoke 'nginx:reload'
-#   end
-# end
-
-# set :application, "#{fetch(:app_name)}_#{fetch(:stage)}"
-# set :deploy_to, "/home/#{fetch(:user)}/apps/#{fetch(:application)}"
-
-# set :linked_files, fetch(:linked_files, []).push('config/database.yml')
-# set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
-# ​
-# ​
-# after 'deploy:publishing', 'deploy:restart'
-# ​
-# namespace :deploy do
-#   task :restart do
-#     invoke 'unicorn:restart'
-#     invoke 'nginx:setup'
-#     invoke 'nginx:reload'
-#   end
-# end
-# ​
+ ​
 namespace :db do
   task :reset do
     on primary fetch(:migration_role) do
@@ -83,23 +54,3 @@ namespace :db do
     end
   end
 end
-# ​
-# namespace :nginx do
-#   desc 'Setup nginx configuration'
-#   task :setup do
-#     on roles :web do
-#       execute :cp, "#{release_path}/config/nginx/#{fetch(:stage)}.conf", "#{shared_path}/config/nginx/#{fetch(:application)}"
-#       sudo :ln, '-fs', "#{shared_path}/config/nginx/#{fetch(:application)}", "/etc/nginx/sites-enabled/#{fetch(:application)}"
-#     end
-#   end
-# ​
-#   %w[start stop restart reload].each do |command|
-#     desc "#{command.capitalize} nginx service"
-#     task command.to_sym do
-#       on roles(:web) do |host|
-#         sudo "service nginx #{command}"
-#         info "Host #{host} (#{host.roles.to_a.join(', ')}):\t#{capture(:uptime)}"
-#       end
-#     end
-#   end
-# end

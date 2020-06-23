@@ -6,7 +6,7 @@
   \// Show button
   $(className).find(".kanban-title-button").show();
   $(className).find(".kanban-drag").append("#{j render @card}");
-  $(className).find('.kanban-board-header span.badge').text('#{@column.cards.count}');
+  $(className).find('.kanban-board-header span.badge').text('#{@column.cards.kept.count}');
   $(cardId).click(function() {
   $.ajax({
   url: `/boards/#{@card.column.board_id}/columns/#{@card.column_id}/cards/#{@card.id}/edit`,
@@ -19,7 +19,4 @@
 
   $(cardId).find('.members-request').on('click', assignClickHandler);
 
-$(".flashes").empty()
-\.append("#{j render 'shared/flash'}")
-\.delay( 5000 )
-\.slideUp( 1000 );
+= render partial: 'shared/toaster'
