@@ -97,4 +97,13 @@ class User < ApplicationRecord
     # Purges the attachment through the queuing system.
     avatar.purge_later
   end
+
+  protected
+
+  # Callback to overwrite if confirmation is required or not.
+  # @see https://www.rubydoc.info/github/plataformatec/devise/Devise%2FModels%2FConfirmable:confirmation_required%3F
+  # @return [Boolean]
+  def confirmation_required?
+    false
+  end
 end
