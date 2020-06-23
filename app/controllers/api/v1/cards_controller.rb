@@ -1,7 +1,7 @@
 module Api
   module V1
     class CardsController < Api::V1::BaseController
-      load_and_authorize_resource :column
+      # load_and_authorize_resource :column
       # load_and_authorize_resource :card, through: :column,
       #                            except: [:index, :update_position]
       before_action :find_column!, except: :index

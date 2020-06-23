@@ -30,7 +30,6 @@ RSpec.describe "Api::V1::Cards", type: :request do
     end
   end
 
-  #Index  
   describe "#index" do
     subject { get api_v1_cards_path(page: page, format: :json), xhr: true }
     let(:page) { 1 }
@@ -44,7 +43,6 @@ RSpec.describe "Api::V1::Cards", type: :request do
       end
     end
   end
-
 
   describe "#create" do
     subject { post api_v1_board_column_cards_path(board, column, card: card_params, format: :json), xhr: true }
