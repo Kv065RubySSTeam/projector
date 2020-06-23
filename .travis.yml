@@ -14,7 +14,7 @@ before_script:
 - bundle exec rake db:create
 - bundle exec rake db:migrate
 script:
-- bundle exec rspec --format doc
+- bundle exec rspec
 after_failure:
 - cat ./config/database.yml
 - echo $RAILS_ENV

@@ -83,6 +83,7 @@ group :development, :test do
   gem 'rspec-json_expectations', '~> 1.2'
   # Faker is used to easily generate fake data: names, addresses, phone numbers, etc.
   gem 'faker', '~> 2.11'
+
   # Code coverage for Ruby with a powerful configuration library and automatic merging of coverage across test suites
   gem 'simplecov', '~> 0.18.5', require: false
   # Simple console output formatter for SimpleCov
