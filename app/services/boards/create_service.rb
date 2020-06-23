@@ -21,9 +21,9 @@ module Boards
       ActiveRecord::Base.transaction do
         board = Board.create!(board_params.merge user: user)
         board.memberships.create!(admin: true, user: user)
-        return board
+        board
       rescue ActiveRecord::RecordInvalid => e
-        return e.record 
+        e.record
       end
     end
   end

@@ -7,6 +7,6 @@ FactoryBot.create_list(:board_with_columns_cards, 5, user: user )
 
 boards = Board.all
 
-boards.each do |board| 
+boards.each do |board|
   FactoryBot.create(:membership, user: user, board: board, admin: true)
 end

@@ -16,7 +16,8 @@ class BoardsController < ApplicationController
   # @optional [Integer] page indicates which page to show
   # @response [Set<Board>] @boards the set of boards
   def index
-    @boards = Board.filter(params[:filter], current_user)
+    @boards = Board.includes(:user)
+      .filter(params[:filter], current_user)
       .search(params[:search])
       .sorting(params[:sort])
       .paginate(page: params[:page])
