@@ -11,7 +11,7 @@
       User
       = succeed "," do
         %b
-          @#{@assignee.full_name}
+          @#{@notificationable.assignee.full_name}
       added as assignee at the card
       = succeed "." do
         %b= @card.title

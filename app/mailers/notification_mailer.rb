@@ -35,7 +35,7 @@ class NotificationMailer < ApplicationMailer
               @notificationable.card
             else
               @notificationable
-end
+            end
   end
 
   def assign_board
