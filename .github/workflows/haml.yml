@@ -1,0 +1,14 @@
+name: HAML Lint
+on: [pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: HAML Lint Action
+      uses: andrewmcodes/haml-lint-action@v0.0.1
+      with:
+        file_paths: 'app/**/*.html.haml'
+        fail_level: 'error'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
